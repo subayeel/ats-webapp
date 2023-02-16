@@ -1,6 +1,12 @@
+//Packages
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./Global";
+
+//Components
+import AuthPage from "./pages/Auth/AuthPage";
+import Login from "./pages/Auth/Login";
+import SignUp from "./pages/Auth/SignUp";
 
 function App() {
   const theme = {
@@ -18,7 +24,10 @@ function App() {
         <GlobalStyle />
         <Router>
           <Routes>
-            <Route></Route>
+            <Route path="/auth" element={<AuthPage />}>
+              <Route path="/auth/login" element={<Login />} />
+              <Route path="/auth/signup" element={<SignUp />} />
+            </Route>
           </Routes>
         </Router>
       </ThemeProvider>
