@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 //Components
 import AuthNavbar from "./helpers/AuthNavbar";
@@ -13,6 +13,7 @@ import {
   Heading,
   BtnWrap,
   Button,
+  LightText,
 } from "../../Global";
 
 import { BorderNavBtn, SmallText } from "./Auth.elements";
@@ -22,7 +23,7 @@ function AuthPage() {
     <>
       <AuthNavbar />
       <MainContainer>
-        <GridContainer columns="1fr 1fr">
+        <GridContainer height="100%" columns="1fr 1fr">
           <Container>
             <Heading>
               Beautiful, Effective, Easy-To-Use HR Software for Growing
@@ -32,14 +33,18 @@ function AuthPage() {
               G&H is designed to help your business run efficiently, save money,
               and stay compliant. Request a demo today!
             </SmallText>
-            <BtnWrap width="100%" justify="flex-start">
+            <GridContainer
+              width="100%"
+              columns="200px 200px"
+              justify="flex-start"
+            >
               <Button btnColor={(props) => props.theme.colors.atsGreen}>
                 Request a Demo
               </Button>
               <Button btnColor={(props) => props.theme.colors.atsBlue}>
                 Learn More{" "}
               </Button>
-            </BtnWrap>
+            </GridContainer>
           </Container>
 
           <Outlet />

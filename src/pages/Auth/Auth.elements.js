@@ -14,10 +14,16 @@ export const BorderNavBtn = styled.button`
   background-color: #fff;
   padding: 0.7rem 1rem;
   height: 48px;
+  transition: 0.2s ease-in-out;
+  &:hover {
+    cursor: pointer;
+    color: #fff;
+    background-color: ${(props) => props.btnColor};
+  }
 `;
 
 export const SmallText = styled.p`
-font-weight: 400;
-font-size: 18px;
-color: #6c6c6c;
-`
+  font-weight: 400;
+  font-size: 18px;
+  color: #6c6c6c;
+`;

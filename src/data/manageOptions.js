@@ -1,0 +1,18 @@
+export const managerJobTitles = [
+  "Product Manager",
+  "Project Manager",
+  "Engineering Manager",
+  "Technical Manager",
+  "Operations Manager",
+  "Marketing Manager",
+  "Sales Manager",
+  "Customer Success Manager",
+  "Human Resources Manager",
+  "Finance Manager",
+  "Business Development Manager",
+  "Account Manager",
+  "Quality Assurance Manager",
+  "Supply Chain Manager",
+  "Information Technology Manager",
+  "General Manager",
+];
