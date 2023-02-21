@@ -3,6 +3,7 @@ import bg from "./assets/images/ats-bg.svg";
 import ubuntu from "./assets/fonts/Ubuntu-Regular.ttf";
 import { TextField } from "@mui/material";
 import { FaPlus } from "react-icons/fa";
+import { GoKebabVertical } from "react-icons/go";
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -12,7 +13,6 @@ export const GlobalStyle = createGlobalStyle`
   -moz-osx-font-smoothing: grayscale;
   background-color: ${(props) => props.theme.colors.fillColor};
   background-image:url(${bg});
-  padding-bottom: 120px;
   }
   @font-face {
     font-family:"Ubuntu" ;
@@ -33,6 +33,7 @@ export const GridContainer = styled.div`
   display: grid;
   grid-gap: 1rem;
   place-content: center;
+
   justify-content: ${(props) => (props.justify ? props.justify : "center")};
   align-items: ${(props) => (props.align ? props.align : "center")};
   grid-template-columns: ${(props) => props.columns};
@@ -42,17 +43,18 @@ export const GridContainer = styled.div`
   max-width: 100%;
 `;
 export const MainContainer = styled.div`
-  margin: auto;
+  margin: 1rem auto;
   max-width: 1280px;
   @media screen and (min-width: 1376px) {
     max-width: 1747px;
   }
 `;
 
+//Card Styled Components
 export const CardContainer = styled(CenterFlexContainer)`
   flex-wrap: wrap;
   flex: 1;
-  margin: 2rem 0;
+  margin: 0;
   padding: 1.8rem;
   justify-content: flex-start;
   align-items: flex-start;
@@ -73,6 +75,41 @@ export const CardContainer = styled(CenterFlexContainer)`
   }
 `;
 
+export const CardHeader = styled(GridContainer)`
+  display: grid;
+  width: 100%;
+`;
+
+export const HeaderLine = styled.hr`
+  width: 100%;
+  border: none;
+  background-color: #ccc;
+  height: 1px;
+`;
+export const VerticalLine = styled.hr`
+  width: 200%;
+  border: none;
+  background-color: #ccc;
+  height: 1px;
+  transform: rotate(90deg);
+`;
+export const CardHeading = styled.h3`
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  color: ${(props) => props.theme.colors.atsBlue};
+`;
+export const CardSubHeading = styled.p`
+  font-size: 18px;
+  font-weight: 600;
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  color: ${(props) => props.theme.colors.atsBlue};
+  width: ${(props) => (props.width ? props.width : "auto")};
+`;
 export const Header = styled.header`
   position: sticky;
   background-color: #fff;
@@ -85,6 +122,7 @@ export const Header = styled.header`
 
 export const Nav = styled.nav`
   display: grid;
+  grid-gap: 1rem;
   align-items: center;
   grid-template-columns: ${(props) => props.columns};
   grid-template-rows: ${(props) => props.rows};
@@ -115,6 +153,7 @@ export const LightText = styled.p`
   color: #6c6c6c;
 `;
 
+//Buttons
 export const BtnWrap = styled(CenterFlexContainer)`
   @media screen and (max-width: 768px) {
     & > button {
@@ -135,7 +174,38 @@ export const Button = styled.button`
     cursor: pointer;
   }
 `;
+export const TextButton = styled.button`
+  outline: none;
+  border: none;
+  color: #fff;
+  
+  background-color: ${(props) => props.btnColor};
+  padding: 0.7rem 1rem;
+  margin: 1rem 0;
+  min-width: max-content;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
+export const LargeButton = styled.button`
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  background-color: ${(props) => props.theme.colors.atsBlue};
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  &:hover {
+    background-color: #393845;
+    cursor: pointer;
+  }
+`;
 export const SquaredIconContainer = styled(CenterFlexContainer)`
   border: 1px solid #bbb;
   border-radius: 4px;
@@ -150,7 +220,16 @@ export const SquaredIconContainer = styled(CenterFlexContainer)`
   }
 `;
 
+// Icons
 export const AddIcon = styled(FaPlus)`
   width: 36px;
   color: inherit;
+`;
+export const KebabMenuIcon = styled(GoKebabVertical)`
+  width: 36px;
+  color: black;
+`;
+
+export const IconContainer = styled(CenterFlexContainer)`
+  color: #ccc;
 `;

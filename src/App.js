@@ -3,10 +3,19 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./Global";
 
-//Components
+
+//Auth Components
 import AuthPage from "./pages/Auth/AuthPage";
 import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
+
+//Manager Components
+import ManagerPage from "./pages/Manager/ManagerPage";
+import Dashboard from "./pages/Manager/Dashboard/Dashboard"
+import Jobs from "./pages/Manager/Jobs/Jobs"
+import Interviews from "./pages/Manager/Interviews/Interviews"
+import Reports from "./pages/Manager/Reports/Reports"
+import Mailbox from "./pages/Manager/Mailbox/Mailbox"
 
 function App() {
   const theme = {
@@ -23,10 +32,21 @@ function App() {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Router>
+          {/* Auth Routes */}
           <Routes>
             <Route path="/auth" element={<AuthPage />}>
               <Route path="/auth/login" element={<Login />} />
               <Route path="/auth/signup" element={<SignUp />} />
+            </Route>
+          </Routes>
+          {/* Manager Routes */}
+          <Routes>
+            <Route path="/manager" element={<ManagerPage />}>
+              <Route path="/manager/dashboard" element={<Dashboard />} />
+              <Route path="/manager/interviews" element={<Interviews />} />
+              <Route path="/manager/jobs" element={<Jobs />} />
+              <Route path="/manager/mailbox" element={<Mailbox />} />
+              <Route path="/manager/reports" element={<Reports />} />
             </Route>
           </Routes>
         </Router>

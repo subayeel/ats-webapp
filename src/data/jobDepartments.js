@@ -1,0 +1,21 @@
+//TO DO: Make it dynamic in V2
+export const jobsDepartments = [
+  "Network administrator",
+  "UX Designer jobs",
+  "SystemAnalystjobs",
+  "Database Administrator jobs",
+  "Software Application Packager",
+  "Full Stack Developer Jobs",
+  "Senior Software Engineer Jobs",
+  "Data Scientist Jobs",
+  "Development Operations Engineer Jobs",
+  "Cloud Engineer Jobs",
+  "IT Security Specialist Jobs",
+  "Analytics Manager Jobs",
+  "Director of Information Technology Jobs",
+  "Mobile Developer",
+  "Game Developer",
+  "Hardware Engineer",
+  "Web Developer",
+  "Web Administrator",
+];
