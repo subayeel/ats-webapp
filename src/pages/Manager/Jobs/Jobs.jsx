@@ -26,6 +26,7 @@ import {
 //data
 import { jobsDepartments } from "../../../data/jobDepartments";
 import JobCard from "./helpers/JobCard";
+import { useNavigate } from "react-router-dom";
 
 const jobs = [
   {
@@ -83,7 +84,7 @@ function Jobs() {
   const [jobType, setJobType] = useState("alljobs");
   const [dept, setDept] = useState("");
   const [location, setLocation] = useState("");
-
+  const navigate = useNavigate();
   function createJobCard(props) {
     return <JobCard {...props} />;
   }
@@ -92,7 +93,7 @@ function Jobs() {
     <MainContainer>
       <GridContainer align="flex-start" columns="1fr 3fr">
         <CardContainer style={{ position: "sticky", top: "104px" }}>
-          <LargeButton>
+          <LargeButton onClick={() => navigate("/manager/jobs/add/creation")}>
             <AddIcon />
             Add New Job
           </LargeButton>

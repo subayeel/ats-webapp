@@ -1,9 +1,10 @@
 import styled, { createGlobalStyle } from "styled-components";
 import bg from "./assets/images/ats-bg.svg";
 import ubuntu from "./assets/fonts/Ubuntu-Regular.ttf";
-import { TextField } from "@mui/material";
-import { FaPlus } from "react-icons/fa";
+
+import { FaArrowRight, FaPlus } from "react-icons/fa";
 import { GoKebabVertical } from "react-icons/go";
+import { IoIosDocument } from "react-icons/io";
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -33,7 +34,7 @@ export const GridContainer = styled.div`
   display: grid;
   grid-gap: 1rem;
   place-content: center;
-
+  margin: ${(props) => props.margin};
   justify-content: ${(props) => (props.justify ? props.justify : "center")};
   align-items: ${(props) => (props.align ? props.align : "center")};
   grid-template-columns: ${(props) => props.columns};
@@ -50,6 +51,16 @@ export const MainContainer = styled.div`
   }
 `;
 
+export const BorderedFlexContainer = styled(CenterFlexContainer)`
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 0 1rem;
+`;
+export const BorderedGridContainer = styled(GridContainer)`
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 0 1rem;
+`;
 //Card Styled Components
 export const CardContainer = styled(CenterFlexContainer)`
   flex-wrap: wrap;
@@ -145,6 +156,14 @@ export const Heading2 = styled.h2`
   color: ${(props) => props.theme.colors.atsGreen};
 `;
 
+export const Heading3 = styled.h3`
+  font-weight: 500;
+  font-size: 22px;
+  width: ${(props) => props.width};
+
+  color: #6c6c6c;
+`;
+
 export const LightText = styled.p`
   width: ${(props) => props.width};
   font-weight: 400;
@@ -164,7 +183,7 @@ export const BtnWrap = styled(CenterFlexContainer)`
 export const Button = styled.button`
   outline: none;
   border: none;
-
+  border-radius: 4px;
   color: #fff;
   background-color: ${(props) => props.btnColor};
   padding: 0.7rem 1rem;
@@ -178,7 +197,7 @@ export const TextButton = styled.button`
   outline: none;
   border: none;
   color: #fff;
-  
+
   background-color: ${(props) => props.btnColor};
   padding: 0.7rem 1rem;
   margin: 1rem 0;
@@ -230,6 +249,17 @@ export const KebabMenuIcon = styled(GoKebabVertical)`
   color: black;
 `;
 
+export const RightArrowIcon = styled(FaArrowRight)`
+  width: 36px;
+  color: #6c6c6c;
+`;
 export const IconContainer = styled(CenterFlexContainer)`
   color: #ccc;
+`;
+
+export const DocIcon = styled(IoIosDocument)`
+  width: 36px;
+  height: 36px;
+
+  color: ${(props) => props.theme.colors.atsGreen};
 `;
