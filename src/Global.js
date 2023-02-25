@@ -2,9 +2,11 @@ import styled, { createGlobalStyle } from "styled-components";
 import bg from "./assets/images/ats-bg.svg";
 import ubuntu from "./assets/fonts/Ubuntu-Regular.ttf";
 
-import { FaArrowRight, FaPlus } from "react-icons/fa";
+import { FaArrowRight, FaPlus, FaLocationArrow } from "react-icons/fa";
 import { GoKebabVertical } from "react-icons/go";
 import { IoIosDocument } from "react-icons/io";
+import { VscTypeHierarchySuper } from "react-icons/vsc";
+import { MdWork } from "react-icons/md";
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -32,7 +34,7 @@ export const Container = styled(CenterFlexContainer)`
 `;
 export const GridContainer = styled.div`
   display: grid;
-  grid-gap: 1rem;
+  grid-gap: ${(props) => (props.gap ? props.gap : "1rem")};
   place-content: center;
   margin: ${(props) => props.margin};
   justify-content: ${(props) => (props.justify ? props.justify : "center")};
@@ -52,12 +54,18 @@ export const MainContainer = styled.div`
 `;
 
 export const BorderedFlexContainer = styled(CenterFlexContainer)`
-  border: 2px solid #ccc;
+  border: 1px solid #ccc;
   border-radius: 4px;
   padding: 0 1rem;
 `;
+export const BorderedContainer = styled(CenterFlexContainer)`
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0 1rem;
+  flex-direction: column;
+`;
 export const BorderedGridContainer = styled(GridContainer)`
-  border: 2px solid #ccc;
+  border: 1px solid #ccc;
   border-radius: 4px;
   padding: 0 1rem;
 `;
@@ -96,6 +104,7 @@ export const HeaderLine = styled.hr`
   border: none;
   background-color: #ccc;
   height: 1px;
+  margin: ${(props) => (props.margin ? props.margin : "2rem 0")};
 `;
 export const VerticalLine = styled.hr`
   width: 200%;
@@ -196,14 +205,16 @@ export const Button = styled.button`
 export const TextButton = styled.button`
   outline: none;
   border: none;
-  color: #fff;
-
-  background-color: ${(props) => props.btnColor};
+  font-weight: 600;
+  color: ${(props) => props.btnTextColor};
+  background-color: transparent;
   padding: 0.7rem 1rem;
   margin: 1rem 0;
   min-width: max-content;
+  border-radius: 10px;
   &:hover {
     cursor: pointer;
+    background-color: #eee;
   }
 `;
 
@@ -250,6 +261,18 @@ export const KebabMenuIcon = styled(GoKebabVertical)`
 `;
 
 export const RightArrowIcon = styled(FaArrowRight)`
+  width: 36px;
+  color: #6c6c6c;
+`;
+export const TypeIcon = styled(VscTypeHierarchySuper)`
+  width: 36px;
+  color: #6c6c6c;
+`;
+export const LocationIcon = styled(FaLocationArrow)`
+  width: 36px;
+  color: #6c6c6c;
+`;
+export const ExperienceIcon = styled(MdWork)`
   width: 36px;
   color: #6c6c6c;
 `;

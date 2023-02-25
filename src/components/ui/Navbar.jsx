@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 function Navbar() {
   return (
     <Header>
-      <Nav columns="50px 1fr 1fr 24px">
+      <Nav columns="50px 1fr  24px">
         <img width="36px" src={logo}></img>
         <NavLinks>
           <Link to="/manager/dashboard">Dashboard</Link>
@@ -18,7 +18,7 @@ function Navbar() {
           <Link to="/manager/mailbox">Mailbox</Link>
           <Link to="/manager/reports">Reports</Link>
         </NavLinks>
-        <TextField label="Search" />
+
         <Badge badgeContent={4} color="primary">
           <MailIcon color="action" />
         </Badge>

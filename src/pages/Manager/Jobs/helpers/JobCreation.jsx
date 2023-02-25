@@ -25,32 +25,11 @@ import {
   Heading3,
 } from "../../../../Global";
 import { TileHeading, TileDesc } from "../../Manager.elements";
-import { jobsDepartments } from "../../../../data/jobDepartments";
+import { jobsDepartments ,skillSet,educationSet} from "../../../../data/jobFieldsOptions";
 
-const skillSet = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-];
-const educationSet = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-];
+
+
+
 
 function JobCreation() {
   const [error, setError] = useState("");
@@ -83,7 +62,7 @@ function JobCreation() {
     const { name, value } = event.target;
     setFormData({ [name]: value });
   };
-  
+
   //handle auto filling using pdf
   function handleAutoFill() {
     console.log("autofill");

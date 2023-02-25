@@ -24,7 +24,7 @@ import {
 } from "@mui/material";
 
 //data
-import { jobsDepartments } from "../../../data/jobDepartments";
+import { jobsDepartments } from "../../../data/jobFieldsOptions";
 import JobCard from "./helpers/JobCard";
 import { useNavigate } from "react-router-dom";
 

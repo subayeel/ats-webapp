@@ -26,21 +26,21 @@ function AddJob() {
       id: 1,
       title: "About Job",
       desc: "Tell applicant why it's great to work at your company.",
-      active: location.pathname === "/manager/jobs/add/creation",
+      active: location.pathname == "/manager/jobs/add/creation",
       clickPath: "/manager/jobs/add/creation",
     },
     {
       id: 2,
       title: "Application Form",
       desc: "Configure the  Application form to fill this Job Role.",
-      active: location.pathname === "/manager/jobs/add/application",
+      active: location.pathname == "/manager/jobs/add/application",
       clickPath: "/manager/jobs/add/application",
     },
     {
       id: 3,
       title: "Hiring Flow",
       desc: "Customize the pipeline to match your hiring flow.",
-      active: location.pathname === "/manager/jobs/add/hiringflow",
+      active: location.pathname == "/manager/jobs/add/hiringflow",
       clickPath: "/manager/jobs/add/hiringflow",
     },
   ];
@@ -51,6 +51,7 @@ function AddJob() {
           {addJobFlowTiles.map(AddJobTile)}
         </GridContainer>
         <HeaderLine />
+        <br></br>
         <Outlet />
       </CardContainer>
     </MainContainer>

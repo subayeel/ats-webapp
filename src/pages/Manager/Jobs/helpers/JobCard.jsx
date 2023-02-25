@@ -97,9 +97,9 @@ function JobCard({
       </GridContainer>
       <CenterFlexContainer justify="flex-start">
         {jobStatus === "closed" ? (
-          <TextButton btnColor="#007d11">Reopen Job</TextButton>
+          <Button btnColor="#007d11">Reopen Job</Button>
         ) : (
-          <TextButton btnColor="#96000d">Close Job</TextButton>
+          <Button btnColor="#96000d">Close Job</Button>
         )}
       </CenterFlexContainer>
     </JobCardContainer>
