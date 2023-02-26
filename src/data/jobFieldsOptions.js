@@ -62,6 +62,38 @@ export const educationSet = [
   "Master's degree",
   "Doctorate (PhD)",
 ];
+
+export const employmentTypes = [
+  "Full-time employment",
+  "Part-time employment",
+  "Temporary employment",
+  "Freelance or self-employed",
+  "Contract employment",
+  "Internship",
+  "Apprenticeship",
+  "Remote or telecommuting",
+  "Seasonal employment",
+];
+
+export const seniorityLevels = [
+  "Entry-level",
+  "Mid-level",
+  "Senior-level",
+  "Executive-level",
+];
+
+export const industryTypes = [
+  "Technology",
+  "Finance",
+  "Healthcare",
+  "Retail",
+  "Manufacturing",
+  "Education",
+  "Transportation",
+  "Hospitality",
+  "Marketing",
+  "Media and Entertainment",
+];
 // export const jobsDepartments = [
 //   "Network administrator",
 //   "UX Designer jobs",

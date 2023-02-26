@@ -25,11 +25,14 @@ import {
   Heading3,
 } from "../../../../Global";
 import { TileHeading, TileDesc } from "../../Manager.elements";
-import { jobsDepartments ,skillSet,educationSet} from "../../../../data/jobFieldsOptions";
-
-
-
-
+import {
+  jobsDepartments,
+  skillSet,
+  educationSet,
+  employmentTypes,
+  seniorityLevels,
+  industryTypes,
+} from "../../../../data/jobFieldsOptions";
 
 function JobCreation() {
   const [error, setError] = useState("");
@@ -192,24 +195,57 @@ function JobCreation() {
         margin="1rem 0"
         columns="repeat(auto-fill,minmax(250px,1fr))"
       >
-        <TextField
-          label="Employment Type"
-          name="employmentType"
-          value={formData.employmentType}
-          onChange={handleFormDataChange}
-        />
-        <TextField
-          label="Seniority Level"
-          name="seniorityLevel"
-          value={formData.seniorityLevel}
-          onChange={handleFormDataChange}
-        />
-        <TextField
-          label="Industry Type"
-          name="industryType"
-          value={formData.industryType}
-          onChange={handleFormDataChange}
-        />
+        <FormControl margin="dense">
+          <InputLabel id="employmentType-select-label">
+            Employment Type
+          </InputLabel>
+          <Select
+            labelId="employmentType-select-label"
+            id="demo-simple-select"
+            name="employmentType"
+            value={formData.employmentType}
+            label="Employment Type"
+            onChange={handleFormDataChange}
+          >
+            {employmentTypes.map((eType) => {
+              return <MenuItem value={eType}>{eType}</MenuItem>;
+            })}
+          </Select>
+        </FormControl>
+
+        <FormControl margin="dense">
+          <InputLabel id="seniorityLevel-select-label">
+            Seniority Level
+          </InputLabel>
+          <Select
+            labelId="seniorityLevel-select-label"
+            id="demo-simple-select"
+            name="seniorityLevel"
+            value={formData.seniorityLevel}
+            label="Seniority Level"
+            onChange={handleFormDataChange}
+          >
+            {seniorityLevels.map((sLevel) => {
+              return <MenuItem value={sLevel}>{sLevel}</MenuItem>;
+            })}
+          </Select>
+        </FormControl>
+
+        <FormControl margin="dense">
+          <InputLabel id="industryType-select-label">Industry Type</InputLabel>
+          <Select
+            labelId="industryType-select-label"
+            id="demo-simple-select"
+            name="industryType"
+            value={formData.industryType}
+            label="Industry Type"
+            onChange={handleFormDataChange}
+          >
+            {industryTypes.map((iTypes) => {
+              return <MenuItem value={iTypes}>{iTypes}</MenuItem>;
+            })}
+          </Select>
+        </FormControl>
       </GridContainer>
       <Heading3 width="100%">Salary Range (CTC)*</Heading3>
       <GridContainer width="100%" columns="1fr 1fr 36px 1fr">
@@ -279,6 +315,7 @@ function JobCreation() {
             labelId="skills-label"
             multiple
             value={skills}
+            
             onChange={handleSkillsChange}
             input={<OutlinedInput label="Skills" />}
             renderValue={(selected) => selected.join(", ")}
@@ -296,14 +333,14 @@ function JobCreation() {
           <Select
             labelId="education-label"
             multiple
-            value={skills}
+            value={education}
             onChange={handleEducationChange}
             input={<OutlinedInput label="Education" />}
             renderValue={(selected) => selected.join(", ")}
           >
             {educationSet.map((eduName) => (
               <MenuItem key={eduName} value={eduName}>
-                <Checkbox checked={educationSet.indexOf(eduName) > -1} />
+                <Checkbox checked={education.indexOf(eduName) > -1} />
                 <ListItemText primary={eduName} />
               </MenuItem>
             ))}

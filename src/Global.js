@@ -124,7 +124,7 @@ export const CardHeading = styled.h3`
 export const CardSubHeading = styled.p`
   font-size: 18px;
   font-weight: 600;
-  margin: 1rem 0;
+  margin: 1rem 0 0 0;
   display: flex;
   align-items: center;
   color: ${(props) => props.theme.colors.atsBlue};
