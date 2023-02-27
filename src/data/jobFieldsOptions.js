@@ -94,6 +94,29 @@ export const industryTypes = [
   "Marketing",
   "Media and Entertainment",
 ];
+
+export const jobApplicationFields = [
+  { fieldName: "martialStatus", fieldTitle: "Martial Status" },
+  { fieldName: "dob", fieldTitle: "Date of Birth" },
+  { fieldName: "gender", fieldTitle: "Gender" },
+  { fieldName: "address", fieldTitle: "Address" },
+  { fieldName: "phone", fieldTitle: "Phone" },
+  { fieldName: "workExperience", fieldTitle: "Work Experience" },
+  { fieldName: "skills", fieldTitle: "Skills" },
+  { fieldName: "education", fieldTitle: "Education" },
+  { fieldName: "workLink", fieldTitle: "Work Link" },
+  { fieldName: "ctc", fieldTitle: "CTC" },
+];
+
+export const answerTypes = [
+  "Single Line text",
+  "Multi Line text",
+  "Multiple Choice",
+  "Single Choice",
+  "Yes/No",
+  "File Upload",
+  "URL",
+];
 // export const jobsDepartments = [
 //   "Network administrator",
 //   "UX Designer jobs",

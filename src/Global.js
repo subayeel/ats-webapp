@@ -5,8 +5,9 @@ import ubuntu from "./assets/fonts/Ubuntu-Regular.ttf";
 import { FaArrowRight, FaPlus, FaLocationArrow } from "react-icons/fa";
 import { GoKebabVertical } from "react-icons/go";
 import { IoIosDocument } from "react-icons/io";
+import { FaTimes } from "react-icons/fa";
 import { VscTypeHierarchySuper } from "react-icons/vsc";
-import { MdWork } from "react-icons/md";
+import { MdWork, MdDelete } from "react-icons/md";
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -194,7 +195,7 @@ export const Button = styled.button`
   border: none;
   border-radius: 4px;
   color: #fff;
-  background-color: ${(props) => props.btnColor};
+  background-color: ${(props) => (props.disabled ? "#ccc" : props.btnColor)};
   padding: 0.7rem 1rem;
   margin: 1rem 0;
   min-width: max-content;
@@ -225,6 +226,7 @@ export const LargeButton = styled.button`
   justify-content: center;
   width: 100%;
   font-size: 14px;
+  margin: 1rem 0;
   font-weight: 500;
   letter-spacing: 1px;
   background-color: ${(props) => props.theme.colors.atsBlue};
@@ -274,6 +276,20 @@ export const LocationIcon = styled(FaLocationArrow)`
 `;
 export const ExperienceIcon = styled(MdWork)`
   width: 36px;
+  color: #6c6c6c;
+`;
+export const CloseIcon = styled(FaTimes)`
+  width: 36px;
+  color: #6c6c6c;
+  &:hover{
+    cursor: pointer;
+    color: black;
+  }
+`;
+export const DeleteIcon = styled(MdDelete)`
+  width: 16px;
+  height: 16px;
+
   color: #6c6c6c;
 `;
 export const IconContainer = styled(CenterFlexContainer)`

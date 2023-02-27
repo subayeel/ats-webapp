@@ -42,8 +42,8 @@ function JobCreation() {
   const [formData, setFormData] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
-      jobTitle: "",
-      location: "",
+      firstName: "",
+      lastName: "",
       department: "",
       isRemote: false,
       jobDesc: "",
