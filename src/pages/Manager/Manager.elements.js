@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { BorderedGridContainer, GridContainer } from "../../Global";
 
 //Jobs Section
 
@@ -65,4 +66,20 @@ export const TileDesc = styled.p`
   }
 `;
 
+export const KanbanContainer = styled(GridContainer)`
+  margin: 4px, 4px;
+  padding: 4px;
 
+  /* width: 2000px; */
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+`;
+
+export const KanbanColumn = styled(BorderedGridContainer)`
+  width: 300px;
+`;
+
+export const KanbanJobCard = styled(BorderedGridContainer)`
+  background-color: #ccc;
+`;
