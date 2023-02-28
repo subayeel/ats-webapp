@@ -50,7 +50,7 @@ function AddJob() {
         <GridContainer width="100%" columns="1fr 1fr 1fr">
           {addJobFlowTiles.map(AddJobTile)}
         </GridContainer>
-        <HeaderLine />
+        <HeaderLine margin="1rem 0" />
         <br></br>
         <Outlet />
       </CardContainer>

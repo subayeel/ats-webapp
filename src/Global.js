@@ -170,7 +170,7 @@ export const Heading3 = styled.h3`
   font-weight: 500;
   font-size: 22px;
   width: ${(props) => props.width};
-
+  margin: 0 0 1rem 0;
   color: #6c6c6c;
 `;
 
@@ -281,7 +281,7 @@ export const ExperienceIcon = styled(MdWork)`
 export const CloseIcon = styled(FaTimes)`
   width: 36px;
   color: #6c6c6c;
-  &:hover{
+  &:hover {
     cursor: pointer;
     color: black;
   }
@@ -301,4 +301,14 @@ export const DocIcon = styled(IoIosDocument)`
   height: 36px;
 
   color: ${(props) => props.theme.colors.atsGreen};
+`;
+export const HScrollWrapper = styled.div`
+  width: 100%;
+  overflow: auto;
+  white-space: nowrap;
+
+  > div {
+    display: inline-block;
+    margin: 0;
+  }
 `;

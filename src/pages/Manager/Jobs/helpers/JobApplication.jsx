@@ -124,181 +124,187 @@ function JobApplication() {
   }
 
   return (
-    <GridContainer align="start" width="100%" columns="2fr 3fr">
-      <AddScreeningQuestionModal setIsOpen={setIsOpen} open={modalIsOpen} />
-      <BorderedGridContainer align="flex-start">
-        <Heading3>Suggested Fields</Heading3>
-        <HeaderLine margin="0" />
-        <JobTitleText style={{ margin: "1rem 0" }}>
-          For Personal Information
-        </JobTitleText>
-        <Container>
-          {jobApplicationFields.map((field) => {
-            return (
-              <JobFieldsEnabler
-                {...field}
-                setFormData={setFormData}
-                formData={formData}
-              />
-            );
-          })}
-        </Container>
-        <BorderedGridContainer>
-          <NoData text="No Questions Added" />
-          <LargeButton onClick={openQuestionModal}>
-            <AddIcon />
-            Add Question
-          </LargeButton>
+    <>
+      <GridContainer align="start" width="100%" columns="2fr 3fr">
+        <AddScreeningQuestionModal setIsOpen={setIsOpen} open={modalIsOpen} />
+        <BorderedGridContainer align="flex-start">
+          <Heading3>Suggested Fields</Heading3>
+          <HeaderLine margin="0" />
+          <JobTitleText style={{ margin: "1rem 0" }}>
+            For Personal Information
+          </JobTitleText>
+          <Container>
+            {jobApplicationFields.map((field) => {
+              return (
+                <JobFieldsEnabler
+                  {...field}
+                  setFormData={setFormData}
+                  formData={formData}
+                />
+              );
+            })}
+          </Container>
+          <BorderedGridContainer>
+            <NoData text="No Questions Added" />
+            <LargeButton onClick={openQuestionModal}>
+              <AddIcon />
+              Add Question
+            </LargeButton>
+          </BorderedGridContainer>
         </BorderedGridContainer>
-      </BorderedGridContainer>
-      <BorderedContainer align="flex-start">
-        <Heading3>Application Form Preview</Heading3>
-        <HeaderLine margin="0" />
+        <BorderedContainer align="flex-start">
+          <Heading3>Application Form Preview</Heading3>
+          <HeaderLine margin="0" />
 
-        <SampleJobCard
-          jobTitle="Sample"
-          department="Administrator"
-          remote={true}
-          experience="0 to 1"
-        />
-        <HeaderLine margin="1rem 0" />
-        <FormHeader
-          headingTitle="For Personal Information"
-          onClear={clearPersonalForm}
-        />
-        <HeaderLine margin="1rem 0" />
-        <GridContainer
-          width="100%"
-          columns="repeat(auto-fill,minmax(250px,1fr))"
-        >
-          <TextField
-            fullWidth
-            label="First Name"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleFormDataChange}
+          <SampleJobCard
+            jobTitle="Sample"
+            department="Administrator"
+            remote={true}
+            experience="0 to 1"
           />
-          <TextField
-            label="Last Name"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleFormDataChange}
+          <HeaderLine margin="1rem 0" />
+          <FormHeader
+            headingTitle="For Personal Information"
+            onClear={clearPersonalForm}
           />
-        </GridContainer>
-
-        <TextField
-          margin="dense"
-          fullWidth
-          label="Email"
-          name="email"
-          value={formData.email}
-          onChange={handleFormDataChange}
-        />
-
-        <GridContainer
-          width="100%"
-          columns="repeat(auto-fill,minmax(250px,1fr))"
-        >
-          <TextField
-            fullWidth
-            label="Enter Contact Phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleFormDataChange}
-          />
-          <TextField
-            label="Select Date of Birth"
-            name="dob"
-            value={formData.dob}
-            onChange={handleFormDataChange}
-          />
-        </GridContainer>
-        <FormControl margin="dense">
-          <JobSmallText id="demo-radio-buttons-group-label">
-            Gender
-          </JobSmallText>
-          <RadioGroup
-            row
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="male"
-            name="gender"
-            onChange={handleFormDataChange}
+          <HeaderLine margin="1rem 0" />
+          <GridContainer
+            width="100%"
+            columns="repeat(auto-fill,minmax(250px,1fr))"
           >
-            <FormControlLabel value="male" control={<Radio />} label="Male" />
-            <FormControlLabel
-              value="female"
-              control={<Radio />}
-              label="Female"
+            <TextField
+              fullWidth
+              label="First Name"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleFormDataChange}
             />
-            <FormControlLabel
-              value="preferNotToSay"
-              control={<Radio />}
-              label="Prefer not to say"
+            <TextField
+              label="Last Name"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleFormDataChange}
             />
-          </RadioGroup>
-        </FormControl>
-        <GridContainer columns="2fr 1fr">
+          </GridContainer>
+
           <TextField
             margin="dense"
             fullWidth
-            multiple
-            label="Address"
-            name="address"
-            value={formData.address}
+            label="Email"
+            name="email"
+            value={formData.email}
             onChange={handleFormDataChange}
           />
-          <TextField
-            margin="dense"
-            label="Post Code"
-            name="postCode"
-            value={formData.postCode}
-            onChange={handleFormDataChange}
+
+          <GridContainer
+            width="100%"
+            columns="repeat(auto-fill,minmax(250px,1fr))"
+          >
+            <TextField
+              fullWidth
+              label="Enter Contact Phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleFormDataChange}
+            />
+            <TextField
+              label="Select Date of Birth"
+              name="dob"
+              value={formData.dob}
+              onChange={handleFormDataChange}
+            />
+          </GridContainer>
+          <FormControl margin="dense">
+            <JobSmallText id="demo-radio-buttons-group-label">
+              Gender
+            </JobSmallText>
+            <RadioGroup
+              row
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue="male"
+              name="gender"
+              onChange={handleFormDataChange}
+            >
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
+              <FormControlLabel
+                value="female"
+                control={<Radio />}
+                label="Female"
+              />
+              <FormControlLabel
+                value="preferNotToSay"
+                control={<Radio />}
+                label="Prefer not to say"
+              />
+            </RadioGroup>
+          </FormControl>
+          <GridContainer columns="2fr 1fr">
+            <TextField
+              margin="dense"
+              fullWidth
+              multiple
+              label="Address"
+              name="address"
+              value={formData.address}
+              onChange={handleFormDataChange}
+            />
+            <TextField
+              margin="dense"
+              label="Post Code"
+              name="postCode"
+              value={formData.postCode}
+              onChange={handleFormDataChange}
+            />
+          </GridContainer>
+          <GridContainer width="100%" columns="1fr 1fr">
+            <FormControl margin="dense">
+              <InputLabel id="state-select-label">Select State</InputLabel>
+              <Select
+                labelId="state-select-label"
+                id="demo-simple-select"
+                name="state"
+                value={formData.state}
+                label="Select State"
+                onChange={handleFormDataChange}
+              >
+                {indianStates.map((state) => {
+                  return <MenuItem value={state}>{state}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+            <FormControl margin="dense">
+              <InputLabel id="city-select-label">Select City</InputLabel>
+              <Select
+                labelId="city-select-label"
+                id="demo-simple-select"
+                name="city"
+                value={formData.city}
+                label="Select City"
+                disabled={cities.length === 0}
+                onChange={handleFormDataChange}
+              >
+                {cities.map((city) => {
+                  return <MenuItem value={city}>{city}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+          </GridContainer>
+          <JobSmallText>Photo</JobSmallText>
+          <ImageUploader handleImageUpload={handleImageUpload} />
+          <HeaderLine margin="1rem 0" />
+          <FormHeader
+            headingTitle="Screening Questions"
+            onClear={clearScreeningQuestions}
           />
-        </GridContainer>
-        <GridContainer width="100%" columns="1fr 1fr">
-          <FormControl margin="dense">
-            <InputLabel id="state-select-label">Select State</InputLabel>
-            <Select
-              labelId="state-select-label"
-              id="demo-simple-select"
-              name="state"
-              value={formData.state}
-              label="Select State"
-              onChange={handleFormDataChange}
-            >
-              {indianStates.map((state) => {
-                return <MenuItem value={state}>{state}</MenuItem>;
-              })}
-            </Select>
-          </FormControl>
-          <FormControl margin="dense">
-            <InputLabel id="city-select-label">Select City</InputLabel>
-            <Select
-              labelId="city-select-label"
-              id="demo-simple-select"
-              name="city"
-              value={formData.city}
-              label="Select City"
-              disabled={cities.length === 0}
-              onChange={handleFormDataChange}
-            >
-              {cities.map((city) => {
-                return <MenuItem value={city}>{city}</MenuItem>;
-              })}
-            </Select>
-          </FormControl>
-        </GridContainer>
-        <JobSmallText>Photo</JobSmallText>
-        <ImageUploader handleImageUpload={handleImageUpload} />
-        <HeaderLine margin="1rem 0" />
-        <FormHeader
-          headingTitle="Screening Questions"
-          onClear={clearScreeningQuestions}
-        />
-        <HeaderLine margin="1rem 0" />
-        {/* TO DO: Add logic to render screening questions */}
-      </BorderedContainer>
-    </GridContainer>
+          <HeaderLine margin="1rem 0" />
+          {/* TO DO: Add logic to render screening questions */}
+        </BorderedContainer>
+      </GridContainer>
+      <GridContainer columns="180px 180px" justify="space-between" width="100%">
+        <TextButton>Previous Page</TextButton>
+        <Button btnColor={(props) => props.theme.colors.atsGreen}>Submit</Button>
+      </GridContainer>
+    </>
   );
 }
 

@@ -1,5 +1,9 @@
 import styled from "styled-components";
-import { BorderedGridContainer, GridContainer } from "../../Global";
+import {
+  BorderedGridContainer,
+  CenterFlexContainer,
+  Container,
+} from "../../Global";
 
 //Jobs Section
 
@@ -66,20 +70,42 @@ export const TileDesc = styled.p`
   }
 `;
 
-export const KanbanContainer = styled(GridContainer)`
-  margin: 4px, 4px;
-  padding: 4px;
+export const KanbanContainer = styled.div`
+  display: flex;
 
-  /* width: 2000px; */
-  overflow-x: auto;
-  overflow-y: hidden;
+  width: 100%;
+  overflow: auto;
   white-space: nowrap;
+
+  > div {
+    display: inline-block;
+    margin: 0;
+  }
 `;
 
-export const KanbanColumn = styled(BorderedGridContainer)`
-  width: 300px;
+export const KanbanColumn = styled(Container)`
+  min-width: 300px;
+  height: 500px;
+  justify-content: flex-start;
+  overflow: auto;
+  padding: 1rem 0;
+  border-radius: 4px;
 `;
 
-export const KanbanJobCard = styled(BorderedGridContainer)`
-  background-color: #ccc;
+export const KanbanCard = styled.div`
+  padding: 1rem;
+  margin: 0 1rem;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  grid-template-columns: 1fr 40px;
+  grid-template-rows: 2fr 1fr;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24);
+`;
+export const SkillTile = styled(CenterFlexContainer)`
+  background-color: #cbcbcb;
+  color: #6c6c6c;
+  margin: 0 0.2rem 0 0;
+  padding: 0.2rem 0.5rem;
+  font-size: 12px;
+  border-radius: 4px;
 `;
