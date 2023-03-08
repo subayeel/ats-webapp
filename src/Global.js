@@ -29,6 +29,7 @@ export const CenterFlexContainer = styled.div`
   justify-content: ${(props) => (props.justify ? props.justify : "center")};
   align-items: ${(props) => (props.align ? props.align : "center")};
   width: ${(props) => (props.width ? props.width : "auto")};
+  height: ${(props) => (props.height ? props.height : "auto")};
 `;
 export const Container = styled(CenterFlexContainer)`
   flex-direction: column;
@@ -74,7 +75,7 @@ export const BorderedGridContainer = styled(GridContainer)`
 export const CardContainer = styled(CenterFlexContainer)`
   flex-wrap: wrap;
   flex: 1;
-  margin: 0;
+  margin: 1rem 0;
   padding: 1.8rem;
   justify-content: flex-start;
   align-items: flex-start;
@@ -287,10 +288,14 @@ export const CloseIcon = styled(FaTimes)`
   }
 `;
 export const DeleteIcon = styled(MdDelete)`
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
 
   color: #6c6c6c;
+  &:hover {
+    cursor: pointer;
+    color: red;
+  }
 `;
 export const IconContainer = styled(CenterFlexContainer)`
   color: #ccc;
@@ -311,4 +316,32 @@ export const HScrollWrapper = styled.div`
     display: inline-block;
     margin: 0;
   }
+`;
+
+export const StyledTable = styled.table`
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  min-width: 400px;
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  & > thead > tr {
+    background-color: ${(props) => props.theme.colors.atsBlue};
+    color: #ffffff;
+    text-align: left;
+  }
+  & > thead > tr > th {
+    padding: 0.7rem 1rem;
+  }
+  td {
+    padding: 12px 15px;
+  }
+`;
+
+export const SquaredImageContainer = styled(CenterFlexContainer)`
+  aspect-ratio: 1/1;
+  border: 1px solid #bbb;
+  border-radius: 4px;
 `;

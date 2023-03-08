@@ -93,7 +93,7 @@ function Jobs() {
   return (
     <MainContainer>
       <GridContainer align="flex-start" columns="1fr 3fr">
-        <CardContainer style={{ position: "sticky", top: "84px" }}>
+        <CardContainer  style={{ position: "sticky", top: "84px" }}>
           <LargeButton onClick={() => navigate("/manager/jobs/add/creation")}>
             <AddIcon />
             Add New Job

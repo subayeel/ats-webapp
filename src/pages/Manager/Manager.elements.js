@@ -15,6 +15,9 @@ export const JobCardContainer = styled.div`
   background-color: #fff;
   border-radius: 4px;
   padding: 1rem;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const JobStatusText = styled.p`
@@ -30,6 +33,10 @@ export const JobTitleText = styled.p`
   letter-spacing: 1px;
   width: 100%;
   color: ${(props) => props.theme.colors.atsBlue};
+  &:hover {
+    cursor: pointer;
+    color: ${(props) => props.theme.colors.atsGreen};
+  }
 `;
 export const JobSubTitle = styled.p`
   margin: 0;
@@ -104,7 +111,7 @@ export const KanbanCard = styled.div`
 export const SkillTile = styled(CenterFlexContainer)`
   background-color: #cbcbcb;
   color: #6c6c6c;
-  margin: 0 0.2rem 0 0;
+  margin: 0.5rem 0.5rem 0 0;
   padding: 0.2rem 0.5rem;
   font-size: 12px;
   border-radius: 4px;

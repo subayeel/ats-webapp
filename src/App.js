@@ -19,6 +19,8 @@ import Mailbox from "./pages/Manager/Mailbox/Mailbox";
 import JobCreation from "./pages/Manager/Jobs/helpers/JobCreation";
 import JobApplication from "./pages/Manager/Jobs/helpers/JobApplication";
 import HiringFlow from "./pages/Manager/Jobs/helpers/HiringFlow";
+import JobDetails from "./pages/Manager/Jobs/helpers/JobDetails";
+import CandidateProfile from "./pages/Manager/Jobs/Candidate/CandidateProfile";
 
 function App() {
   const theme = {
@@ -48,6 +50,14 @@ function App() {
               <Route path="/manager/dashboard" element={<Dashboard />} />
               <Route path="/manager/interviews" element={<Interviews />} />
               <Route path="/manager/jobs" element={<Jobs />}></Route>
+              <Route
+                path="/manager/jobs/:jobId"
+                element={<JobDetails />}
+              ></Route>
+              <Route
+                path="/manager/jobs/:jobId/candidate/:candidateId"
+                element={<CandidateProfile />}
+              ></Route>
               <Route path="/manager/jobs/add" element={<AddJob />}>
                 <Route
                   path="/manager/jobs/add/creation"

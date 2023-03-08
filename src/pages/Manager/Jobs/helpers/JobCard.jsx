@@ -3,7 +3,9 @@ import {
   CenterFlexContainer,
   Container,
   GridContainer,
+  Heading2,
   KebabMenuIcon,
+  StyledTable,
   TextButton,
   VerticalLine,
 } from "../../../../Global";
@@ -19,7 +21,10 @@ import { AiOutlinePushpin } from "react-icons/ai";
 
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button";
+import { Button } from "../../../../Global";
+import ReactModal from "react-modal";
+import PublishRow from "./PublishRow";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function JobCard({
   jobStatus,
@@ -31,7 +36,11 @@ function JobCard({
   activeCandidateCount,
   jobId,
 }) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [publishModal, setPublishModal] = useState(false);
+  const [isGoogle, setGoogle] = useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -39,8 +48,76 @@ function JobCard({
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handlePublish = () => {
+    setPublishModal(true);
+  };
+
+  const publishdata = [
+    {
+      isSelected: false,
+
+      boardName: "Google",
+      pricing: "10$",
+      candidatesApplied: "12",
+      isPublished: false,
+    },
+    {
+      isSelected: false,
+
+      boardName: "LinkedIn",
+      pricing: "free",
+      candidatesApplied: "12",
+      isPublished: false,
+    },
+    {
+      isSelected: false,
+
+      boardName: "Free Jobs Page",
+      pricing: "free",
+      candidatesApplied: "12",
+      isPublished: false,
+    },
+    {
+      isSelected: true,
+      boardName: "Google",
+      pricing: "10$",
+      candidatesApplied: "12",
+      isPublished: false,
+    },
+  ];
   return (
     <JobCardContainer>
+      <ReactModal
+        isOpen={publishModal}
+        onRequestClose={() => setPublishModal(false)}
+        style={{
+          content: {
+            width: "60%",
+            height: "60%",
+            margin: "auto",
+            padding: "0 2rem",
+          },
+        }}
+      >
+        <Heading2>Publish Job</Heading2>
+        <JobSubTitle>Choose where you want the Job to show up</JobSubTitle>
+        <StyledTable>
+          <thead>
+            <tr>
+              <th>Job Board Name</th>
+              <th>Type</th>
+              <th>Candidates Applied</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {publishdata.map((pd) => {
+              return <PublishRow {...pd} />;
+            })}
+          </tbody>
+        </StyledTable>
+      </ReactModal>
       <CenterFlexContainer justify="flex-start">
         <AiOutlinePushpin />
         <JobStatusText textColor={jobStatus === "closed" ? "red" : "green"}>
@@ -49,7 +126,9 @@ function JobCard({
       </CenterFlexContainer>
       <CenterFlexContainer justify="space-between">
         <div>
-          <JobTitleText>{jobTitle}</JobTitleText>
+          <JobTitleText onClick={() => navigate(`/manager/jobs/${jobId}`)}>
+            {jobTitle}
+          </JobTitleText>
           <JobSubTitle>
             {jobCategory} &nbsp;&#x2022; &nbsp;{jobType} &nbsp; &#x2022; &nbsp;{" "}
             {jobPosition}
@@ -95,12 +174,13 @@ function JobCard({
           <JobTitleText>{jobId}</JobTitleText>
         </Container>
       </GridContainer>
-      <CenterFlexContainer justify="flex-start">
+      <CenterFlexContainer justify="space-between">
         {jobStatus === "closed" ? (
           <Button btnColor="#007d11">Reopen Job</Button>
         ) : (
           <Button btnColor="#96000d">Close Job</Button>
         )}
+        <TextButton onClick={handlePublish}>Publish</TextButton>
       </CenterFlexContainer>
     </JobCardContainer>
   );
