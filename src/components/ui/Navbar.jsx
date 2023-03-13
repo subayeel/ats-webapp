@@ -1,22 +1,45 @@
 import React from "react";
 import { Header, Nav } from "../../Global";
-import { NavLinks } from "./ui.elements";
+import { NavLinks, NavAnchor } from "./ui.elements";
 import logo from "../../assets/images/ats-logo.png";
 import { TextField, Badge } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  var currentPath = location.pathname.split("/");
   return (
     <Header>
       <Nav columns="50px 1fr  24px">
         <img width="36px" src={logo}></img>
         <NavLinks>
-          <Link to="/manager/dashboard">Dashboard</Link>
-          <Link to="/manager/jobs">Jobs</Link>
-          <Link to="/manager/interviews">Interviews</Link>
+          <NavAnchor
+            active={currentPath.includes("dashboard")}
+            onClick={() => navigate("/manager/dashboard")}
+          >
+            Dashboard
+          </NavAnchor>
+          <NavAnchor
+            active={currentPath.includes("jobs")}
+            onClick={() => navigate("/manager/jobs")}
+          >
+            Jobs
+          </NavAnchor>
+          <NavAnchor
+            active={currentPath.includes("interviews")}
+            onClick={() => navigate("/manager/interviews")}
+          >
+            Interviews
+          </NavAnchor>
           {/* <Link to="/manager/mailbox">Mailbox</Link> */}
-          <Link to="/manager/reports/overview">Reports</Link>
+          <NavAnchor
+            active={currentPath.includes("overview")}
+            onClick={() => navigate("/manager/reports/overview")}
+          >
+            Reports
+          </NavAnchor>
         </NavLinks>
 
         {/* <Badge badgeContent={4} color="primary">

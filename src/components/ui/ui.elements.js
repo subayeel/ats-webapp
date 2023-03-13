@@ -6,7 +6,6 @@ export const NavLinks = styled.ul`
   display: flex;
   justify-content: flex-end;
   & > a {
-    color: ${(props) => props.theme.colors.atsBlue};
     text-decoration: none;
     display: inline;
     font-size: 18px;
@@ -18,4 +17,9 @@ export const NavLinks = styled.ul`
     color: ${(props) => props.theme.colors.atsGreen};
     /* background-color: rgba(0, 0, 0, 0.05); */
   }
+`;
+
+export const NavAnchor = styled.a`
+  color: ${(props) =>
+    props.active ? props.theme.colors.atsGreen : props.theme.colors.atsBlue};
 `;

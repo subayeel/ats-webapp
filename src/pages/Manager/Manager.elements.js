@@ -131,3 +131,12 @@ export const MenuRowContainer = styled(GridContainer)`
     color: ${(props) => props.theme.colors.atsGreen};
   }
 `;
+
+export const ReportCardContainer = styled(Container)`
+  aspect-ratio: 1/1;
+  align-items: flex-start;
+  max-width: 180px;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #fff;
+`;

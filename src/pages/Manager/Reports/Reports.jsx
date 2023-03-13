@@ -2,6 +2,7 @@ import React from "react";
 import {
   CardContainer,
   CardHeader,
+  CardHeading,
   CenterFlexContainer,
   Container,
   GridContainer,
@@ -50,13 +51,17 @@ function Reports() {
             <MenuRow {...m} />
           ))}
         </CardContainer>
-        <GridContainer align="flex-start" width="100%" rows="100px 1fr">
+        <GridContainer
+          align="flex-start"
+          width="100%"
+          columns="1fr"
+          rows="100px 1fr"
+        >
           <CardContainer>
-            <CardHeader>All Time</CardHeader>
+            <CardHeading>All Time</CardHeading>
           </CardContainer>
-          <CardContainer>
-            <Outlet />
-          </CardContainer>
+
+          <Outlet />
         </GridContainer>
       </GridContainer>
     </MainContainer>
