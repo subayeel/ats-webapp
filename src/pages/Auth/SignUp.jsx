@@ -20,8 +20,6 @@ import {
   CenterFlexContainer,
 } from "../../Global";
 
-//icons
-import { FaPlus } from "react-icons/fa";
 //data
 import { managerJobTitles } from "../../data/manageOptions";
 function SignUp() {

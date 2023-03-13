@@ -93,7 +93,7 @@ function Jobs() {
   return (
     <MainContainer>
       <GridContainer align="flex-start" columns="1fr 3fr">
-        <CardContainer  style={{ position: "sticky", top: "84px" }}>
+        <CardContainer  style={{ position: "sticky", top: "100px" ,height:"75vh" }}>
           <LargeButton onClick={() => navigate("/manager/jobs/add/creation")}>
             <AddIcon />
             Add New Job
@@ -164,7 +164,7 @@ function Jobs() {
             </Select>
           </FormControl>
         </CardContainer>
-        <GridContainer align="start" columns="1fr" rows="80px 1fr">
+        <GridContainer gap="1rem" align="start" columns="1fr" rows="100px 1fr">
           <CardContainer>
             <CardHeading>Jobs(2)</CardHeading>
           </CardContainer>

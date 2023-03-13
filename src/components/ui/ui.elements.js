@@ -16,6 +16,6 @@ export const NavLinks = styled.ul`
   & > a:hover {
     cursor: pointer;
     color: ${(props) => props.theme.colors.atsGreen};
-    background-color: rgba(0, 0, 0, 0.05);
+    /* background-color: rgba(0, 0, 0, 0.05); */
   }
 `;

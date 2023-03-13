@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Button,
   CardContainer,
@@ -33,7 +33,7 @@ const candidateData = {
 
 const CandidateProfile = () => {
   const { jobId, candidateId } = useParams(); //get data using candidateId
-
+  const navigate = useNavigate();
   return (
     <MainContainer>
       <CardContainer>
@@ -64,7 +64,15 @@ const CandidateProfile = () => {
               <JobSubTitle>{candidateData.status}</JobSubTitle>
             </Container>
             <GridContainer columns="2fr 1fr 1fr">
-              <Button style={{ margin: "0" }} btnColor="lightblue">
+              <Button
+                onClick={() =>
+                  navigate(
+                    `/manager/jobs/${jobId}/candidate/${candidateId}/interview`
+                  )
+                }
+                style={{ margin: "0" }}
+                btnColor="lightblue"
+              >
                 Schedule Interview
               </Button>
               <Button style={{ margin: "0" }} btnColor="lightgreen">

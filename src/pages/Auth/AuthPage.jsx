@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 
 //Components
@@ -16,9 +16,22 @@ import {
   LightText,
 } from "../../Global";
 
+//RTK Query
+
 import { BorderNavBtn, SmallText } from "./Auth.elements";
+import { useLoginMutation } from "../../api/endpoints/loginEndpoint";
 
 function AuthPage() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [login, { isLoading: isLoginLoading, error: loginError }] =
+    useLoginMutation();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login({ username, password });
+  };
   return (
     <>
       <AuthNavbar />

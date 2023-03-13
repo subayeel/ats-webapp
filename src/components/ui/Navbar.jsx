@@ -15,13 +15,13 @@ function Navbar() {
           <Link to="/manager/dashboard">Dashboard</Link>
           <Link to="/manager/jobs">Jobs</Link>
           <Link to="/manager/interviews">Interviews</Link>
-          <Link to="/manager/mailbox">Mailbox</Link>
-          <Link to="/manager/reports">Reports</Link>
+          {/* <Link to="/manager/mailbox">Mailbox</Link> */}
+          <Link to="/manager/reports/overview">Reports</Link>
         </NavLinks>
 
-        <Badge badgeContent={4} color="primary">
+        {/* <Badge badgeContent={4} color="primary">
           <MailIcon color="action" />
-        </Badge>
+        </Badge> */}
       </Nav>
     </Header>
   );

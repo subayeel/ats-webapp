@@ -3,6 +3,7 @@ import {
   BorderedGridContainer,
   CenterFlexContainer,
   Container,
+  GridContainer,
 } from "../../Global";
 
 //Jobs Section
@@ -115,4 +116,18 @@ export const SkillTile = styled(CenterFlexContainer)`
   padding: 0.2rem 0.5rem;
   font-size: 12px;
   border-radius: 4px;
+`;
+
+export const MenuRowContainer = styled(GridContainer)`
+  padding: 1.5rem 1rem;
+  border-radius: 4px;
+  transition: 0.2s ease-in-out;
+  color: ${(props) =>
+    props.active ? props.theme.colors.atsGreen : props.theme.colors.atsBlue};
+  background-color: ${(props) => (props.active ? "#eee" : "")};
+  &:hover {
+    cursor: pointer;
+    background-color: #eee;
+    color: ${(props) => props.theme.colors.atsGreen};
+  }
 `;

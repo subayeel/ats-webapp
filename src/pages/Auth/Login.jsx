@@ -9,12 +9,15 @@ import {
   Container,
   GridContainer,
 } from "../../Global";
-import axios from "../../api/axiosApi";
+import { useLoginMutation } from "../../api/endpoints/loginEndpoint";
+
 function Login() {
+  const [login, { isLoading, error: loginError, isError }] = useLoginMutation();
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  function handlePhoneSubmit() {
+
+  async function handlePhoneSubmit() {
     if (!phone) {
       setError("Please enter your Phone Number");
       return;
@@ -26,6 +29,11 @@ function Login() {
       return;
     }
     //create send otp api call
+    try {
+      await login({phone_number:phone});
+    } catch (err) {
+      console.log(err);
+    }
   }
   return (
     <CardContainer>

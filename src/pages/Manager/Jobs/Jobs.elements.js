@@ -43,7 +43,7 @@ export const TabsNav = styled.ul`
     border-bottom-left-radius: 2rem;
     border-top-left-radius: 2rem;
   }
-  li:nth-child(6) {
+  li:nth-child(4) {
     border-radius: 0;
     border-bottom-right-radius: 2rem;
     border-top-right-radius: 2rem;
