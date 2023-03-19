@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
   font-family: 'Ubuntu';
+  box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: ${(props) => props.theme.colors.fillColor};
@@ -148,8 +149,8 @@ export const Nav = styled.nav`
   align-items: center;
   grid-template-columns: ${(props) => props.columns};
   grid-template-rows: ${(props) => props.rows};
-  max-width: 1280px;
-  margin: auto;
+
+  margin: 0 2rem;
 `;
 
 export const Heading = styled.h1`
@@ -171,7 +172,7 @@ export const Heading3 = styled.h3`
   font-weight: 500;
   font-size: 22px;
   width: ${(props) => props.width};
-  margin: 0 0 1rem 0;
+  margin: 1rem 0;
   color: #6c6c6c;
 `;
 
@@ -257,6 +258,9 @@ export const SquaredIconContainer = styled(CenterFlexContainer)`
 export const AddIcon = styled(FaPlus)`
   width: 36px;
   color: inherit;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 export const KebabMenuIcon = styled(GoKebabVertical)`
   width: 36px;

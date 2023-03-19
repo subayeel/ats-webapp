@@ -51,7 +51,7 @@ export const JobSmallText = styled.p`
   margin: 0;
   font-weight: 400;
   font-size: 14px;
-  width: 100%;
+  
   color: #6c6c6c;
 `;
 

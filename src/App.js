@@ -6,7 +6,6 @@ import { GlobalStyle } from "./Global";
 //Auth Components
 import AuthPage from "./pages/Auth/AuthPage";
 import Login from "./pages/Auth/Login";
-import SignUp from "./pages/Auth/SignUp";
 
 //Manager Components
 import ManagerPage from "./pages/Manager/ManagerPage";
@@ -29,6 +28,12 @@ import CandidateReport from "./pages/Manager/Reports/helpers/CandidateReport";
 import JobsReport from "./pages/Manager/Reports/helpers/JobsReport";
 import TeamReport from "./pages/Manager/Reports/helpers/TeamReport";
 
+//Candidate Components
+import CandidateDashboard from "./pages/Candidate/Dashboard/Candidatedashboard";
+import CandidateJobDetails from "./pages/Candidate/Jobs/JobDetail";
+import CandidatePage from "./pages/Candidate/CandidatePage";
+import ManagerSignup from "./pages/Auth/Manager/ManagerSignup";
+import CandidateSignup from "./pages/Auth/Candidate/CandidateSignup";
 function App() {
   const theme = {
     colors: {
@@ -50,7 +55,11 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/auth" element={<AuthPage />}>
               <Route path="/auth/login" element={<Login />} />
-              <Route path="/auth/signup" element={<SignUp />} />
+              <Route path="/auth/signup/manager" element={<ManagerSignup />} />
+              <Route
+                path="/auth/signup/candidate"
+                element={<CandidateSignup />}
+              />
             </Route>
           </Routes>
           {/* Manager Routes */}
@@ -104,6 +113,24 @@ function App() {
                   element={<TeamReport />}
                 ></Route>
               </Route>
+            </Route>
+          </Routes>
+
+          {/* Candidate Routes */}
+          <Routes>
+            <Route path="/candidate" element={<CandidatePage />}>
+              <Route
+                path="/candidate/:candidateId"
+                element={<CandidateDashboard></CandidateDashboard>}
+              ></Route>
+              <Route
+                path="/candidate/jobs/:jobId"
+                element={<CandidateJobDetails />}
+              ></Route>
+              <Route
+                path="/candidate/jobs/:jobId/apply"
+                element={<CandidateJobDetails />}
+              ></Route>
             </Route>
           </Routes>
         </Router>

@@ -35,7 +35,7 @@ function JobCreation() {
   const [error, setError] = useState("");
   const [skills, setSkills] = useState([]);
   const [education, setEducation] = useState([]);
-
+  console.log(education);
   const [formData, setFormData] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {

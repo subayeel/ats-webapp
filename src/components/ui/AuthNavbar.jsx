@@ -1,12 +1,12 @@
 import React from "react";
-import logo from "../../../assets/images/ats-logo.png";
-import { Header, Nav } from "../../../Global";
-import { NavText, BorderNavBtn } from "../Auth.elements";
+import logo from "../../assets/images/ats-logo.png";
+import { Header, Nav } from "../../Global";
+import { NavText, BorderNavBtn } from "../../pages/Auth/Auth.elements";
 function AuthNavbar() {
   return (
     <Header>
-      <Nav columns="80px 1fr 200px 200px">
-        <img width="60px" src={logo}></img>
+      <Nav columns="80px 1fr 100px 180px">
+        <img width="40px" src={logo}></img>
         <div></div>
         <NavText>Need Help?</NavText>
         <BorderNavBtn btnColor={(props) => props.theme.colors.atsBlue}>

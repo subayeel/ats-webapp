@@ -10,6 +10,7 @@ import {
   JobSmallText,
   SkillTile,
   TileDesc,
+  JobTitleText,
 } from "../../Manager.elements";
 import {
   Button,
@@ -29,80 +30,104 @@ import {
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import { StrictModeDroppable as Droppable } from "../../../../utils/StrictModeDroppable";
 import { SmallText } from "../../../Auth/Auth.elements";
-//get it from api
-const jobDetails = {
+
+//get details from api using id in params
+const jobsApiData = {
+  job_title: "React Developer",
+  department: "IT",
+  location: "Banglore Karnataka",
+  remote: true,
+  job_desc: {
+    desc: "We are seeking a skilled React Developer to join our dynamic development team. As a React Developer, you will be responsible for developing and implementing user interface components using React.js concepts and workflows such as Redux, Flux, and Webpack. You should have experience in building reusable components and front-end libraries for future use, and you will collaborate with the team to define and implement innovative solutions for the product direction, visuals, and experience.",
+    responsibilities: [
+      "Develop new user-facing features using React.js",
+      "Build reusable components and front-end libraries for future use",
+      "Collaborate with other team members and stakeholders to define, design, and implement innovative solutions for the product direction, visuals, and experience",
+      "Ensure the technical feasibility of UI/UX designs",
+      "Optimize applications for maximum speed and scalability",
+      "Develop and maintain code quality, organization, and automation",
+      "Work with the design and product teams to understand end-user requirements and use cases, and translate them into technical specifications and requirements",
+      "Stay up-to-date with emerging trends and technologies in front-end development",
+    ],
+    requirements: [
+      "Strong proficiency in JavaScript, including DOM manipulation and the JavaScript object model",
+      "Thorough understanding of React.js and its core principles",
+      "Experience with popular React.js workflows (such as Redux, Flux, and Webpack)",
+      "Experience with data structure libraries (e.g., Immutable.js)",
+      "Familiarity with RESTful APIs",
+      "Knowledge of modern authorization mechanisms, such as JSON Web Token",
+      "Familiarity with modern front-end build pipelines and tools",
+      "Experience with common front-end development tools, such as Babel, Webpack, NPM, etc.",
+      "Ability to understand business requirements and translate them into technical requirements",
+      "Excellent problem-solving skills and ability to debug complex issues",
+      "Passion for developing high-quality, maintainable, and scalable code",
+      "Strong organizational and time-management skills",
+      "Bachelor's degree in Computer Science or a related field, or equivalent work experience],",
+    ],
+  },
+  employment_type: "Full-Time",
+
+  seniority_level: "Junior Developer", //Junior Developer.Mid Level Developer.Senior Developer.
+  industry_type: "Technology",
+  salary_range: {
+    ctc_min: 4.5,
+    ctc_max: 7,
+    currency: "Rupees",
+  },
+  work_experience: {
+    min_years: 2,
+  },
+  skills: ["HTML", "CSS", "JS", "Redux", "Axios"],
+  education: "Bachelor's Degree",
+  openings: 32,
   candidates: [
     {
-      id: "223",
-      name: "Rahul Naik",
-      email: "abc@gmail.com",
-      isFresher: true,
-      title: "React Developer",
-      experience: "0",
-      status: "contacted",
-      package: "4.5CTC",
+      _id: 1,
+      status: "source",
     },
     {
-      id: "121",
-      title: "Nodejs Developer",
-      name: "Rahul Naik",
-      email: "abc@gmail.com",
-      isFresher: false,
-      experience: "4",
-
-      status: "rejected",
-      package: "2.5CTC",
+      _id: 2,
+      status: "source",
     },
     {
-      id: "1233221",
-      title: "App developer",
-      name: "Rahul Naik",
-      email: "abc@gmail.com",
-      isFresher: false,
-
-      experience: "2",
-      status: "applied",
-      package: "3.5CTC",
+      _id: 3,
+      status: "source",
+    },
+    {
+      _id: 4,
+      status: "source",
+    },
+    {
+      _id: 5,
+      status: "source",
     },
   ],
-  jobTitle: "React Developer",
-  jobStatus: "open",
-  jobDesc:
-    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?",
-  jobCreatehDate: "9th March 2022",
 };
-//data to get from backend
-const data = [
-  { id: 1, name: "Subayeel", title: "developer", experience: "3" },
-  { id: 2, name: "vcxcvxcv", title: "ddddddddd", experience: "1" },
-  { id: 3, name: "Suvxcvxcvbayeel", title: "developer", experience: "2" },
-  { id: 4, name: "ewrwe", title: "App dev", experience: "3" },
-];
 
 const columnsFromBackend = {
   [uuid()]: {
     name: "Source",
-    items: jobDetails.candidates.filter((c) => c.status === "source"),
+    items: jobsApiData.candidates.filter((c) => c.status === "source"),
   },
   [uuid()]: {
     name: "Applied",
-    items: jobDetails.candidates.filter((c) => c.status === "applied"),
+    items: jobsApiData.candidates.filter((c) => c.status === "applied"),
   },
   [uuid()]: {
     name: "Contacted",
-    items: jobDetails.candidates.filter((c) => c.status === "contacted"),
+    items: jobsApiData.candidates.filter((c) => c.status === "contacted"),
   },
   [uuid()]: {
     name: "Interview",
-    items: jobDetails.candidates.filter((c) => c.status === "interview"),
+    items: jobsApiData.candidates.filter((c) => c.status === "interview"),
   },
   [uuid()]: {
     name: "Hired",
-    items: jobDetails.candidates.filter((c) => c.status === "hired"),
+    items: jobsApiData.candidates.filter((c) => c.status === "hired"),
   },
   [uuid()]: {
     name: "Rejected",
-    items: jobDetails.candidates.filter((c) => c.status === "rejected"),
+    items: jobsApiData.candidates.filter((c) => c.status === "rejected"),
   },
 };
 
@@ -147,45 +172,77 @@ const JobDetails = () => {
     <>
       <MainContainer>
         <CardContainer style={{ margin: "1rem 0" }}>
-          <TileHeading>{jobDetails.jobTitle}</TileHeading>
+          <TileHeading>{jobsApiData.job_title}</TileHeading>
         </CardContainer>
 
         <CardContainer>
-          <GridContainer align="stretch" width="100%" columns="1fr 1fr">
+          <GridContainer align="flex-start" width="100%" columns="1fr 1fr">
             <BorderedContainer align="flex-start" justify="flex-start">
               <Heading2>About Job</Heading2>
-              <small>{jobDetails.jobCreatehDate}</small>
-              <TileDesc>{jobDetails.jobDesc}</TileDesc>
+              <GridContainer columns="1fr 1fr 1fr" width="100%">
+                <Container align="flex-start">
+                  <JobTitleText>Location:</JobTitleText>
+                  <small>{jobsApiData.location}</small>
+                </Container>
+                <Container align="flex-start">
+                  <JobTitleText>Job Type:</JobTitleText>
+                  <small>{jobsApiData.remote ? "Remote" : "Office"}</small>
+                </Container>
+                <Container align="flex-start">
+                  <JobTitleText>Employment Type:</JobTitleText>
+                  <small>{jobsApiData.employment_type}</small>
+                </Container>
+              </GridContainer>
+              <br></br>
+              <GridContainer columns="1fr 1fr 1fr" width="100%">
+                <Container align="flex-start">
+                  <JobTitleText>Package Range:</JobTitleText>
+                  <CenterFlexContainer>
+                    <small>
+                      {jobsApiData.salary_range.ctc_min}-
+                      {jobsApiData.salary_range.ctc_max} LPA{" "}
+                      {jobsApiData.salary_range.currency}
+                    </small>
+                  </CenterFlexContainer>
+                </Container>
+                <Container align="flex-start">
+                  <JobTitleText>Seniority Level:</JobTitleText>
+                  <small>{jobsApiData.seniority_level}</small>
+                </Container>
+                <Container align="flex-start">
+                  <JobTitleText>Required Work Experience:</JobTitleText>
+                  <small>{jobsApiData.work_experience.min_years} Years</small>
+                </Container>
+              </GridContainer>
+
+              <JobTitleText>Required Skills</JobTitleText>
+              <CenterFlexContainer>
+                {jobsApiData.skills.map((skill) => (
+                  <SkillTile>{skill}</SkillTile>
+                ))}
+              </CenterFlexContainer>
+              <br></br>
             </BorderedContainer>
             <BorderedContainer align="flex-start">
-              <Heading2>Candidates Suggestd by ZanHire </Heading2>
-              <GridContainer
-                width="100%"
-                justify="flex-start"
-                style={{ height: "300px", overflow: "auto" }}
-              >
-                {jobDetails.candidates.map((candidate) => {
-                  return (
-                    <BorderedGridContainer
-                      width="100%"
-                      style={{ margin: "0.2rem", padding: "0 1rem" }}
-                      columns="4fr 1fr"
-                    >
-                      <SmallText>{candidate.name}</SmallText>
-                      <Button
-                        btnColor={(props) => props.theme.colors.atsBlue}
-                        onClick={() =>
-                          navigate(
-                            `/manager/jobs/${jobId}/candidate/${candidate.id}`
-                          )
-                        }
-                      >
-                        View
-                      </Button>
-                    </BorderedGridContainer>
-                  );
-                })}
-              </GridContainer>
+              <Heading2>Job Description</Heading2>
+              <JobSmallText>{jobsApiData.job_desc.desc}</JobSmallText>
+              <br></br>
+              <JobTitleText>Key responsibilities:</JobTitleText>
+              <JobSmallText>
+                <ul>
+                  {jobsApiData.job_desc.requirements.map((req) => (
+                    <li>{req}</li>
+                  ))}
+                </ul>
+              </JobSmallText>
+              <JobTitleText>Requirements:</JobTitleText>
+              <JobSmallText>
+                <ul>
+                  {jobsApiData.job_desc.requirements.map((req) => (
+                    <li>{req}</li>
+                  ))}
+                </ul>
+              </JobSmallText>
             </BorderedContainer>
           </GridContainer>
           <div style={{ width: "1200px", margin: "2rem 0" }}>

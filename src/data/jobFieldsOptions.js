@@ -117,6 +117,25 @@ export const answerTypes = [
   "File Upload",
   "URL",
 ];
+
+export const jobPositions = [
+  "Software Engineer",
+  "Project Manager",
+  "Marketing Specialist",
+  "Sales Representative",
+  "Human Resources Manager",
+  "Accountant",
+  "Business Analyst",
+  "Graphic Designer",
+  "Customer Service Representative",
+  "Operations Manager",
+  "Data Analyst",
+  "Financial Analyst",
+  "Content Writer",
+  "IT Support Specialist",
+  "Product Manager",
+];
+
 // export const jobsDepartments = [
 //   "Network administrator",
 //   "UX Designer jobs",

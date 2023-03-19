@@ -6,7 +6,7 @@ import { TextField, Badge } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-function Navbar() {
+function ManagerNavbar() {
   const navigate = useNavigate();
   const location = useLocation();
   var currentPath = location.pathname.split("/");
@@ -50,4 +50,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default ManagerNavbar;

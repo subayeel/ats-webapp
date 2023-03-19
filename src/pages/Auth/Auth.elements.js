@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const NavText = styled.h2`
   font-weight: 500;
-  font-size: 28px;
-  margin: 0.7rem;
+  font-size: 18px;
+  margin: 0.2rem;
   color: ${(props) => props.theme.colors.atsBlue};
 `;
 
@@ -13,7 +13,7 @@ export const BorderNavBtn = styled.button`
   color: ${(props) => props.btnColor};
   background-color: #fff;
   padding: 0.7rem 1rem;
-  height: 48px;
+
   transition: 0.2s ease-in-out;
   &:hover {
     cursor: pointer;
