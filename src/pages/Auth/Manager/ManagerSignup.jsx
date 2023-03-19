@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState, useEffect } from "react";
 import {
   TextField,
   Select,
   MenuItem,
   InputLabel,
   FormControl,
-  Modal,
   Checkbox,
   OutlinedInput,
   ListItemText,
+  Input,
 } from "@mui/material";
 
 import {
@@ -32,11 +32,10 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 //data
-import { managerJobTitles } from "../../../data/manageOptions";
+import { indianCities, indianStates } from "../../../data/indianStateCities";
 import { educationSet, jobPositions } from "../../../data/jobFieldsOptions";
 import ReactModal from "react-modal";
-import { DateTimeField } from "@mui/x-date-pickers";
-import { SatelliteAlt } from "@mui/icons-material";
+
 import { JobSmallText, JobTitleText } from "../../Manager/Manager.elements";
 import moment from "moment/moment";
 
@@ -45,6 +44,16 @@ const customStyle = {
   content: {
     width: "max-content",
     height: "max-content",
+    margin: "auto",
+  },
+  overlay: {
+    zIndex: 999,
+  },
+};
+const companyModalStyle = {
+  content: {
+    width: "90vw",
+    height: "90vh",
     margin: "auto",
   },
   overlay: {
@@ -71,6 +80,23 @@ function ManagerSignup() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEnddDate] = useState("");
 
+  //new company modal states
+  const [nCName, setNCName] = useState("");
+  const [nCWebsite, setNCWebsite] = useState("");
+  const [nCLogo, setNCLogo] = useState("");
+  const [nCStreetAddress, setNCStreetAddress] = useState("");
+
+  const [nCCity, setNCCity] = useState("");
+  const [nCState, setNCState] = useState("");
+
+  const [nCCountry, setNCCountry] = useState("");
+  const [cities, setCities] = useState([]);
+
+  const [nCStructure, setNCStructure] = useState("");
+  const [nCActivities, setNCActivities] = useState([]);
+  const [nCTaxIdNumber, setNCTaxIdNumber] = useState("");
+  const [nCOwners, setNCOwners] = useState([]);
+
   const ACTION = {
     fullName: "handleName",
     email: "handleEmail",
@@ -81,6 +107,8 @@ function ManagerSignup() {
     streetAddress: "handleStreetAddress",
     workExperience: "handleWorkExperience",
     currentCompany: "handleCurrentCompany",
+    employeeIdNum: "handelEmployeeIdNum",
+    employeeIdImage: "handleEmployeeIdImage",
   };
 
   const reducer = (state, action) => {
@@ -126,7 +154,17 @@ function ManagerSignup() {
       case ACTION.currentCompany:
         return {
           ...state,
-          workExperience: [...state.currentCompany, action.payload],
+          currentCompany: action.payload,
+        };
+      case ACTION.employeeIdNum:
+        return {
+          ...state,
+          employeeIdNum: action.payload,
+        };
+      case ACTION.employeeIdImage:
+        return {
+          ...state,
+          employeeIdImage: action.payload,
         };
     }
   };
@@ -142,7 +180,7 @@ function ManagerSignup() {
     },
     qualifications: [],
     workExperience: [],
-    employeeId: "",
+    employeeIdNum: "",
     employeeIdImage: "Binary",
 
     identificationDocument: {
@@ -158,8 +196,8 @@ function ManagerSignup() {
       openness: "",
       conscientiousness: "",
       extroversion: "",
-      agreeableness: Number,
-      neuroticism: Number,
+      agreeableness: "",
+      neuroticism: "",
     },
   });
 
@@ -204,8 +242,12 @@ function ManagerSignup() {
     // setCompanyName("");
   }
   // console.log(state);
-  var day = moment("Wed Mar 01 2023 00:00:00 GMT+0530 (India Standard Time)");
-  console.log(day.format());
+  useEffect(() => {
+    if (nCState != "") {
+      setCities(indianCities[indianStates.indexOf(nCState) + 1].split("|"));
+    }
+  }, [nCState]);
+  console.log(state);
   return (
     <MainContainer>
       {/* Work experience Modal */}
@@ -271,17 +313,100 @@ function ManagerSignup() {
           </Button>
         </GridContainer>
       </ReactModal>
+
+      {/* Modal to register New Company */}
+      <ReactModal
+        isOpen={companyModal}
+        onRequestClose={() => setCompanyModal(false)}
+        style={companyModalStyle}
+      >
+        <Heading2>Registering Company</Heading2>
+        <GridContainer width="100%" columns="1fr 1fr">
+          <BorderedGridContainer columns="1fr" justify="flex-start">
+            <Heading3>Company Details</Heading3>
+            <TextField
+              name="firstName"
+              value={nCName}
+              onChange={(e) => setNCName(e.target.value)}
+              id="outlined-basic"
+              label="Company Name"
+              variant="outlined"
+            ></TextField>
+            <TextField
+              name="firstName"
+              value={nCWebsite}
+              onChange={(e) => setNCWebsite(e.target.value)}
+              id="outlined-basic"
+              label="Company Website"
+              variant="outlined"
+            ></TextField>
+            <Container align="flex-start">
+              <small>Upload Company Logo:</small>
+              <Input
+                labelId="id-label-job-title"
+                type="file"
+                onChange={(e) => setNCLogo(e.target.value)}
+                id="outlined-basic"
+                variant="outlined"
+              ></Input>
+            </Container>
+            <Heading3>Address</Heading3>
+            <TextField
+              value={nCStreetAddress}
+              onChange={(e) => setNCStreetAddress(e.target.value)}
+              id="outlined-basic"
+              label="Street Address"
+              variant="outlined"
+            ></TextField>
+
+            <GridContainer width="100%" columns="1fr 1fr">
+              <FormControl margin="dense">
+                <InputLabel id="state-select-label">Select State</InputLabel>
+                <Select
+                  labelId="state-select-label"
+                  id="demo-simple-select"
+                  value={nCState}
+                  label="Select State"
+                  onChange={(e) => setNCState(e.target.value)}
+                >
+                  {indianStates.map((state) => {
+                    return <MenuItem value={state}>{state}</MenuItem>;
+                  })}
+                </Select>
+              </FormControl>
+              <FormControl margin="dense">
+                <InputLabel id="city-select-label">Select City</InputLabel>
+                <Select
+                  labelId="city-select-label"
+                  id="demo-simple-select"
+                  name="city"
+                  value={nCCity}
+                  label="Select City"
+                  disabled={cities.length === 0}
+                  onChange={(e) => setNCCity(e.target.value)}
+                >
+                  {cities.map((city) => {
+                    return <MenuItem value={city}>{city}</MenuItem>;
+                  })}
+                </Select>
+              </FormControl>
+            </GridContainer>
+
+            <TextField
+              helperText="The product is available in India Only"
+              value="India"
+              id="outlined-basic"
+              label="Country"
+              variant="outlined"
+              disabled
+            ></TextField>
+          </BorderedGridContainer>
+          <BorderedGridContainer columns="1fr" justify="flex-start">
+            <Heading3>Verification Details</Heading3>
+          </BorderedGridContainer>
+        </GridContainer>
+      </ReactModal>
       <CardContainer>
-        <Modal
-          open={companyModal}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <CardContainer>
-            <h1>This is Modal</h1>
-          </CardContainer>
-        </Modal>
         <Heading2 width="100%">Signing up as Hiring Manager</Heading2>
         <GridContainer align="flex-start" width="100%" columns="1fr 1fr">
           <BorderedGridContainer justify="flex-start" columns="1fr">
@@ -336,12 +461,12 @@ function ManagerSignup() {
             <TextField
               error={error}
               helperText={error}
-              value={state.contactInformation.email}
+              value={state.contactInformation.phone}
               onChange={(e) =>
                 dispatch({ type: ACTION.phone, payload: e.target.value })
               }
               id="outlined-basic"
-              label="Phone"
+              label="Email"
               variant="outlined"
             ></TextField>
             <TextField
@@ -384,9 +509,42 @@ function ManagerSignup() {
               </GridContainer>
             )}
           </BorderedGridContainer>
-          <BorderedGridContainer justify="flex-start">
+          <BorderedGridContainer columns="1fr" justify="flex-start">
             <Heading3>Verification Fields</Heading3>
-            <GridContainer columns="1fr 56px">
+            <TextField
+              error={error}
+              helperText={error}
+              value={state.employeeIdNum}
+              onChange={(e) =>
+                dispatch({
+                  type: ACTION.employeeIdNum,
+                  payload: e.target.value,
+                })
+              }
+              id="outlined-basic"
+              label="Employee Id Number"
+              variant="outlined"
+            ></TextField>
+            <Container align="flex-start">
+              <small>Upload Employee Image:</small>
+              <Input
+                labelId="id-label-job-title"
+                type="file"
+                error={error}
+                helperText={error}
+                onChange={(e) =>
+                  dispatch({
+                    type: ACTION.employeeIdImage,
+                    payload: e.target.value,
+                  })
+                }
+                id="outlined-basic"
+                placeholder="Employee Id "
+                variant="outlined"
+              ></Input>
+            </Container>
+
+            <GridContainer columns="1fr 56px" width="100%">
               <FormControl>
                 <InputLabel id="select-label-job-title">
                   Company Name

@@ -86,7 +86,9 @@ function JobApplication() {
 
   useEffect(() => {
     if (formData.state != "") {
-      setCities(indianCities[indianStates.indexOf(formData.state)].split("|"));
+      setCities(
+        indianCities[indianStates.indexOf(formData.state) + 1].split("|")
+      );
     }
   }, [formData.state]);
 
@@ -302,7 +304,9 @@ function JobApplication() {
       </GridContainer>
       <GridContainer columns="180px 180px" justify="space-between" width="100%">
         <TextButton>Previous Page</TextButton>
-        <Button btnColor={(props) => props.theme.colors.atsGreen}>Submit</Button>
+        <Button btnColor={(props) => props.theme.colors.atsGreen}>
+          Submit
+        </Button>
       </GridContainer>
     </>
   );

@@ -16,3 +16,20 @@ export const managerJobTitles = [
   "Information Technology Manager",
   "General Manager",
 ];
+export const businessActivities = [
+  "Marketing and advertising",
+  "Sales",
+  "Accounting and bookkeeping",
+  "Human resources",
+  "Research and development",
+  "Customer service",
+  "Production and manufacturing",
+  "Supply chain management",
+  "Administration",
+  "Information technology",
+  "Legal services",
+  "Logistics and transportation",
+  "Consulting",
+  "Risk management",
+  "Strategic planning",
+];
