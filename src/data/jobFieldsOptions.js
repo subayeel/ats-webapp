@@ -136,6 +136,18 @@ export const jobPositions = [
   "Product Manager",
 ];
 
+export const businessStructureList = [
+  "Sole proprietorship",
+  "Partnership",
+  "Limited liability company (LLC)",
+  "Corporation - C corp",
+  "Corporation - S corp",
+  "Corporation - B corp",
+  "Close corporation",
+  "Nonprofit corporation",
+  "Cooperative",
+];
+export const businessctivitiesList = ["Operating", "Investing", "Financing"];
 // export const jobsDepartments = [
 //   "Network administrator",
 //   "UX Designer jobs",

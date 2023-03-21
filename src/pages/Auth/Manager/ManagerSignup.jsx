@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import React, { useReducer, useState, useEffect } from "react";
 import {
   TextField,
@@ -25,6 +24,7 @@ import {
   Heading3,
   CenterFlexContainer,
   Container,
+  CardHeading,
 } from "../../../Global";
 
 //date
@@ -33,7 +33,12 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 //data
 import { indianCities, indianStates } from "../../../data/indianStateCities";
-import { educationSet, jobPositions } from "../../../data/jobFieldsOptions";
+import {
+  educationSet,
+  jobPositions,
+  businessStructureList,
+  businessctivitiesList,
+} from "../../../data/jobFieldsOptions";
 import ReactModal from "react-modal";
 
 import { JobSmallText, JobTitleText } from "../../Manager/Manager.elements";
@@ -73,6 +78,7 @@ function ManagerSignup() {
   const [success, setSuccess] = useState("");
   const [qualification, setQualification] = useState([]);
   const [isaddingExp, setIsAddingExp] = useState(false);
+  const [ownerModal, setOwnerModal] = useState(false);
 
   //work exp. modal states
   const [companyName, setCompanyName] = useState("");
@@ -95,7 +101,13 @@ function ManagerSignup() {
   const [nCStructure, setNCStructure] = useState("");
   const [nCActivities, setNCActivities] = useState([]);
   const [nCTaxIdNumber, setNCTaxIdNumber] = useState("");
+  const [nCParentCompany, setNCParentCompany] = useState("");
   const [nCOwners, setNCOwners] = useState([]);
+
+  //Owner Modal states
+  const [ownerName, setOwnerName] = useState("");
+  const [ownerEmail, setOwnerEmail] = useState("");
+  const [ownershipPercentage, setOwnershipPercentage] = useState("");
 
   const ACTION = {
     fullName: "handleName",
@@ -241,7 +253,18 @@ function ManagerSignup() {
     // setPosition("");
     // setCompanyName("");
   }
-  // console.log(state);
+
+  function handleAddOwner() {
+    setNCOwners((owners) => [
+      ...owners,
+      {
+        name: ownerName,
+        email: ownerEmail,
+        percentageOwnership: ownershipPercentage,
+      },
+    ]);
+  }
+
   useEffect(() => {
     if (nCState != "") {
       setCities(indianCities[indianStates.indexOf(nCState) + 1].split("|"));
@@ -259,9 +282,6 @@ function ManagerSignup() {
         <Heading3>Add Work Experience:</Heading3>
         <GridContainer>
           <TextField
-            error={error}
-            helperText={error}
-            name="firstName"
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
             id="outlined-basic"
@@ -285,8 +305,6 @@ function ManagerSignup() {
           </FormControl>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateTimePicker
-              error={error}
-              helperText={error}
               value={startDate}
               onChange={(newValue) => setStartDate(newValue)}
               id="outlined-basic"
@@ -296,8 +314,6 @@ function ManagerSignup() {
           </LocalizationProvider>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateTimePicker
-              error={error}
-              helperText={error}
               value={endDate}
               onChange={(newValue) => setEnddDate(newValue)}
               id="outlined-basic"
@@ -320,12 +336,47 @@ function ManagerSignup() {
         onRequestClose={() => setCompanyModal(false)}
         style={companyModalStyle}
       >
+        <ReactModal
+          isOpen={ownerModal}
+          onRequestClose={() => setOwnerModal(false)}
+          style={customStyle}
+        >
+          <Heading3>Adding Owner</Heading3>
+          <GridContainer>
+            <TextField
+              value={ownerName}
+              onChange={(e) => setOwnerName(e.target.value)}
+              id="outlined-basic"
+              label="Owner Name"
+              variant="outlined"
+            ></TextField>
+            <TextField
+              value={ownerEmail}
+              onChange={(e) => setOwnerEmail(e.target.value)}
+              id="outlined-basic"
+              label="Owner Email"
+              variant="outlined"
+            ></TextField>
+            <TextField
+              value={ownershipPercentage}
+              onChange={(e) => setOwnershipPercentage(e.target.value)}
+              id="outlined-basic"
+              label="Owner Percentage"
+              variant="outlined"
+            ></TextField>
+            <Button
+              onClick={handleAddOwner}
+              btnColor={(props) => props.theme.colors.atsGreen}
+            >
+              Add Owner
+            </Button>
+          </GridContainer>
+        </ReactModal>
         <Heading2>Registering Company</Heading2>
-        <GridContainer width="100%" columns="1fr 1fr">
+        <GridContainer align="flex-start" width="100%" columns="1fr 1fr">
           <BorderedGridContainer columns="1fr" justify="flex-start">
             <Heading3>Company Details</Heading3>
             <TextField
-              name="firstName"
               value={nCName}
               onChange={(e) => setNCName(e.target.value)}
               id="outlined-basic"
@@ -333,7 +384,6 @@ function ManagerSignup() {
               variant="outlined"
             ></TextField>
             <TextField
-              name="firstName"
               value={nCWebsite}
               onChange={(e) => setNCWebsite(e.target.value)}
               id="outlined-basic"
@@ -401,9 +451,86 @@ function ManagerSignup() {
               disabled
             ></TextField>
           </BorderedGridContainer>
-          <BorderedGridContainer columns="1fr" justify="flex-start">
-            <Heading3>Verification Details</Heading3>
-          </BorderedGridContainer>
+          <GridContainer columns="1fr">
+            <BorderedGridContainer columns="1fr" justify="flex-start">
+              <Heading3>Verification Details</Heading3>
+              <FormControl margin="dense">
+                <InputLabel id="nCStructure-select-label">
+                  Select Business Structure
+                </InputLabel>
+                <Select
+                  labelId="nCStructure-select-label"
+                  id="demo-simple-select"
+                  value={nCStructure}
+                  label="Select Business Structure"
+                  onChange={(e) => setNCStructure(e.target.value)}
+                >
+                  {businessStructureList.map((bStrct) => {
+                    return <MenuItem value={bStrct}>{bStrct}</MenuItem>;
+                  })}
+                </Select>
+              </FormControl>
+              <FormControl margin="dense">
+                <InputLabel id="nCStructure-select-label">
+                  Select Business Activities
+                </InputLabel>
+                <Select
+                  labelId="nCStructure-select-label"
+                  id="demo-simple-select"
+                  value={nCActivities}
+                  label="Select Business Activities"
+                  onChange={(e) => setNCActivities(e.target.value)}
+                >
+                  {businessctivitiesList.map((bStrct) => {
+                    return <MenuItem value={bStrct}>{bStrct}</MenuItem>;
+                  })}
+                </Select>
+              </FormControl>
+              <TextField
+                value={nCTaxIdNumber}
+                onChange={(e) => setNCTaxIdNumber(e.target.value)}
+                id="outlined-basic"
+                label="Tax Identification Number"
+                variant="outlined"
+              ></TextField>
+              <TextField
+                value={nCParentCompany}
+                onChange={(e) => setNCParentCompany(e.target.value)}
+                id="outlined-basic"
+                label="Parent Company"
+                variant="outlined"
+              ></TextField>
+
+              <br></br>
+            </BorderedGridContainer>
+            <BorderedGridContainer columns="1fr" justify="flex-start">
+              <GridContainer columns="1fr 50px">
+                <Heading3>Company Owners</Heading3>
+                <AddIcon onClick={() => setOwnerModal(true)} />
+              </GridContainer>
+              {nCOwners.length < 1 && (
+                <Container width="100%">
+                  <JobSmallText>No Comapany Owners added</JobSmallText>
+                  <Button
+                    btnColor={(props) => props.theme.colors.atsBlue}
+                    onClick={() => setOwnerModal(true)}
+                  >
+                    Add
+                  </Button>
+                </Container>
+              )}
+              {nCOwners.map((owner) => (
+                <BorderedGridContainer columns="1fr 30px">
+                  <Container align="flex-start">
+                    <JobTitleText>{owner.name}</JobTitleText>
+                    <LightText>{owner.name}</LightText>
+                  </Container>
+                  <CardHeading>{owner.percentageOwnership}</CardHeading>
+                </BorderedGridContainer>
+              ))}
+              <br></br>
+            </BorderedGridContainer>
+          </GridContainer>
         </GridContainer>
       </ReactModal>
       <CardContainer>
@@ -412,9 +539,6 @@ function ManagerSignup() {
           <BorderedGridContainer justify="flex-start" columns="1fr">
             <Heading3>Personal Inforamtion</Heading3>
             <TextField
-              error={error}
-              helperText={error}
-              name="firstName"
               value={state.fullName}
               onChange={(e) =>
                 dispatch({ type: ACTION.fullName, payload: e.target.value })
@@ -448,8 +572,6 @@ function ManagerSignup() {
             <Heading3>Contact Information</Heading3>
 
             <TextField
-              error={error}
-              helperText={error}
               value={state.contactInformation.email}
               onChange={(e) =>
                 dispatch({ type: ACTION.email, payload: e.target.value })
@@ -459,19 +581,15 @@ function ManagerSignup() {
               variant="outlined"
             ></TextField>
             <TextField
-              error={error}
-              helperText={error}
               value={state.contactInformation.phone}
               onChange={(e) =>
                 dispatch({ type: ACTION.phone, payload: e.target.value })
               }
               id="outlined-basic"
-              label="Email"
+              label="Phone"
               variant="outlined"
             ></TextField>
             <TextField
-              error={error}
-              helperText={error}
               value={state.contactInformation.streetAddress}
               onChange={(e) =>
                 dispatch({
@@ -480,7 +598,7 @@ function ManagerSignup() {
                 })
               }
               id="outlined-basic"
-              label="Phone"
+              label="Address"
               variant="outlined"
             ></TextField>
             <br></br>
@@ -508,12 +626,11 @@ function ManagerSignup() {
                 ))}
               </GridContainer>
             )}
+            <br></br>
           </BorderedGridContainer>
           <BorderedGridContainer columns="1fr" justify="flex-start">
             <Heading3>Verification Fields</Heading3>
             <TextField
-              error={error}
-              helperText={error}
               value={state.employeeIdNum}
               onChange={(e) =>
                 dispatch({
@@ -551,8 +668,6 @@ function ManagerSignup() {
                 </InputLabel>
                 <Select
                   labelId="select-label-job-title"
-                  id="demo-simple-select"
-                  name="companyName"
                   value={state.currentCompany}
                   onChange={(e) =>
                     dispatch({
@@ -570,53 +685,11 @@ function ManagerSignup() {
               <SquaredIconContainer onClick={handleOpen}>
                 <AddIcon />
               </SquaredIconContainer>
+              <br></br>
             </GridContainer>
           </BorderedGridContainer>
-
-          {/* 
-          <FormControl>
-            <InputLabel id="demo-simple-select-label">Job Title</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              name="jobTitle"
-              value={formData.companyName}
-              onChange={handleFormDataChange}
-              label="Job Title"
-            >
-              {managerJobTitles.map((title) => (
-                <MenuItem value={title}>{title}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          
-
-          <TextField
-            error={error}
-            helperText={error}
-            type="tel"
-            name="employeeCount"
-            value={formData.employeeCount}
-            onChange={handleFormDataChange}
-            id="outlined-basic"
-            label="No. of Employees"
-            variant="outlined"
-          ></TextField>
-          <TextField
-            error={error}
-            helperText={error}
-            type="tel"
-            name="linkedinProfile"
-            value={formData.linkedinProfile}
-            onChange={handleFormDataChange}
-            id="outlined-basic"
-            label="Linkedin Profile"
-            variant="outlined"
-          ></TextField> */}
         </GridContainer>
-        {/* <LightText width="100%">
-          Already registerd? &nbsp;<Link to="/auth/login">Login</Link>
-        </LightText> */}
+
         <GridContainer width="100%" justify="flex-end">
           <Button
             btnColor={(props) => props.theme.colors.atsGreen}
