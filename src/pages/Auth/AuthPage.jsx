@@ -14,6 +14,7 @@ import {
   BtnWrap,
   Button,
   LightText,
+  ScreenContainer,
 } from "../../Global";
 
 //RTK Query

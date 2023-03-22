@@ -42,7 +42,9 @@ import {
 import ReactModal from "react-modal";
 
 import { JobSmallText, JobTitleText } from "../../Manager/Manager.elements";
-import moment from "moment/moment";
+
+//COmponents
+import ExpTile from "../helpers/ExpTile";
 
 //contants
 const customStyle = {
@@ -622,7 +624,7 @@ function ManagerSignup() {
             ) : (
               <GridContainer justify="flex-start" width="100%">
                 {state.workExperience.map((wExp) => (
-                  <ExpTitle {...wExp}></ExpTitle>
+                  <ExpTile {...wExp}></ExpTile>
                 ))}
               </GridContainer>
             )}
@@ -704,27 +706,3 @@ function ManagerSignup() {
 }
 
 export default ManagerSignup;
-
-function ExpTitle({ companyName, position, startDate, endDate }) {
-  console.log(startDate);
-  return (
-    <BorderedGridContainer
-      style={{ margin: "2px 0" }}
-      columns="1fr 100px 100px"
-      width="100%"
-    >
-      <Container align="flex-start">
-        <JobTitleText>{position}</JobTitleText>
-        <LightText>{companyName}</LightText>
-      </Container>
-      <Container align="flex-start">
-        <LightText>From:</LightText>
-        <JobSmallText>{moment(startDate).format("DD/MM/YYYY")}</JobSmallText>
-      </Container>
-      <Container align="flex-start">
-        <LightText>To:</LightText>
-        <JobSmallText>{moment(endDate).format("DD/MM/YYYY")}</JobSmallText>
-      </Container>
-    </BorderedGridContainer>
-  );
-}

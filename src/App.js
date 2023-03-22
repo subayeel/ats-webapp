@@ -34,6 +34,16 @@ import CandidateJobDetails from "./pages/Candidate/Jobs/JobDetail";
 import CandidatePage from "./pages/Candidate/CandidatePage";
 import ManagerSignup from "./pages/Auth/Manager/ManagerSignup";
 import CandidateSignup from "./pages/Auth/Candidate/CandidateSignup";
+
+//Authentication
+import RequireAuth from "./pages/Auth/RequireAuth";
+import PersistLogin from "./pages/Auth/PersistLogin";
+const ROLES = {
+  User: 2001,
+  Editor: 1984,
+  Admin: 5150,
+};
+
 function App() {
   const theme = {
     colors: {
@@ -52,85 +62,89 @@ function App() {
           {/* Auth Routes */}
 
           <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/auth" element={<AuthPage />}>
-              <Route path="/auth/login" element={<Login />} />
-              <Route path="/auth/signup/manager" element={<ManagerSignup />} />
-              <Route
-                path="/auth/signup/candidate"
-                element={<CandidateSignup />}
-              />
-            </Route>
-          </Routes>
-          {/* Manager Routes */}
-          <Routes>
-            <Route path="/manager" element={<ManagerPage />}>
-              <Route path="/manager/dashboard" element={<Dashboard />} />
-              <Route path="/manager/interviews" element={<Interviews />} />
-              <Route path="/manager/jobs" element={<Jobs />}></Route>
-              <Route
-                path="/manager/jobs/:jobId"
-                element={<JobDetails />}
-              ></Route>
-              <Route
-                path="/manager/jobs/:jobId/candidate/:candidateId"
-                element={<CandidateProfile />}
-              ></Route>
-              <Route
-                path="/manager/jobs/:jobId/candidate/:candidateId/interview"
-                element={<ScheduleInterview />}
-              ></Route>
-              <Route path="/manager/jobs/add" element={<AddJob />}>
+            <Route element={<PersistLogin />}>
+              <Route path="/" element={<Login />} />
+              <Route path="/auth" element={<AuthPage />}>
+                <Route path="/auth/login" element={<Login />} />
                 <Route
-                  path="/manager/jobs/add/creation"
-                  element={<JobCreation />}
-                ></Route>
+                  path="/auth/signup/manager"
+                  element={<ManagerSignup />}
+                />
                 <Route
-                  path="/manager/jobs/add/application"
-                  element={<JobApplication />}
-                ></Route>
-                <Route
-                  path="/manager/jobs/add/hiringflow"
-                  element={<HiringFlow />}
-                ></Route>
+                  path="/auth/signup/candidate"
+                  element={<CandidateSignup />}
+                />
               </Route>
-              <Route path="/manager/mailbox" element={<Mailbox />} />
-              <Route path="/manager/reports" element={<Reports />}>
-                <Route
-                  path="/manager/reports/overview"
-                  element={<Overview />}
-                ></Route>
-                <Route
-                  path="/manager/reports/jobs"
-                  element={<JobsReport />}
-                ></Route>
-                <Route
-                  path="/manager/reports/candidates"
-                  element={<CandidateReport />}
-                ></Route>
-                <Route
-                  path="/manager/reports/team"
-                  element={<TeamReport />}
-                ></Route>
-              </Route>
-            </Route>
-          </Routes>
 
-          {/* Candidate Routes */}
-          <Routes>
-            <Route path="/candidate" element={<CandidatePage />}>
-              <Route
-                path="/candidate/:candidateId"
-                element={<CandidateDashboard></CandidateDashboard>}
-              ></Route>
-              <Route
-                path="/candidate/jobs/:jobId"
-                element={<CandidateJobDetails />}
-              ></Route>
-              <Route
-                path="/candidate/jobs/:jobId/apply"
-                element={<CandidateJobDetails />}
-              ></Route>
+              {/* Manager Routes */}
+
+              <Route path="/manager" element={<ManagerPage />}>
+                <Route path="/manager/dashboard" element={<Dashboard />} />
+                <Route path="/manager/interviews" element={<Interviews />} />
+                <Route path="/manager/jobs" element={<Jobs />}></Route>
+                <Route
+                  path="/manager/jobs/:jobId"
+                  element={<JobDetails />}
+                ></Route>
+                <Route
+                  path="/manager/jobs/:jobId/candidate/:candidateId"
+                  element={<CandidateProfile />}
+                ></Route>
+                <Route
+                  path="/manager/jobs/:jobId/candidate/:candidateId/interview"
+                  element={<ScheduleInterview />}
+                ></Route>
+                <Route path="/manager/jobs/add" element={<AddJob />}>
+                  <Route
+                    path="/manager/jobs/add/creation"
+                    element={<JobCreation />}
+                  ></Route>
+                  <Route
+                    path="/manager/jobs/add/application"
+                    element={<JobApplication />}
+                  ></Route>
+                  <Route
+                    path="/manager/jobs/add/hiringflow"
+                    element={<HiringFlow />}
+                  ></Route>
+                </Route>
+                <Route path="/manager/mailbox" element={<Mailbox />} />
+                <Route path="/manager/reports" element={<Reports />}>
+                  <Route
+                    path="/manager/reports/overview"
+                    element={<Overview />}
+                  ></Route>
+                  <Route
+                    path="/manager/reports/jobs"
+                    element={<JobsReport />}
+                  ></Route>
+                  <Route
+                    path="/manager/reports/candidates"
+                    element={<CandidateReport />}
+                  ></Route>
+                  <Route
+                    path="/manager/reports/team"
+                    element={<TeamReport />}
+                  ></Route>
+                </Route>
+              </Route>
+
+              {/* Candidate Routes */}
+
+              <Route path="/candidate" element={<CandidatePage />}>
+                <Route
+                  path="/candidate/:candidateId"
+                  element={<CandidateDashboard></CandidateDashboard>}
+                ></Route>
+                <Route
+                  path="/candidate/jobs/:jobId"
+                  element={<CandidateJobDetails />}
+                ></Route>
+                <Route
+                  path="/candidate/jobs/:jobId/apply"
+                  element={<CandidateJobDetails />}
+                ></Route>
+              </Route>
             </Route>
           </Routes>
         </Router>

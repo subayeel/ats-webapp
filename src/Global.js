@@ -49,13 +49,18 @@ export const GridContainer = styled.div`
   max-width: 100%;
 `;
 export const MainContainer = styled.div`
-  margin: 1rem auto;
+  margin: 1rem 2rem;
   max-width: 1280px;
   @media screen and (min-width: 1376px) {
     max-width: 1747px;
   }
 `;
-
+export const ScreenContainer = styled.div`
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 export const BorderedFlexContainer = styled(CenterFlexContainer)`
   border: 1px solid #ccc;
   border-radius: 4px;
