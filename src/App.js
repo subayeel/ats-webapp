@@ -77,55 +77,56 @@ function App() {
               </Route>
 
               {/* Manager Routes */}
-
-              <Route path="/manager" element={<ManagerPage />}>
-                <Route path="/manager/dashboard" element={<Dashboard />} />
-                <Route path="/manager/interviews" element={<Interviews />} />
-                <Route path="/manager/jobs" element={<Jobs />}></Route>
-                <Route
-                  path="/manager/jobs/:jobId"
-                  element={<JobDetails />}
-                ></Route>
-                <Route
-                  path="/manager/jobs/:jobId/candidate/:candidateId"
-                  element={<CandidateProfile />}
-                ></Route>
-                <Route
-                  path="/manager/jobs/:jobId/candidate/:candidateId/interview"
-                  element={<ScheduleInterview />}
-                ></Route>
-                <Route path="/manager/jobs/add" element={<AddJob />}>
+              <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+                <Route path="/manager" element={<ManagerPage />}>
+                  <Route path="/manager/dashboard" element={<Dashboard />} />
+                  <Route path="/manager/interviews" element={<Interviews />} />
+                  <Route path="/manager/jobs" element={<Jobs />}></Route>
                   <Route
-                    path="/manager/jobs/add/creation"
-                    element={<JobCreation />}
+                    path="/manager/jobs/:jobId"
+                    element={<JobDetails />}
                   ></Route>
                   <Route
-                    path="/manager/jobs/add/application"
-                    element={<JobApplication />}
+                    path="/manager/jobs/:jobId/candidate/:candidateId"
+                    element={<CandidateProfile />}
                   ></Route>
                   <Route
-                    path="/manager/jobs/add/hiringflow"
-                    element={<HiringFlow />}
+                    path="/manager/jobs/:jobId/candidate/:candidateId/interview"
+                    element={<ScheduleInterview />}
                   ></Route>
-                </Route>
-                <Route path="/manager/mailbox" element={<Mailbox />} />
-                <Route path="/manager/reports" element={<Reports />}>
-                  <Route
-                    path="/manager/reports/overview"
-                    element={<Overview />}
-                  ></Route>
-                  <Route
-                    path="/manager/reports/jobs"
-                    element={<JobsReport />}
-                  ></Route>
-                  <Route
-                    path="/manager/reports/candidates"
-                    element={<CandidateReport />}
-                  ></Route>
-                  <Route
-                    path="/manager/reports/team"
-                    element={<TeamReport />}
-                  ></Route>
+                  <Route path="/manager/jobs/add" element={<AddJob />}>
+                    <Route
+                      path="/manager/jobs/add/creation"
+                      element={<JobCreation />}
+                    ></Route>
+                    <Route
+                      path="/manager/jobs/add/application"
+                      element={<JobApplication />}
+                    ></Route>
+                    <Route
+                      path="/manager/jobs/add/hiringflow"
+                      element={<HiringFlow />}
+                    ></Route>
+                  </Route>
+                  <Route path="/manager/mailbox" element={<Mailbox />} />
+                  <Route path="/manager/reports" element={<Reports />}>
+                    <Route
+                      path="/manager/reports/overview"
+                      element={<Overview />}
+                    ></Route>
+                    <Route
+                      path="/manager/reports/jobs"
+                      element={<JobsReport />}
+                    ></Route>
+                    <Route
+                      path="/manager/reports/candidates"
+                      element={<CandidateReport />}
+                    ></Route>
+                    <Route
+                      path="/manager/reports/team"
+                      element={<TeamReport />}
+                    ></Route>
+                  </Route>
                 </Route>
               </Route>
 

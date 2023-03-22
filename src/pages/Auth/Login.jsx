@@ -1,6 +1,7 @@
 import { TextField } from "@mui/material";
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import axios from "../../api/axios";
 import {
   CardContainer,
   Heading2,
@@ -16,36 +17,58 @@ import {
 import { useLoginMutation } from "../../api/endpoints/loginEndpoint";
 import { JobTitleText } from "../Manager/Manager.elements";
 import { SmallText } from "./Auth.elements";
-
+import useAuth from "../../hooks/useAuth";
+const LOGIN_URL = "/auth";
 function Login() {
   const navigate = useNavigate();
-  const [login, { isLoading, error: loginError, isError }] = useLoginMutation();
-  const [userName, setUserName] = useState("");
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+  const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const { setAuth, persist, setPersist } = useAuth();
 
-  async function handlePhoneSubmit() {
-    if (!userName) {
-      setError("Please enter your User Name");
-      return;
-    } else if (!pwd) {
-      setError("Please enter your Password");
-    }
-    // } else if (phone.length !== 10) {
-    //   setError("Invalid Phone Number Please enter without country code ");
-    //   return;
-    // } else if (parseInt(phone).toString().length !== 10) {
-    //   setError("Please Enter only Numbers in Phone field");
-    //   return;
-    // }
-    //create send otp api call
+  const handleSubmit = async () => {
     try {
-      await login({ user: userName, pwd: pwd });
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({ user, pwd }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(JSON.stringify(response?.data));
+      //console.log(JSON.stringify(response));
+      const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.roles;
+      setAuth({ user, pwd, roles, accessToken });
+      setUser("");
+      setPwd("");
+      navigate(from, { replace: true });
     } catch (err) {
-      console.log(err);
+      if (!err?.response) {
+        setError("No Server Response");
+      } else if (err.response?.status === 400) {
+        setError("Missing Username or Password");
+      } else if (err.response?.status === 401) {
+        setError("Unauthorized");
+      } else {
+        setError("Login Failed");
+      }
     }
-  }
+  };
+
+  const togglePersist = () => {
+    setPersist((prev) => !prev);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
+
   return (
     <ScreenContainer>
       <MainContainer>
@@ -78,9 +101,8 @@ function Login() {
             <GridContainer columns="1fr" width="100%">
               <TextField
                 error={error}
-                helperText={error}
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
+                value={user}
+                onChange={(e) => setUser(e.target.value)}
                 id="outlined-basic"
                 label="User Name"
                 variant="outlined"
@@ -94,8 +116,17 @@ function Login() {
                 label="Password"
                 variant="outlined"
               />
+              <label>
+                <input
+                  type="checkbox"
+                  id="persist"
+                  onChange={togglePersist}
+                  checked={persist}
+                ></input>
+                &nbsp;Remember Me
+              </label>
               <Button
-                onClick={() => handlePhoneSubmit()}
+                onClick={() => handleSubmit()}
                 btnColor={(props) => props.theme.colors.atsGreen}
               >
                 Get OTP
