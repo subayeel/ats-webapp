@@ -41,6 +41,8 @@ import {
 import { JobSmallText } from "../../Manager/Manager.elements";
 
 import ReactModal from "react-modal";
+import axios from "../../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 //constants
 const customStyle = {
@@ -54,6 +56,7 @@ const customStyle = {
   },
 };
 function CandidateSignup() {
+  const navigate = useNavigate();
   const [qualification, setQualification] = useState([]);
   const [skills, setSkills] = useState([]);
   const [isaddingExp, setIsAddingExp] = useState(false);
@@ -65,6 +68,8 @@ function CandidateSignup() {
   const [endDate, setEnddDate] = useState("");
   const ACTION = {
     fullName: "handleName",
+    userName: "handleUserName",
+    password: "handlePassword",
     dob: "handleDob",
     title: "handleTitle",
     workExperience: "handleWorkExperience",
@@ -80,6 +85,10 @@ function CandidateSignup() {
     switch (action.type) {
       case ACTION.fullName:
         return { ...state, fullName: action.payload };
+      case ACTION.userName:
+        return { ...state, userName: action.payload };
+      case ACTION.password:
+        return { ...state, password: action.payload };
       case ACTION.dob:
         return {
           ...state,
@@ -115,6 +124,8 @@ function CandidateSignup() {
   };
   const [state, dispatch] = useReducer(reducer, {
     fullName: "",
+    userName: "",
+    password: "",
     dob: "",
     title: "",
     workExperience: [],
@@ -186,7 +197,17 @@ function CandidateSignup() {
     setPosition("");
     setCompanyName("");
   }
-  console.log(state);
+  const handleSubmit = async () => {
+    try {
+      const result = await axios.post("/register/candidate", state);
+      if (result.status == 201) {
+        console.log("Registered");
+        navigate("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <MainContainer>
       {/* Work experience Modal */}
@@ -248,6 +269,35 @@ function CandidateSignup() {
       <CardContainer>
         <Heading2>Signing up as Candidate</Heading2>
         <GridContainer align="flex-start" width="100%" columns="1fr 1fr">
+          <BorderedGridContainer align="flex-start" columns="1fr">
+            <Heading3>Login Credentials</Heading3>
+            <TextField
+              value={state.userName}
+              onChange={(e) =>
+                dispatch({
+                  type: ACTION.userName,
+                  payload: e.target.value,
+                })
+              }
+              id="outlined-basic"
+              label="Enter your title(if any)"
+              variant="outlined"
+            ></TextField>
+            <TextField
+              value={state.password}
+              type="password"
+              onChange={(e) =>
+                dispatch({
+                  type: ACTION.password,
+                  payload: e.target.value,
+                })
+              }
+              id="outlined-basic"
+              label="Enter your title(if any)"
+              variant="outlined"
+            ></TextField>
+          </BorderedGridContainer>
+
           <BorderedGridContainer align="flex-start" columns="1fr">
             <Heading3>Personal Details</Heading3>
             <TextField
@@ -376,7 +426,10 @@ function CandidateSignup() {
           </GridContainer>
         </GridContainer>
         <BtnWrap justify="flex-end" width="100%">
-          <Button btnColor={(props) => props.theme.colors.atsGreen}>
+          <Button
+            onClick={handleSubmit}
+            btnColor={(props) => props.theme.colors.atsGreen}
+          >
             Register
           </Button>
         </BtnWrap>

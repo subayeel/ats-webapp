@@ -5,14 +5,32 @@ import logo from "../../assets/images/ats-logo.png";
 import { TextField, Badge } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Button } from "../../Global";
+import axios from "../../api/axios";
+import useAuth from "../../hooks/useAuth";
 
 function ManagerNavbar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { setAuth } = useAuth();
   var currentPath = location.pathname.split("/");
+
+  const handleLogout = () => {
+    axios
+      .get("/logout", {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.status === 204) {
+          setAuth({});
+          navigate("/");
+        }
+      });
+  };
   return (
     <Header>
-      <Nav columns="50px 1fr  24px">
+      <Nav columns="50px 1fr 120px ">
         <img width="36px" src={logo}></img>
         <NavLinks>
           <NavAnchor
@@ -41,10 +59,13 @@ function ManagerNavbar() {
             Reports
           </NavAnchor>
         </NavLinks>
-
-        {/* <Badge badgeContent={4} color="primary">
-          <MailIcon color="action" />
-        </Badge> */}
+        <Button
+          style={{ margin: "0" }}
+          btnColor={(props) => props.theme.colors.atsBlue}
+          onClick={handleLogout}
+        >
+          Logout
+        </Button>
       </Nav>
     </Header>
   );

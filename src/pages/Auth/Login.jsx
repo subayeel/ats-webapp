@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../../api/axios";
 import {
   CardContainer,
@@ -14,7 +14,7 @@ import {
   MainContainer,
   ScreenContainer,
 } from "../../Global";
-import { useLoginMutation } from "../../api/endpoints/loginEndpoint";
+
 import { JobTitleText } from "../Manager/Manager.elements";
 import { SmallText } from "./Auth.elements";
 import useAuth from "../../hooks/useAuth";
@@ -22,12 +22,13 @@ const LOGIN_URL = "/auth";
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const [onLoginRoute, setOnLoginRoute] = useState("/");
+  const from = location.state?.from?.pathname || onLoginRoute;
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+
   const { setAuth, persist, setPersist } = useAuth();
 
   const handleSubmit = async () => {
@@ -44,6 +45,13 @@ function Login() {
       //console.log(JSON.stringify(response));
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
+      if (roles.includes(5150)) {
+        setOnLoginRoute("/manager/dashboard");
+      } else if (roles.includes(1984)) {
+        setOnLoginRoute("/employee");
+      } else if (roles.includes(1984)) {
+        setOnLoginRoute("/candidate");
+      }
       setAuth({ user, pwd, roles, accessToken });
       setUser("");
       setPwd("");
@@ -129,7 +137,7 @@ function Login() {
                 onClick={() => handleSubmit()}
                 btnColor={(props) => props.theme.colors.atsGreen}
               >
-                Get OTP
+                Login
               </Button>
             </GridContainer>
 

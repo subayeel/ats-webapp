@@ -45,6 +45,8 @@ import { JobSmallText, JobTitleText } from "../../Manager/Manager.elements";
 
 //COmponents
 import ExpTile from "../helpers/ExpTile";
+import axios from "../../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 //contants
 const customStyle = {
@@ -76,6 +78,7 @@ const registeredCompanies = [
   { id: 15, name: "Apple" },
 ];
 function ManagerSignup() {
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [qualification, setQualification] = useState([]);
@@ -113,6 +116,8 @@ function ManagerSignup() {
 
   const ACTION = {
     fullName: "handleName",
+    userName: "handleUserName",
+    password: "handlePassword",
     email: "handleEmail",
     phone: "handlePhone",
     address: "handleAddress",
@@ -123,27 +128,38 @@ function ManagerSignup() {
     currentCompany: "handleCurrentCompany",
     employeeIdNum: "handelEmployeeIdNum",
     employeeIdImage: "handleEmployeeIdImage",
+    identificationDocument: "handleidDocument",
   };
 
   const reducer = (state, action) => {
     switch (action.type) {
       case ACTION.fullName:
         return { ...state, fullName: action.payload };
+      case ACTION.userName:
+        return { ...state, userName: action.payload };
+      case ACTION.password:
+        return { ...state, password: action.payload };
       case ACTION.email:
         return {
           ...state,
-          contactInformation: { ...state, email: action.payload },
+          contactInformation: {
+            ...state.contactInformation,
+            email: action.payload,
+          },
         };
       case ACTION.phone:
         return {
           ...state,
-          contactInformation: { ...state, phone: action.payload },
+          contactInformation: {
+            ...state.contactInformation,
+            phone: action.payload,
+          },
         };
       case ACTION.streetAddress:
         return {
           ...state,
           contactInformation: {
-            ...state,
+            ...state.contactInformation,
             address: { ...state, streetAddress: action.payload },
           },
         };
@@ -151,7 +167,7 @@ function ManagerSignup() {
         return {
           ...state,
           contactInformation: {
-            ...state,
+            ...state.contactInformation,
             address: { ...state, country: action.payload },
           },
         };
@@ -180,10 +196,17 @@ function ManagerSignup() {
           ...state,
           employeeIdImage: action.payload,
         };
+      case ACTION.identificationDocument:
+        return {
+          ...state,
+          identificationDocument: action.payload,
+        };
     }
   };
   const [state, dispatch] = useReducer(reducer, {
     fullName: "",
+    userName: "",
+    password: "",
     contactInformation: {
       email: "",
       phone: "",
@@ -195,16 +218,11 @@ function ManagerSignup() {
     qualifications: [],
     workExperience: [],
     employeeIdNum: "",
-    employeeIdImage: "Binary",
+    employeeIdImage: "",
 
-    identificationDocument: {
-      type: "",
-      number: "",
-      expiryDate: Date,
-      documentImage: "Binary",
-    },
-    managerId: "",
-    profilePic: "Binary",
+    identificationDocument: "",
+
+    profilePic: "",
 
     personalityTraits: {
       openness: "",
@@ -214,9 +232,6 @@ function ManagerSignup() {
       neuroticism: "",
     },
   });
-
-  //handle registration
-  function handleRegister() {}
 
   //Register company modal
   const [companyModal, setCompanyModal] = useState(false);
@@ -272,7 +287,19 @@ function ManagerSignup() {
       setCities(indianCities[indianStates.indexOf(nCState) + 1].split("|"));
     }
   }, [nCState]);
-  console.log(state);
+
+  const handleSubmit = async () => {
+    try {
+      const result = await axios.post("/register/manager", state);
+      if (result.status == 201) {
+        setSuccess("Registered Successfully");
+        navigate("/");
+      }
+    } catch (err) {
+      setError(err);
+      console.log(err);
+    }
+  };
   return (
     <MainContainer>
       {/* Work experience Modal */}
@@ -539,6 +566,29 @@ function ManagerSignup() {
         <Heading2 width="100%">Signing up as Hiring Manager</Heading2>
         <GridContainer align="flex-start" width="100%" columns="1fr 1fr">
           <BorderedGridContainer justify="flex-start" columns="1fr">
+            <Heading3>Login Credentials</Heading3>
+            <TextField
+              value={state.userName}
+              onChange={(e) =>
+                dispatch({ type: ACTION.userName, payload: e.target.value })
+              }
+              id="outlined-basic"
+              label="Username"
+              variant="outlined"
+            ></TextField>
+            <TextField
+              value={state.password}
+              type="password"
+              helperText="Please include Numbers and a Special Character"
+              onChange={(e) =>
+                dispatch({ type: ACTION.password, payload: e.target.value })
+              }
+              id="outlined-basic"
+              label="Password"
+              variant="outlined"
+            ></TextField>
+          </BorderedGridContainer>
+          <BorderedGridContainer justify="flex-start" columns="1fr">
             <Heading3>Personal Inforamtion</Heading3>
             <TextField
               value={state.fullName}
@@ -575,19 +625,19 @@ function ManagerSignup() {
 
             <TextField
               value={state.contactInformation.email}
+              type="email"
               onChange={(e) =>
                 dispatch({ type: ACTION.email, payload: e.target.value })
               }
-              id="outlined-basic"
               label="Email"
               variant="outlined"
             ></TextField>
             <TextField
               value={state.contactInformation.phone}
+              type="tel"
               onChange={(e) =>
                 dispatch({ type: ACTION.phone, payload: e.target.value })
               }
-              id="outlined-basic"
               label="Phone"
               variant="outlined"
             ></TextField>
@@ -644,6 +694,7 @@ function ManagerSignup() {
               label="Employee Id Number"
               variant="outlined"
             ></TextField>
+
             <Container align="flex-start">
               <small>Upload Employee Image:</small>
               <Input
@@ -687,15 +738,34 @@ function ManagerSignup() {
               <SquaredIconContainer onClick={handleOpen}>
                 <AddIcon />
               </SquaredIconContainer>
-              <br></br>
             </GridContainer>
+            <Container align="flex-start">
+              <small>
+                Aadhar Card,PAN Card,Voter ID,vehicle License or any other
+                document for idenity verification:
+              </small>
+              <Input
+                labelId="id-label-job-title"
+                type="file"
+                onChange={(e) =>
+                  dispatch({
+                    type: ACTION.identificationDocument,
+                    payload: e.target.value,
+                  })
+                }
+                id="outlined-basic"
+                placeholder="Upload identification Document"
+                variant="outlined"
+              ></Input>
+            </Container>
+            <br></br>
           </BorderedGridContainer>
         </GridContainer>
 
         <GridContainer width="100%" justify="flex-end">
           <Button
             btnColor={(props) => props.theme.colors.atsGreen}
-            onClick={() => handleRegister()}
+            onClick={handleSubmit}
           >
             Register
           </Button>
