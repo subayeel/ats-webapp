@@ -324,6 +324,9 @@ const JobDetails = () => {
                                           </CenterFlexContainer>
 
                                           <Button
+                                            onClick={() =>
+                                              navigate(`candidate/${item.id}`)
+                                            }
                                             btnColor={(props) =>
                                               props.theme.colors.atsBlue
                                             }

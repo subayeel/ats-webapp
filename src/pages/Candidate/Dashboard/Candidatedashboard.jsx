@@ -116,7 +116,12 @@ const CandidateDashboard = () => {
         </GridContainer>
       </CardContainer>
       <CardContainer>
-        <GridContainer align="flex-start" columns="1fr 1fr" width="100%" gap="1rem">
+        <GridContainer
+          align="flex-start"
+          columns="1fr 1fr"
+          width="100%"
+          gap="1rem"
+        >
           <BorderedGridContainer justify="flex-start">
             <Heading3 width="100%">Jobs Applied</Heading3>
             <Container align="flex-start">
@@ -147,9 +152,8 @@ function JobTile({ _id, job_title, department, location, status }) {
   return (
     <BorderedGridContainer
       style={{ margin: "4px 0" }}
-      width="100%"
       key={_id}
-      columns="1fr 1fr 100px"
+      columns="1fr 1fr 140px"
     >
       <Container align="flex-start" width="100%">
         <JobTitleText>{job_title}</JobTitleText>
@@ -174,9 +178,8 @@ function SuggestedJobTile({ _id, job_title, department, location, status }) {
   return (
     <BorderedGridContainer
       style={{ margin: "4px 0" }}
-      width="100%"
       key={_id}
-      columns="1fr  100px"
+      columns="1fr  120px"
     >
       <Container align="flex-start" width="100%">
         <JobTitleText>{job_title}</JobTitleText>

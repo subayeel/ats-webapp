@@ -42,7 +42,14 @@ const HR_DETAILS = {
   title: "Human Resource Manager",
   company: "ZAN Corporation",
 };
-const interviewTypes = [];
+const interviewTypes = [
+  "Technical skills assessment",
+  "Behavioral interview",
+  "Panel interview",
+  "Case study interview",
+  "Presentation interview",
+  "Group interview",
+];
 //GET api - candidates
 const candidateList = [
   {
@@ -262,9 +269,9 @@ ${HR_DETAILS.company}</p>`;
                 renderValue={(selected) => selected.join(", ")}
               >
                 {employeesList.map((emp) => (
-                  <MenuItem key={emp.employeeId} value={emp.employeeId}>
+                  <MenuItem key={emp.employeeId} value={emp.employeeName}>
                     <Checkbox
-                      checked={selectedEmployees.indexOf(emp.employeeId) > -1}
+                      checked={selectedEmployees.indexOf(emp.employeeName) > -1}
                     />
                     <ListItemText primary={emp.employeeName} />
                   </MenuItem>
