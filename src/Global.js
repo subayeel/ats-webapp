@@ -201,6 +201,7 @@ export const Button = styled.button`
   outline: none;
   border: none;
   border-radius: 4px;
+  font-size: 16px;
   color: #fff;
   background-color: ${(props) => (props.disabled ? "#ccc" : props.btnColor)};
   padding: 0.7rem 1rem;

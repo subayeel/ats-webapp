@@ -51,7 +51,7 @@ export const JobSmallText = styled.p`
   margin: 0;
   font-weight: 400;
   font-size: 14px;
-  
+
   color: #6c6c6c;
 `;
 
@@ -95,6 +95,7 @@ export const KanbanColumn = styled(Container)`
   min-width: 300px;
   height: 500px;
   justify-content: flex-start;
+  align-items: flex-start;
   overflow: auto;
   padding: 1rem 0;
   border-radius: 4px;

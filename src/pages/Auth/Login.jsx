@@ -110,7 +110,7 @@ function Login() {
             </GridContainer>
           </Container>
           <CardContainer>
-            <Heading3 width="100%">Login</Heading3>
+            <Heading2 width="100%">Login</Heading2>
 
             <GridContainer columns="1fr" width="100%">
               <TextField
@@ -150,30 +150,38 @@ function Login() {
             <LightText style={{ width: "100%", textAlign: "center" }}>
               Or
             </LightText>
-            <Heading3 style={{ margin: "0 0 1rem 0" }} width="100%">
+            <Heading2 style={{ margin: "0 0 1rem 0" }} width="100%">
               Sign Up
-            </Heading3>
-            <BorderedGridContainer gap="0" columns="1fr " justify="flex-start">
-              <br></br>
-              <JobTitleText>I am looking for Job</JobTitleText>
-              <Button
-                onClick={() => navigate("/auth/signup/candidate")}
-                btnColor={(props) => props.theme.colors.atsBlue}
+            </Heading2>
+            <GridContainer width="100%" columns="3fr 2fr">
+              <BorderedGridContainer
+                gap="0"
+                columns="3fr 1fr"
+                justify="flex-start"
               >
-                Sign up
-              </Button>
-            </BorderedGridContainer>
-            <br></br>
-            <BorderedGridContainer gap="0" columns="1fr " justify="flex-start">
-              <br></br>
-              <JobTitleText>I am hiring!</JobTitleText>
-              <Button
-                onClick={() => navigate("/auth/signup/manager")}
-                btnColor={(props) => props.theme.colors.atsBlue}
+                <JobTitleText>I am looking for Job</JobTitleText>
+                <Button
+                  onClick={() => navigate("/auth/signup/candidate")}
+                  btnColor={(props) => props.theme.colors.atsBlue}
+                >
+                  Sign up
+                </Button>
+              </BorderedGridContainer>
+
+              <BorderedGridContainer
+                gap="0"
+                columns="3fr 1fr "
+                justify="flex-start"
               >
-                Sign up
-              </Button>
-            </BorderedGridContainer>
+                <JobTitleText>I am hiring!</JobTitleText>
+                <Button
+                  onClick={() => navigate("/auth/signup/manager")}
+                  btnColor={(props) => props.theme.colors.atsBlue}
+                >
+                  Sign up
+                </Button>
+              </BorderedGridContainer>
+            </GridContainer>
           </CardContainer>
         </GridContainer>
       </MainContainer>

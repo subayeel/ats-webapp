@@ -83,32 +83,43 @@ const jobsApiData = {
   candidates: [
     {
       id: 1,
-      status: "source",
+      status: "intervies",
+      fullName: "Abdullah Subayeel",
+      title: "Full Stack Developer",
+      skills: ["ReactJs", "NodeJs", "MongoDB", "Redux"],
     },
     {
       id: 2,
-      status: "source",
+      status: "hired",
+      fullName: "Maruti Naik",
+      title: "Android Dev",
+      skills: ["Kotlin", "Java"],
     },
     {
       id: 3,
-      status: "source",
+      status: "contacted",
+      fullName: "Abdul Raheem",
+      title: "Node Developer",
+      skills: ["JS", "NodeJs", "ExpressJs", "EJS"],
     },
     {
       id: 4,
-      status: "source",
+      status: "contacted",
+      fullName: "Naif Hussain",
+      title: ".Net Developer",
+      skills: ["C#", "C++", "VB.NET"],
     },
     {
       id: 5,
-      status: "source",
+      status: "applied",
+      fullName: "Mohammed Zakwan",
+      title: "Frontend Developer",
+      skills: ["HTML", "CSS", "JS", "ReactJs"],
     },
   ],
 };
 
 const columnsFromBackend = {
-  [uuid()]: {
-    name: "Source",
-    items: jobsApiData.candidates.filter((c) => c.status === "source"),
-  },
   [uuid()]: {
     name: "Applied",
     items: jobsApiData.candidates.filter((c) => c.status === "applied"),
@@ -283,7 +294,7 @@ const JobDetails = () => {
                                         ref={provided.innerRef}
                                         style={{
                                           userSelect: "none",
-                                          padding: 16,
+
                                           margin: "0 0 8px 0",
                                           backgroundColor: snapshot.isDragging
                                             ? "#CBCBCB "
@@ -295,7 +306,9 @@ const JobDetails = () => {
                                           width="100%"
                                           align="flex-start"
                                         >
-                                          <JobSubTitle>{item.name}</JobSubTitle>
+                                          <JobSubTitle>
+                                            {item.fullName}
+                                          </JobSubTitle>
                                           <TileHeading>
                                             {item.title}
                                           </TileHeading>
@@ -305,7 +318,7 @@ const JobDetails = () => {
                                         </Container>
                                         <CenterFlexContainer justify="space-between">
                                           <CenterFlexContainer justify="flex-start">
-                                            {dummySkills.map((skill) => (
+                                            {item.skills.map((skill) => (
                                               <SkillTile>{skill}</SkillTile>
                                             ))}
                                           </CenterFlexContainer>

@@ -28,20 +28,16 @@ import SelectedMemberRow from "./SelectedMemberRow";
 
 //data to get from backend
 const data = [
-  { id: 1, name: "Subayeel", title: "developer", experience: "3" },
-  { id: 2, name: "vcxcvxcv", title: "ddddddddd", experience: "1" },
-  { id: 3, name: "Suvxcvxcvbayeel", title: "developer", experience: "2" },
-  { id: 4, name: "ewrwe", title: "App dev", experience: "3" },
+  { id: 1, name: "Subayeel", title: "React Developer", experience: "3" },
+  { id: 2, name: "Areeb Kazia", title: "Node Developer", experience: "1" },
+  { id: 3, name: "Naif Hussain", title: ".Net Developer", experience: "2" },
+  { id: 4, name: "Pavan Kumar", title: "Flutter dev", experience: "3" },
 ];
 
 const columnsFromBackend = {
   [uuid()]: {
-    name: "Source",
-    items: data,
-  },
-  [uuid()]: {
     name: "Applied",
-    items: [],
+    items: data,
   },
   [uuid()]: {
     name: "Contacted",
@@ -294,9 +290,11 @@ function HiringFlow() {
                                     }}
                                   >
                                     <Container width="100%" align="flex-start">
-                                      <JobSubTitle>Google</JobSubTitle>
-                                      <TileHeading>Google</TileHeading>
-                                      <JobSmallText>$75k - $105k</JobSmallText>
+                                      <JobSubTitle>{item.title}</JobSubTitle>
+                                      <TileHeading>{item.name}</TileHeading>
+                                      <JobSmallText>
+                                        Experience:&nbsp;{item.experience}
+                                      </JobSmallText>
                                     </Container>
                                     <CenterFlexContainer justify="space-between">
                                       <CenterFlexContainer justify="flex-start">
