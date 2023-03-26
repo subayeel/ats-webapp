@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/images/ats-logo.png";
+import logo from "../../assets/images/logo.png";
 import { Header, Nav } from "../../Global";
 import { NavText, BorderNavBtn } from "../../pages/Auth/Auth.elements";
 function AuthNavbar() {

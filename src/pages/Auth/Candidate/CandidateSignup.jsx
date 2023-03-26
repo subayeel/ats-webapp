@@ -280,7 +280,7 @@ function CandidateSignup() {
                 })
               }
               id="outlined-basic"
-              label="Enter your title(if any)"
+              label="Username"
               variant="outlined"
             ></TextField>
             <TextField
@@ -293,9 +293,10 @@ function CandidateSignup() {
                 })
               }
               id="outlined-basic"
-              label="Enter your title(if any)"
+              label="Password"
               variant="outlined"
             ></TextField>
+            <br></br>
           </BorderedGridContainer>
 
           <BorderedGridContainer align="flex-start" columns="1fr">

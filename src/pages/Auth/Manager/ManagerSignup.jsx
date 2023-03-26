@@ -739,7 +739,7 @@ function ManagerSignup() {
                 <AddIcon />
               </SquaredIconContainer>
             </GridContainer>
-            <Container align="flex-start">
+            {/* <Container align="flex-start">
               <small>
                 Aadhar Card,PAN Card,Voter ID,vehicle License or any other
                 document for idenity verification:
@@ -757,7 +757,7 @@ function ManagerSignup() {
                 placeholder="Upload identification Document"
                 variant="outlined"
               ></Input>
-            </Container>
+            </Container> */}
             <br></br>
           </BorderedGridContainer>
         </GridContainer>

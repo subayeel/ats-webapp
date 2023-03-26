@@ -56,7 +56,7 @@ export const MainContainer = styled.div`
   }
 `;
 export const ScreenContainer = styled.div`
-  height: 90vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,10 +1,16 @@
 import React from "react";
-import { Header, Nav } from "../../Global";
+import {
+  CardHeader,
+  GridContainer,
+  Header,
+  Heading2,
+  Heading3,
+  Nav,
+} from "../../Global";
 import { NavLinks, NavAnchor } from "./ui.elements";
-import logo from "../../assets/images/ats-logo.png";
-import { TextField, Badge } from "@mui/material";
-import MailIcon from "@mui/icons-material/Mail";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import logo from "../../assets/images/logo.png";
+
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "../../Global";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
@@ -30,8 +36,21 @@ function ManagerNavbar() {
   };
   return (
     <Header>
-      <Nav columns="50px 1fr 120px ">
-        <img width="36px" src={logo}></img>
+      <Nav columns="240px 1fr 120px ">
+        <GridContainer columns="48px 180px" width="100%">
+          <img width="48px" src={logo}></img>
+          <Heading3
+            style={{
+              fontSize: "32px",
+              letterSpacing: "1px",
+              fontWeight: "500",
+              margin: "0",
+            }}
+          >
+            ATS Plus
+          </Heading3>
+        </GridContainer>
+
         <NavLinks>
           <NavAnchor
             active={currentPath.includes("dashboard")}

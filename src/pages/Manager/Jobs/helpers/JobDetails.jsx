@@ -82,23 +82,23 @@ const jobsApiData = {
   openings: 32,
   candidates: [
     {
-      _id: 1,
+      id: 1,
       status: "source",
     },
     {
-      _id: 2,
+      id: 2,
       status: "source",
     },
     {
-      _id: 3,
+      id: 3,
       status: "source",
     },
     {
-      _id: 4,
+      id: 4,
       status: "source",
     },
     {
-      _id: 5,
+      id: 5,
       status: "source",
     },
   ],

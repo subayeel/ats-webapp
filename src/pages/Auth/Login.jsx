@@ -13,6 +13,7 @@ import {
   BorderedGridContainer,
   MainContainer,
   ScreenContainer,
+  Heading3,
 } from "../../Global";
 
 import { JobTitleText } from "../Manager/Manager.elements";
@@ -23,13 +24,13 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const [onLoginRoute, setOnLoginRoute] = useState("/");
-  const from = location.state?.from?.pathname || onLoginRoute;
+  const from = location.state?.from?.pathname;
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [error, setError] = useState("");
 
-  const { setAuth, persist, setPersist } = useAuth();
+  const { setAuth, persist, setPersist, auth } = useAuth();
 
   const handleSubmit = async () => {
     try {
@@ -41,22 +42,16 @@ function Login() {
           withCredentials: true,
         }
       );
-      console.log(JSON.stringify(response?.data));
-      //console.log(JSON.stringify(response));
+
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
-      if (roles.includes(5150)) {
-        setOnLoginRoute("/manager/dashboard");
-      } else if (roles.includes(1984)) {
-        setOnLoginRoute("/employee");
-      } else if (roles.includes(1984)) {
-        setOnLoginRoute("/candidate");
-      }
+      console.log(auth?.roles);
+
       setAuth({ user, pwd, roles, accessToken });
       setUser("");
       setPwd("");
-      navigate(from, { replace: true });
     } catch (err) {
+      console.log(err);
       if (!err?.response) {
         setError("No Server Response");
       } else if (err.response?.status === 400) {
@@ -77,19 +72,30 @@ function Login() {
     localStorage.setItem("persist", persist);
   }, [persist]);
 
+  useEffect(() => {
+    if (auth?.roles?.includes(5150)) {
+      navigate("/manager/dashboard");
+    } else if (auth?.roles?.includes(1984)) {
+      navigate("/employee");
+    } else if (auth?.roles?.includes(2001)) {
+      navigate("/candidate");
+    }
+  }, [auth?.roles]);
   return (
     <ScreenContainer>
       <MainContainer>
-        <GridContainer align="stretch" height="100%" columns="1fr 1fr">
+        <GridContainer align="center" height="100%" columns="1fr 1fr">
           <Container justify="space-evenly">
-            <Heading>
-              Beautiful, Effective, Easy-To-Use HR Software for Growing
-              Businesses
-            </Heading>
-            <SmallText>
-              G&H is designed to help your business run efficiently, save money,
-              and stay compliant. Request a demo today!
-            </SmallText>
+            <GridContainer columns="1fr" align="flex-start" gap="0">
+              <Heading>
+                Beautiful, Effective, Easy-To-Use HR Software for Growing
+                Businesses
+              </Heading>
+              <SmallText>
+                G&H is designed to help your business run efficiently, save
+                money, and stay compliant. Request a demo today!
+              </SmallText>
+            </GridContainer>
             <GridContainer
               width="100%"
               columns="200px 200px"
@@ -104,7 +110,7 @@ function Login() {
             </GridContainer>
           </Container>
           <CardContainer>
-            <Heading2 width="100%">Login</Heading2>
+            <Heading3 width="100%">Login</Heading3>
 
             <GridContainer columns="1fr" width="100%">
               <TextField
@@ -144,14 +150,11 @@ function Login() {
             <LightText style={{ width: "100%", textAlign: "center" }}>
               Or
             </LightText>
-            <Heading2 style={{ margin: "0 0 1rem 0" }} width="100%">
+            <Heading3 style={{ margin: "0 0 1rem 0" }} width="100%">
               Sign Up
-            </Heading2>
-            <BorderedGridContainer
-              columns="1fr 100px"
-              justify="flex-start"
-              width="100%"
-            >
+            </Heading3>
+            <BorderedGridContainer gap="0" columns="1fr " justify="flex-start">
+              <br></br>
               <JobTitleText>I am looking for Job</JobTitleText>
               <Button
                 onClick={() => navigate("/auth/signup/candidate")}
@@ -161,11 +164,8 @@ function Login() {
               </Button>
             </BorderedGridContainer>
             <br></br>
-            <BorderedGridContainer
-              columns="1fr 100px"
-              justify="flex-start"
-              width="100%"
-            >
+            <BorderedGridContainer gap="0" columns="1fr " justify="flex-start">
+              <br></br>
               <JobTitleText>I am hiring!</JobTitleText>
               <Button
                 onClick={() => navigate("/auth/signup/manager")}

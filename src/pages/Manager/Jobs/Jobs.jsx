@@ -93,7 +93,9 @@ function Jobs() {
   return (
     <MainContainer>
       <GridContainer align="flex-start" columns="1fr 3fr">
-        <CardContainer  style={{ position: "sticky", top: "100px" ,height:"75vh" }}>
+        <CardContainer
+          style={{ position: "sticky", top: "100px", height: "75vh" }}
+        >
           <LargeButton onClick={() => navigate("/manager/jobs/add/creation")}>
             <AddIcon />
             Add New Job
@@ -129,40 +131,44 @@ function Jobs() {
               />
             </RadioGroup>
           </FormControl>
-          <CardSubHeading width="100%">Department</CardSubHeading>
-          <FormControl margin="dense" fullWidth>
-            <InputLabel id="demo-simple-select-label">Department</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={dept}
-              label="Department"
-              onChange={(e) => {
-                setDept(e.target.value);
-              }}
-            >
-              {jobsDepartments.map((job) => {
-                return <MenuItem value={job}>{job}</MenuItem>;
-              })}
-            </Select>
-          </FormControl>
-          <CardSubHeading width="100%">Location</CardSubHeading>
-          <FormControl margin="dense" fullWidth>
-            <InputLabel id="demo-simple-select-label">Location</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={location}
-              label="Location"
-              onChange={(e) => {
-                setLocation(e.target.value);
-              }}
-            >
-              {jobsDepartments.map((job) => {
-                return <MenuItem value={job}>{job}</MenuItem>;
-              })}
-            </Select>
-          </FormControl>
+          <GridContainer columns="1fr" width="100%">
+            <CardSubHeading width="100%">Department</CardSubHeading>
+            <FormControl margin="dense" fullWidth>
+              <InputLabel id="demo-simple-select-label">Department</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={dept}
+                label="Department"
+                onChange={(e) => {
+                  setDept(e.target.value);
+                }}
+              >
+                {jobsDepartments.map((job) => {
+                  return <MenuItem value={job}>{job}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+          </GridContainer>
+          <GridContainer columns="1fr" width="100%">
+            <CardSubHeading width="100%">Location</CardSubHeading>
+            <FormControl margin="dense" fullWidth>
+              <InputLabel id="demo-simple-select-label">Location</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={location}
+                label="Location"
+                onChange={(e) => {
+                  setLocation(e.target.value);
+                }}
+              >
+                {jobsDepartments.map((job) => {
+                  return <MenuItem value={job}>{job}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+          </GridContainer>
         </CardContainer>
         <GridContainer gap="1rem" align="start" columns="1fr" rows="100px 1fr">
           <CardContainer>
