@@ -1,60 +1,43 @@
 import React, { useState, useReducer } from "react";
+import {
+  Button,
+  CardContainer,
+  Container,
+  GridContainer,
+  Heading,
+  LightText,
+  MainContainer,
+} from "../../../Global";
 
 const OceanQuestionsForm = () => {
-  const [openness, setOpenness] = useState("");
-  const [conscientiousness, setConscientiousness] = useState("");
-  const [extraversion, setExtraversion] = useState("");
-  const [agreeableness, setAgreeableness] = useState("");
-  const [neuroticism, setNeuroticism] = useState("");
+  
 
-  const ACTION = {
-    o1: "handleO1",
-    o2: "handleO2",
-    o3: "handleO3",
-    o4: "handleO4",
-    o5: "handleO5",
-
-    c1: "handleC1",
-    c2: "handleC2",
-    c3: "handleC3",
-    c4: "handleC4",
-    c5: "handleC5",
-
-    e1: "handleE1",
-    e2: "handleE2",
-    e3: "handleE3",
-    e4: "handleE4",
-    e5: "handleE5",
-
-    a1: "handleA1",
-    a2: "handleA2",
-    a3: "handleA3",
-    a4: "handleA4",
-    a5: "handleA5",
-
-    n1: "handleN1",
-    n2: "handleN2",
-    n3: "handleN3",
-    n4: "handleN4",
-    n5: "handleN5",
-  };
-  const reducer = (state, action) => {
+ 
+  function reducer(state, action) {
     switch (action.type) {
-      case ACTION.o1:
+      case "answer":
+        const { category, qid, answer } = action.payload;
+        const questionScore = state[category].questionScore.map((question) => {
+          if (question.qid === qid) {
+            return {
+              ...question,
+              answer: answer,
+            };
+          } else {
+            return question;
+          }
+        });
         return {
           ...state,
-          questionScore: [
-            ...state.questionScore,
-            {
-              qid: 1,
-              question:
-                "How much do you enjoy trying new things and exploring different ideas?",
-              answer: action.payload,
-            },
-          ],
+          [category]: {
+            ...state[category],
+            questionScore: questionScore,
+          },
         };
+      default:
+        throw new Error();
     }
-  };
+  }
   const [questionsData, dispatch] = useReducer(reducer, {
     openness: {
       weightage: "0.2",
@@ -63,29 +46,29 @@ const OceanQuestionsForm = () => {
           qid: 1,
           question:
             "How much do you enjoy trying new things and exploring different ideas?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 2,
           question:
             "Are you comfortable with unconventional or abstract concepts?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 3,
           question: "Do you prefer routine or variety in your daily life?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 4,
           question:
             "How often do you seek out new experiences or seek to learn new things?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 5,
           question: "How much do you value creativity and imagination?",
-          answer: "",
+          answer: "0",
         },
       ],
     },
@@ -95,31 +78,31 @@ const OceanQuestionsForm = () => {
         {
           qid: 1,
           question: "How organized and detail-oriented are you?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 2,
           question:
             "Do you tend to plan ahead and stick to schedules or deadlines?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 3,
           question:
             "How motivated are you to complete tasks to the best of your ability?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 4,
           question:
             "How much do you prioritize responsibility and reliability in your work and personal life?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 5,
           question:
             "How likely are you to follow rules and adhere to social norms?",
-          answer: "",
+          answer: "0",
         },
       ],
     },
@@ -130,31 +113,31 @@ const OceanQuestionsForm = () => {
           qid: 1,
           question:
             "How much do you enjoy being around people and socializing?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 2,
           question:
             "Do you feel energized or drained after spending time with others?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 3,
           question:
             "How comfortable are you with being the center of attention or in the spotlight?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 4,
           question:
             "How often do you initiate conversations or take charge in group settings?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 5,
           question:
             "How much do you enjoy participating in group activities or events?",
-          answer: "",
+          answer: "0",
         },
       ],
     },
@@ -165,31 +148,31 @@ const OceanQuestionsForm = () => {
           qid: 1,
           question:
             "How much do you value harmony and cooperation in your relationships?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 2,
           question:
             "How willing are you to compromise and find common ground with others?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 3,
           question:
             "How much do you prioritize empathy and understanding in your interactions with others?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 4,
           question:
             "Do you prefer to avoid conflict or address issues head-on?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 5,
           question:
             "How likely are you to prioritize the needs of others over your own needs?",
-          answer: "",
+          answer: "0",
         },
       ],
     },
@@ -200,34 +183,45 @@ const OceanQuestionsForm = () => {
           qid: 1,
           question:
             "How easily do you experience negative emotions such as anxiety, worry, or fear?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 2,
           question: "How well do you cope with stress and adversity?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 3,
           question:
             "How often do you experience mood swings or emotional instability?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 4,
           question:
             "How likely are you to dwell on negative experiences or feelings?",
-          answer: "",
+          answer: "0",
         },
         {
           qid: 5,
           question:
             "How much do you perceive yourself as being sensitive or vulnerable to criticism or rejection?",
-          answer: "",
+          answer: "0",
         },
       ],
     },
   });
+
+  const handleAnswer = (category, qid, answer) => {
+    dispatch({
+      type: "answer",
+      payload: {
+        category: category,
+        qid: qid,
+        answer: answer,
+      },
+    });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -235,52 +229,145 @@ const OceanQuestionsForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Openness to experience</h2>
-      {questionsData.openness.questionScore.map((q) => {
-        return (
-          <label>
-            {q.question}
-            <input
-              type="number"
-              min="1"
-              max="10"
-              value={q.answer}
-              onChange={(event) => dispatch(event.target.value)}
-              required
-            />
-          </label>
-        );
-      })}
+    <MainContainer>
+      <form onSubmit={handleSubmit}>
+        <GridContainer
+          columns="repeat(auto-fill,minmax(350px,1fr))"
+          align="stretch"
+        >
+          <CardContainer>
+            <Heading margin="0 0 2rem 0">Openness to experience</Heading>
+            {questionsData.openness.questionScore.map((q) => {
+              return (
+                <Container align="start">
+                  <LightText>{q.question}</LightText>
+                  <GridContainer columns="1fr 20px">
+                    <input
+                      type="range"
+                      min="1"
+                      max="100"
+                      value={q.answer}
+                      onChange={(e) =>
+                        handleAnswer("openness", q.qid, e.target.value)
+                      }
+                      class="slider"
+                      id="myRange"
+                    />
+                    <LightText>{q.answer}</LightText>
+                  </GridContainer>
+                </Container>
+              );
+            })}
+          </CardContainer>
+          <CardContainer>
+            <Heading>Conscientiousness</Heading>
+            {questionsData.conscientiousness.questionScore.map((q) => {
+              return (
+                <Container align="start">
+                  <LightText>{q.question}</LightText>
+                  <GridContainer columns="1fr 20px">
+                    <input
+                      type="range"
+                      min="1"
+                      max="100"
+                      value={q.answer}
+                      onChange={(e) =>
+                        handleAnswer("conscientiousness", q.qid, e.target.value)
+                      }
+                      class="slider"
+                      id="myRange"
+                    />
+                    <LightText>{q.answer}</LightText>
+                  </GridContainer>
+                </Container>
+              );
+            })}
+          </CardContainer>
+          <CardContainer>
+            <Heading>Extraversion</Heading>
+            {questionsData.extraversion.questionScore.map((q) => {
+              return (
+                <Container align="start">
+                  <LightText>{q.question}</LightText>
+                  <GridContainer columns="1fr 20px">
+                    <input
+                      type="range"
+                      min="1"
+                      max="100"
+                      value={q.answer}
+                      onChange={(e) =>
+                        handleAnswer("extraversion", q.qid, e.target.value)
+                      }
+                      class="slider"
+                      id="myRange"
+                    />
+                    <LightText>{q.answer}</LightText>
+                  </GridContainer>
+                </Container>
+              );
+            })}
+          </CardContainer>
+        </GridContainer>
 
-      <label>
-        Are you comfortable with unconventional or abstract concepts?
-        <input
-          type="number"
-          min="1"
-          max="10"
-          value={openness}
-          onChange={(event) => setOpenness(event.target.value)}
-          required
-        />
-      </label>
+        <GridContainer
+          columns="repeat(auto-fill,minmax(450px,1fr))"
+          align="stretch"
+        >
+          <CardContainer>
+            <Heading>Agreeableness</Heading>
+            {questionsData.agreeableness.questionScore.map((q) => {
+              return (
+                <Container align="start">
+                  <LightText>{q.question}</LightText>
+                  <GridContainer columns="1fr 20px">
+                    <input
+                      type="range"
+                      min="1"
+                      max="100"
+                      value={q.answer}
+                      onChange={(e) =>
+                        handleAnswer("agreeableness", q.qid, e.target.value)
+                      }
+                      class="slider"
+                      id="myRange"
+                    />
+                    <LightText>{q.answer}</LightText>
+                  </GridContainer>
+                </Container>
+              );
+            })}
+          </CardContainer>
+          <CardContainer>
+            <Heading>Neuroticism</Heading>
+            {questionsData.neuroticism.questionScore.map((q) => {
+              return (
+                <Container align="start">
+                  <LightText>{q.question}</LightText>
+                  <GridContainer columns="1fr 20px">
+                    <input
+                      type="range"
+                      min="1"
+                      max="100"
+                      value={q.answer}
+                      onChange={(e) =>
+                        handleAnswer("neuroticism", q.qid, e.target.value)
+                      }
+                      class="slider"
+                      id="myRange"
+                    />
+                    <LightText>{q.answer}</LightText>
+                  </GridContainer>
+                </Container>
+              );
+            })}
+          </CardContainer>
+        </GridContainer>
 
-      {/* Repeat the above code for the remaining Openness questions */}
+     
 
-      <h2>Conscientiousness</h2>
-      {/* Repeat the code for Conscientiousness questions */}
-
-      <h2>Extraversion</h2>
-      {/* Repeat the code for Extraversion questions */}
-
-      <h2>Agreeableness</h2>
-      {/* Repeat the code for Agreeableness questions */}
-
-      <h2>Neuroticism</h2>
-      {/* Repeat the code for Neuroticism questions */}
-
-      <button type="submit">Submit</button>
-    </form>
+        <Button btnColor={props=>props.theme.colors.atsBlue} type="submit">Submit</Button>
+      </form>
+    </MainContainer>
   );
 };
 

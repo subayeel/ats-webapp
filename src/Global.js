@@ -160,7 +160,8 @@ export const Nav = styled.nav`
 
 export const Heading = styled.h1`
   font-weight: 600;
-  font-size: 48px;
+  margin: ${props=>props.margin};
+  font-size: 42px;
   width: ${(props) => props.width};
   color: ${(props) => props.theme.colors.atsBlue};
 `;
@@ -169,7 +170,7 @@ export const Heading2 = styled.h2`
   font-weight: 500;
   font-size: 28px;
   width: ${(props) => props.width};
-
+margin: ${props=>props.margin};
   color: ${(props) => props.theme.colors.atsGreen};
 `;
 

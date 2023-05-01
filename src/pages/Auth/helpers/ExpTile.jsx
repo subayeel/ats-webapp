@@ -9,7 +9,7 @@ function ExpTile({ companyName, position, startDate, endDate }) {
     <BorderedGridContainer
       style={{ margin: "2px 0" }}
       columns="1fr 100px 100px"
-      width="100%"
+      width="calc(100% - 2rem)"
     >
       <Container align="flex-start">
         <JobTitleText>{position}</JobTitleText>
