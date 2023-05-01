@@ -38,7 +38,7 @@ export const Container = styled(CenterFlexContainer)`
 export const GridContainer = styled.div`
   display: grid;
   grid-gap: ${(props) => (props.gap ? props.gap : "1rem")};
-  place-content: center;
+  place-content: ${(props) => (props.place ? props.place : "center")};
   margin: ${(props) => props.margin};
   justify-content: ${(props) => (props.justify ? props.justify : "center")};
   align-items: ${(props) => (props.align ? props.align : "center")};
@@ -112,7 +112,7 @@ export const HeaderLine = styled.hr`
   border: none;
   background-color: #ccc;
   height: 1px;
-  margin: ${(props) => (props.margin ? props.margin : "2rem 0")};
+  margin: ${(props) => (props.margin ? props.margin : "1rem 0")};
 `;
 export const VerticalLine = styled.hr`
   width: 200%;

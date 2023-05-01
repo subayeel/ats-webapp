@@ -38,6 +38,8 @@ import CandidateSignup from "./pages/Auth/Candidate/CandidateSignup";
 //Authentication
 import RequireAuth from "./pages/Auth/RequireAuth";
 import PersistLogin from "./pages/Auth/PersistLogin";
+import OceanQuestionsForm from "./pages/Auth/helpers/OceanQuestionsForm";
+import CandidateInterview from "./pages/Candidate/Interview/CandidateInterview";
 const ROLES = {
   User: 2001,
   Editor: 1984,
@@ -69,6 +71,10 @@ function App() {
                 <Route
                   path="/auth/signup/manager"
                   element={<ManagerSignup />}
+                />
+                <Route
+                  path="/auth/signup/ocean"
+                  element={<OceanQuestionsForm />}
                 />
                 <Route
                   path="/auth/signup/candidate"
@@ -136,6 +142,10 @@ function App() {
                 <Route
                   path="/candidate/:candidateId"
                   element={<CandidateDashboard></CandidateDashboard>}
+                ></Route>
+                <Route
+                  path="/candidate/interview"
+                  element={<CandidateInterview></CandidateInterview>}
                 ></Route>
                 <Route
                   path="/candidate/jobs/:jobId"

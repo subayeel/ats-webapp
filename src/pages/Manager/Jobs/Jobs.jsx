@@ -32,7 +32,7 @@ import { useNavigate } from "react-router-dom";
 const jobs = [
   {
     jobStatus: "open",
-    jobTitle: "Marketing Intern",
+    jobTitle: "React Developer",
     jobType: "Remote",
     jobCategory: "Digital Marketing",
     jobPosition: "INTERN",

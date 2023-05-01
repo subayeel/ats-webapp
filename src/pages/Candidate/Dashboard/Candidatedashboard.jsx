@@ -24,6 +24,10 @@ import {
   TileHeading,
 } from "../../Manager/Manager.elements";
 
+//Componenets
+import JobTile from "../helpers/JobTile";
+import SuggestedJobTile from "../helpers/SuggestedJobTile";
+
 //suggested jobs by ML model
 const suggestedJobs = [
   {
@@ -117,23 +121,33 @@ const CandidateDashboard = () => {
       </CardContainer>
       <CardContainer>
         <GridContainer
-          align="flex-start"
+          align="stretch"
           columns="1fr 1fr"
           width="100%"
           gap="1rem"
         >
-          <BorderedGridContainer justify="flex-start">
-            <Heading3 width="100%">Jobs Applied</Heading3>
-            <Container align="flex-start">
+          <BorderedGridContainer
+            gap="0"
+            columns="1fr"
+            place="start"
+            justify="flex-start"
+          >
+            <Heading2 width="100%">Jobs Applied</Heading2>
+            <Container align="flex-start" width="100%">
               {candidateApiData.appliedJobs.map((job) => (
                 <JobTile {...job} />
               ))}
             </Container>
             <br></br>
           </BorderedGridContainer>
-          <BorderedGridContainer justify="flex-start">
-            <Heading3>Jobs Suggested by ZANHire</Heading3>
-            <Container align="flex-start">
+          <BorderedGridContainer
+            gap="0"
+            columns="1fr"
+            place="start"
+            justify="flex-start"
+          >
+            <Heading2 width="100%">Jobs Suggested by ZANHire</Heading2>
+            <Container align="flex-start" width="100%">
               {suggestedJobs.map((sjob) => (
                 <SuggestedJobTile {...sjob} />
               ))}
@@ -146,52 +160,3 @@ const CandidateDashboard = () => {
 };
 
 export default CandidateDashboard;
-
-function JobTile({ _id, job_title, department, location, status }) {
-  const navigate = useNavigate();
-  return (
-    <BorderedGridContainer
-      style={{ margin: "4px 0" }}
-      key={_id}
-      columns="1fr 1fr 140px"
-    >
-      <Container align="flex-start" width="100%">
-        <JobTitleText>{job_title}</JobTitleText>
-        <JobSubTitle>{department}</JobSubTitle>
-        <JobSmallText>{location}</JobSmallText>
-      </Container>
-      <Container>
-        <LightText>Your Status</LightText>
-        <JobSmallText>{status}</JobSmallText>
-      </Container>
-      <Button
-        onClick={() => navigate(`/candidate/jobs/${_id}`)}
-        btnColor={(props) => props.theme.colors.atsBlue}
-      >
-        View Details
-      </Button>
-    </BorderedGridContainer>
-  );
-}
-function SuggestedJobTile({ _id, job_title, department, location, status }) {
-  const navigate = useNavigate();
-  return (
-    <BorderedGridContainer
-      style={{ margin: "4px 0" }}
-      key={_id}
-      columns="1fr  120px"
-    >
-      <Container align="flex-start" width="100%">
-        <JobTitleText>{job_title}</JobTitleText>
-        <JobSmallText>{location}</JobSmallText>
-      </Container>
-
-      <Button
-        onClick={() => navigate(`/candidate/jobs/${_id}/apply`)}
-        btnColor={(props) => props.theme.colors.atsBlue}
-      >
-        Apply
-      </Button>
-    </BorderedGridContainer>
-  );
-}

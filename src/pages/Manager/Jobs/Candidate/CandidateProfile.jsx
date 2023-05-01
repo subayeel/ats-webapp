@@ -21,14 +21,14 @@ import {
 } from "../../Manager.elements";
 const candidateData = {
   id: "223",
-  name: "Rahul Naik",
+  name: "Abdulla Subayeel",
   email: "abc@gmail.com",
   isFresher: true,
   title: "React Developer",
   experience: "0",
   status: "contacted",
   package: "4.5CTC",
-  skills: ["Full Time", "Senior", "UX/UI"],
+  skills: ["HTML", "CSS", "JS", "UX/UI"],
 };
 
 const CandidateProfile = () => {

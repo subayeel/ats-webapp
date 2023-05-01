@@ -105,7 +105,7 @@ const jobsApiData = {
     {
       id: 4,
       status: "contacted",
-      fullName: "Naif Hussain",
+      fullName: "Abdullah Subayeel",
       title: ".Net Developer",
       skills: ["C#", "C++", "VB.NET"],
     },

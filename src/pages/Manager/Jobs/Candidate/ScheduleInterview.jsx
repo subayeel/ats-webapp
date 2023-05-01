@@ -54,7 +54,7 @@ const interviewTypes = [
 const candidateList = [
   {
     candidateId: 12,
-    candidateName: "Rahul Naik",
+    candidateName: "Abdullah Subayeel",
   },
   {
     candidateId: 13,

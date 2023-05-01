@@ -45,7 +45,7 @@ function Login() {
 
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
-      console.log(auth?.roles);
+      
 
       setAuth({ user, pwd, roles, accessToken });
       setUser("");
@@ -63,7 +63,7 @@ function Login() {
       }
     }
   };
-
+  console.log(auth);
   const togglePersist = () => {
     setPersist((prev) => !prev);
   };
@@ -128,6 +128,7 @@ function Login() {
                 onChange={(e) => setPwd(e.target.value)}
                 id="outlined-basic"
                 label="Password"
+                type="password"
                 variant="outlined"
               />
               <label>
