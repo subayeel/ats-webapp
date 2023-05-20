@@ -25,6 +25,11 @@ import JobApplication from "./helpers/JobApplication";
 import HiringFlow from "./helpers/HiringFlow";
 import SelectedMemberRow from "./helpers/SelectedMemberRow";
 
+import {
+  useAddJobMutation,
+  useGetJobsQuery,
+} from "../../../api/endpoints/jobsEndpoint";
+import useAuth from "../../../hooks/useAuth";
 const dummyMembers = [
   {
     id: "223",
@@ -67,6 +72,24 @@ const accessTypes = ["Administrator Access", "Read-Only Access"];
 
 const selectedMembers = [{ memberName: "Rahul", memberAccess: "Admin" }];
 function AddJob() {
+  const {
+    data: jobs,
+    isLoading: isJobsLoading,
+    isSuccess: isJobsSuccess,
+    isError: isJobsError,
+    error: JobsError,
+  } = useGetJobsQuery ();
+
+  const [
+    addJobMutation,
+    {
+      isLoading: isAddJobLoading,
+      isSuccess: isAddJobSuccess,
+      isError: isAddJobError,
+      error: addJobError,
+    },
+  ] = useAddJobMutation();
+  
   const [error, setError] = useState("");
   const [aboutData, setAboutData] = useState([]);
   const [applicationData, setApplicationData] = useState([]);
@@ -228,12 +251,8 @@ function AddJob() {
       picture: "1",
     }
   );
-  const finalData = {
-    jobData: state,
-    applicationData: formData,
-    interviwers: choosenMembers,
-  };
-  console.log(finalData);
+  
+  
   const addJobFlowTiles = [
     {
       id: 1,
@@ -329,13 +348,20 @@ function AddJob() {
   function openAssignMembersModal() {
     setAssignModal(true);
   }
-  function handleJobSubmission() {
+  async function handleJobSubmission() {
     //create an api call to save the job details
 
-    //close modal
-    setAssignModal(false);
-    //redirect to job section
-    navigate("/manager/jobs");
+    // //close modal
+    // setAssignModal(false);
+    // //redirect to job section
+    // navigate("/manager/jobs");
+    const finalData = {
+      jobData: state,
+      applicationData: formData,
+      interviwers: choosenMembers,
+      
+    };
+    const response = await addJobMutation(finalData)
   }
   function handleAddUser() {
     //make api call to add member
