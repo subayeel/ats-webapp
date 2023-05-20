@@ -40,6 +40,7 @@ import RequireAuth from "./pages/Auth/RequireAuth";
 import PersistLogin from "./pages/Auth/PersistLogin";
 import OceanQuestionsForm from "./pages/Auth/helpers/OceanQuestionsForm";
 import CandidateInterview from "./pages/Candidate/Interview/CandidateInterview";
+import InterviewScreen from "./pages/Candidate/Interview/InterviewScreen";
 const ROLES = {
   User: 2001,
   Editor: 1984,
@@ -146,6 +147,10 @@ function App() {
                 <Route
                   path="/candidate/interview"
                   element={<CandidateInterview></CandidateInterview>}
+                ></Route>
+                <Route
+                  path="/candidate/interview/:jobId"
+                  element={<InterviewScreen></InterviewScreen>}
                 ></Route>
                 <Route
                   path="/candidate/jobs/:jobId"

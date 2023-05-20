@@ -64,12 +64,12 @@ function ManagerNavbar() {
           >
             Jobs
           </NavAnchor>
-          <NavAnchor
+          {/* <NavAnchor
             active={currentPath.includes("interviews")}
             onClick={() => navigate("/manager/interviews")}
           >
             Interviews
-          </NavAnchor>
+          </NavAnchor> */}
           {/* <Link to="/manager/mailbox">Mailbox</Link> */}
           <NavAnchor
             active={currentPath.includes("overview")}

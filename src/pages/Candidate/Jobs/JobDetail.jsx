@@ -80,7 +80,7 @@ const CandidateJobDetails = () => {
   var isApplying = params.includes("apply");
 
   function handleApplication() {
-    console.log("Applying...");
+    navigate(`/candidate/interview/${jobId}`);
   }
   return (
     <>

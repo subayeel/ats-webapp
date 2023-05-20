@@ -58,56 +58,14 @@ const columnsFromBackend = {
 };
 const dummySkills = ["Full Time", "Senior", "UX/UI"];
 
-const dummyMembers = [
-  {
-    id: "223",
-    memberName: "Rahul Naik",
-    memberAccess: "",
-    email: "abc@gmail.com",
-    isFresher: true,
-    title: "React Developer",
-    experience: "0",
-    status: "contacted",
-    package: "4.5CTC",
-  },
-  {
-    id: "121",
-    title: "Nodejs Developer",
-    memberName: "Rahul Naik",
-    memberAccess: "",
-    email: "abc@gmail.com",
-    isFresher: false,
-    experience: "4",
 
-    status: "rejected",
-    package: "2.5CTC",
-  },
-  {
-    id: "1233221",
-    title: "App developer",
-    memberName: "Rahul Naik",
-    memberAccess: "",
-    email: "abc@gmail.com",
-    isFresher: false,
 
-    experience: "2",
-    status: "applied",
-    package: "3.5CTC",
-  },
-];
 
-const accessTypes = ["Administrator Access", "Read-Only Access"];
-
-const selectedMembers = [{ memberName: "Rahul", memberAccess: "Admin" }];
 
 function HiringFlow() {
-  const navigate = useNavigate();
-  const [todos, updateTodos] = useState(data || []);
+  
   const [columns, setColumns] = useState(columnsFromBackend);
-  const [assignModalOpen, setAssignModal] = useState(false);
-  const [selectedMember, setSelectedMember] = useState("");
-  const [choosenMembers, setChoosenMembers] = useState([]);
-  const [accessType, setAccessType] = useState("");
+  
 
   const handleOnDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return;
@@ -139,111 +97,10 @@ function HiringFlow() {
     }
   };
 
-  function openAssignMembersModal() {
-    setAssignModal(true);
-  }
-  function handleJobSubmission() {
-    //create an api call to save the job details
-
-    //close modal
-    setAssignModal(false);
-    //redirect to job section
-    navigate("/manager/jobs");
-  }
-  function handleAddUser() {
-    //make api call to add member
-    setChoosenMembers((prev) => [
-      ...prev,
-      { id: selectedMember, accessType: accessType },
-    ]);
-    console.log(choosenMembers);
-  }
+  
   return (
     <>
-      <ReactModal
-        isOpen={assignModalOpen}
-        onRequestClose={() => setAssignModal(false)}
-        style={{
-          content: {
-            position: "relative",
-            width: "80%",
-            height: "400px",
-            margin: "auto",
-            padding: "2rem",
-            borderRadius: "4px",
-          },
-        }}
-      >
-        <Heading2 width="100%">
-          Assign Your associates to this particular Job
-        </Heading2>
-        <GridContainer columns="1fr 1fr 150px">
-          <FormControl margin="dense">
-            <InputLabel id="member-select-label">Select Member</InputLabel>
-            <Select
-              labelId="member-select-label"
-              id="demo-simple-select"
-              value={selectedMember}
-              label="Select Memebr"
-              onChange={(e) => setSelectedMember(e.target.value)}
-            >
-              {dummyMembers.map((member) => {
-                return (
-                  <MenuItem value={member.id}>{member.memberName}</MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-          <FormControl margin="dense">
-            <InputLabel id="state-select-label">Select User Access</InputLabel>
-            <Select
-              labelId="state-select-label"
-              id="demo-simple-select"
-              value={accessType}
-              label="Select User Access"
-              onChange={(e) => setAccessType(e.target.value)}
-            >
-              {accessTypes.map((aType) => {
-                return <MenuItem value={aType}>{aType}</MenuItem>;
-              })}
-            </Select>
-          </FormControl>
-          <Button
-            onClick={handleAddUser}
-            btnColor={(props) => props.theme.colors.atsGreen}
-          >
-            Add Member
-          </Button>
-        </GridContainer>
-
-        <Container align="flex-start">
-          <Heading3>Selected Members</Heading3>
-          {/* {dummyMembers
-            .filter((mem) =>
-              choosenMembers.map((memb) => memb.id).includes(mem.id)
-            )
-            .map((member) => {
-              return <SelectedMemberRow {...member}></SelectedMemberRow>;
-            })} */}
-          {choosenMembers.map((member) => {
-            return (
-              <SelectedMemberRow
-                members={dummyMembers}
-                memberId={member.id}
-                memberAccess={member.accessType}
-              ></SelectedMemberRow>
-            );
-          })}
-        </Container>
-        <div style={{ position: "absolute", bottom: "1rem", right: "2rem" }}>
-          <Button
-            onClick={handleJobSubmission}
-            btnColor={(props) => props.theme.colors.atsGreen}
-          >
-            Submit Job
-          </Button>
-        </div>
-      </ReactModal>
+      
       <Heading3>Setup Interview Stages</Heading3>
       <div style={{ width: "1200px" }}>
         <KanbanContainer>
@@ -327,15 +184,7 @@ function HiringFlow() {
           </DragDropContext>
         </KanbanContainer>
       </div>
-      <GridContainer columns="180px 180px" justify="space-between" width="100%">
-        <TextButton>Previous Page</TextButton>
-        <Button
-          onClick={openAssignMembersModal}
-          btnColor={(props) => props.theme.colors.atsGreen}
-        >
-          Submit
-        </Button>
-      </GridContainer>
+      
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import {
   TextField,
   Select,
@@ -35,7 +35,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
 
-function JobCreation() {
+function JobCreation({ setAboutData ,dispatch,state}) {
   const navigate = useNavigate();
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
@@ -66,104 +66,7 @@ function JobCreation() {
     openings: "handleOpenings",
     candidates: "handleCandidates",
   };
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case ACTION.jobTitle:
-        return { ...state, jobTitle: action.payload };
-      case ACTION.department:
-        return { ...state, department: action.payload };
-      case ACTION.location:
-        return { ...state, location: action.payload };
-
-      case ACTION.remote:
-        return { ...state, remote: action.payload };
-      case ACTION.hideSalary:
-        return { ...state, hideSalary: action.payload };
-
-      case ACTION.desc:
-        return {
-          ...state,
-          jobDesc: { ...state.jobDesc, desc: action.payload },
-        };
-      case ACTION.responsibilities:
-        return {
-          ...state,
-          jobDesc: { ...state.jobDesc, responsibilities: action.payload },
-        };
-      case ACTION.requirements:
-        return {
-          ...state,
-          jobDesc: { ...state.jobDesc, requirements: action.payload },
-        };
-      case ACTION.employmentType:
-        return { ...state, employmentType: action.payload };
-      case ACTION.seniorityLevel:
-        return { ...state, seniorityLevel: action.payload };
-      case ACTION.industryType:
-        return { ...state, industryType: action.payload };
-      case ACTION.ctcMin:
-        return {
-          ...state,
-          salary: { ...state.salary, ctcMin: action.payload },
-        };
-      case ACTION.ctcMax:
-        return {
-          ...state,
-          salary: { ...state.salary, ctcMax: action.payload },
-        };
-      case ACTION.currency:
-        return {
-          ...state,
-          salary: { ...state.salary, currency: action.payload },
-        };
-      case ACTION.salaryType:
-        return {
-          ...state,
-          salary: { ...state.salary, salaryType: action.payload },
-        };
-      case ACTION.minYears:
-        return {
-          ...state,
-          workExperience: { ...state.workExperience, minYears: action.payload },
-        };
-      case ACTION.skills:
-        return { ...state, skills: action.payload };
-      case ACTION.education:
-        return { ...state, education: action.payload };
-      case ACTION.openings:
-        return { ...state, openings: action.payload };
-      case ACTION.candidates:
-        return { ...state, candidates: action.payload };
-    }
-  };
-  const [state, dispatch] = useReducer(reducer, {
-    jobTitle: "",
-    department: "",
-    location: "",
-    remote: false,
-    hideSalary: false,
-    jobDesc: {
-      desc: "",
-      responsibilities: [],
-      requirements: [],
-    },
-    employmentType: "",
-    seniorityLevel: "",
-    industryType: "",
-    salary: {
-      salaryType: "",
-      ctcMin: 0,
-      ctcMax: 0,
-      currency: "",
-    },
-    workExperience: {
-      minYears: 0,
-    },
-    skills: [],
-    education: [],
-    openings: 0,
-    candidates: [],
-  });
+  
 
   //handle auto filling using pdf
   function handleAutoFill() {
@@ -215,7 +118,9 @@ function JobCreation() {
       console.log(err);
     }
   }
-  console.log(state);
+  useEffect(() => {
+    setAboutData(state);
+  }, [state]);
   return (
     <>
       <GridContainer width="100%" columns="1fr 20px 1fr">
@@ -469,14 +374,7 @@ function JobCreation() {
           }
         />
       </GridContainer>
-      <GridContainer justify="right" width="100%">
-        <Button
-          btnColor={(props) => props.theme.colors.atsGreen}
-          onClick={handleSubmit}
-        >
-          Save & Proceed
-        </Button>
-      </GridContainer>
+      
     </>
   );
 }

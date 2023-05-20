@@ -32,26 +32,26 @@ import SuggestedJobTile from "../helpers/SuggestedJobTile";
 const suggestedJobs = [
   {
     _id: "12",
-    job_title: "Front end Developer",
+    job_title: "React Developer",
     department: "IT",
     location: "Mysore,Karnataka",
   },
   {
     _id: "13",
-    job_title: "Front end Developer",
+    job_title: "JavaScript Dev",
     department: "IT",
-    location: "Mysore,Karnataka",
+    location: "Manglore,Karnataka",
   },
   {
     _id: "14",
-    job_title: "Front end Developer",
+    job_title: "Flutter Developer",
     department: "IT",
-    location: "Mysore,Karnataka",
+    location: "Banglore,Karnataka",
   },
 ];
 //get api data from candidateId in params
 const candidateApiData = {
-  fullName: "Mohammed Zakwan",
+  fullName: "Areeb Kazia",
   dob: "2017-01-01T08:00:00",
   title: "Not a Developer",
   education: {},

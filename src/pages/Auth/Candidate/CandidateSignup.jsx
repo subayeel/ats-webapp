@@ -390,25 +390,6 @@ function CandidateSignup() {
     setPosition("");
     setCompanyName("");
   }
-  const handleSubmit = async () => {
-    try {
-      const result = await axios.post("/register/candidate", state);
-      const registerUser = await axios.post("/register", {
-        user: state.userName,
-        pwd: state.password,
-        roles: { User: 2001 },
-      });
-      if (registerUser.status === 409) {
-        setError("Username is already taken");
-      }
-      if (result.status == 201 && registerUser.status == 201) {
-        console.log("Registered");
-        navigate("/");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   function answerReducer(state, action) {
     switch (action.type) {
@@ -494,7 +475,29 @@ function CandidateSignup() {
     setSubmittedPersonality(true);
     setIsAddingPersonality(false);
   }
-  console.log(state);
+
+  const handleSubmit = async () => {
+    try {
+      const registerUser = await axios.post("/register", {
+        user: state.userName,
+        pwd: state.password,
+        roles: { Candidate: 2001 },
+      });
+      const result = await axios.post("/register/candidate", state);
+      
+      if (registerUser.status === 409) {
+        setError("Username is already taken");
+        return
+      }
+      if (result.status == 201 && registerUser.status == 201) {
+        console.log("Registered");
+        navigate("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <MainContainer>
       {/* Work experience Modal */}
@@ -705,7 +708,7 @@ function CandidateSignup() {
       <CardContainer>
         <Heading2 margin="0 0 1rem 0">Signing up as Candidate</Heading2>
         <GridContainer
-          align="flex-start"
+          align="flex-start"skill
           width="100%"
           columns="repeat(auto-fill,minmax(350px,1fr))"
         >
@@ -749,7 +752,7 @@ function CandidateSignup() {
               </GridContainer>
               {submittedPersonality ? (
                 <Container>
-                  <CheckCircleOutline style={{margin:"0 0 1rem 0"}} />
+                  <CheckCircleOutline style={{ margin: "0 0 1rem 0" }} />
                   <LightText>
                     Personality Assessment Added Click to update
                   </LightText>

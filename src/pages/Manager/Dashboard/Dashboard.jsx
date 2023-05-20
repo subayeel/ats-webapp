@@ -4,15 +4,16 @@ import {
   GridContainer,
   CardHeader,
   MainContainer,
-  Heading2,
   CardHeading,
-  CenterFlexContainer,
   HeaderLine,
   LightText,
 } from "../../../Global";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import NoData from "../../../components/ui/NoData";
+import useAuth from "../../../hooks/useAuth";
 function Dashboard() {
+  const { auth } = useAuth();
+  console.log(auth.accessToken);
   const [alignment, setAlignment] = useState("me");
   const [interviews, setInterviews] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -27,7 +28,6 @@ function Dashboard() {
           <CardHeader columns="1fr 200px">
             <CardHeading>Upcoming Interviews</CardHeading>
             <ToggleButtonGroup
-
               color="primary"
               value={alignment}
               exclusive

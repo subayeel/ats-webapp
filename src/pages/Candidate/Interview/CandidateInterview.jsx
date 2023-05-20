@@ -1,6 +1,5 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import EyeTracking from "./EyeTracking";
-import FacialExpressionDetector from "./FacialExpression";
 import {
   BorderedGridContainer,
   CardContainer,
@@ -17,26 +16,25 @@ import { Button } from "../../../Global";
 import NoData from "../../../components/ui/NoData";
 import SuggestedJobTile from "../helpers/SuggestedJobTile";
 
-
 //constants
 const suggestedJobs = [
   {
     _id: "12",
-    job_title: "Front end Developer",
+    job_title: "React Developer",
     department: "IT",
     location: "Mysore,Karnataka",
   },
   {
     _id: "13",
-    job_title: "Front end Developer",
+    job_title: "JavaScript Dev",
     department: "IT",
-    location: "Mysore,Karnataka",
+    location: "Manglore,Karnataka",
   },
   {
     _id: "14",
-    job_title: "Front end Developer",
+    job_title: "Flutter Developer",
     department: "IT",
-    location: "Mysore,Karnataka",
+    location: "Banglore,Karnataka",
   },
 ];
 const CandidateInterview = () => {
@@ -66,13 +64,12 @@ const CandidateInterview = () => {
         </CardContainer>
         <CardContainer>
           <Heading3>Apply for Jobs</Heading3>
-
           <HeaderLine />
           <Container width="100%" align="flex-start">
-              {suggestedJobs.map((sjob) => (
-                <SuggestedJobTile {...sjob} />
-              ))}
-            </Container>
+            {suggestedJobs.map((sjob) => (
+              <SuggestedJobTile {...sjob} />
+            ))}
+          </Container>
         </CardContainer>
       </GridContainer>
     </MainContainer>

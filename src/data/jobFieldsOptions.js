@@ -99,13 +99,13 @@ export const jobApplicationFields = [
   { fieldName: "martialStatus", fieldTitle: "Martial Status" },
   { fieldName: "dob", fieldTitle: "Date of Birth" },
   { fieldName: "gender", fieldTitle: "Gender" },
+  { fieldName: "email", fieldTitle: "Email" },
   { fieldName: "address", fieldTitle: "Address" },
   { fieldName: "phone", fieldTitle: "Phone" },
   { fieldName: "workExperience", fieldTitle: "Work Experience" },
   { fieldName: "skills", fieldTitle: "Skills" },
   { fieldName: "education", fieldTitle: "Education" },
-  { fieldName: "workLink", fieldTitle: "Work Link" },
-  { fieldName: "ctc", fieldTitle: "CTC" },
+  { fieldName: "picture", fieldTitle: "Picture" },
 ];
 
 export const answerTypes = [

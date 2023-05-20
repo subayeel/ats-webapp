@@ -26,6 +26,7 @@ import {
   Heading,
   Heading2,
   BorderedGridContainer,
+  LightText,
 } from "../../../../Global";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import { StrictModeDroppable as Droppable } from "../../../../utils/StrictModeDroppable";
@@ -119,6 +120,44 @@ const jobsApiData = {
   ],
 };
 
+const candidates = [
+  {
+    id: 1,
+    status: "intervies",
+    fullName: "Abdullah Subayeel",
+    title: "Full Stack Developer",
+    skills: ["ReactJs", "NodeJs", "MongoDB", "Redux"],
+  },
+  {
+    id: 2,
+    status: "hired",
+    fullName: "Maruti Naik",
+    title: "Android Dev",
+    skills: ["Kotlin", "Java"],
+  },
+  {
+    id: 3,
+    status: "contacted",
+    fullName: "Abdul Raheem",
+    title: "Node Developer",
+    skills: ["JS", "NodeJs", "ExpressJs", "EJS"],
+  },
+  {
+    id: 4,
+    status: "contacted",
+    fullName: "Abdullah Subayeel",
+    title: ".Net Developer",
+    skills: ["C#", "C++", "VB.NET"],
+  },
+  {
+    id: 5,
+    status: "applied",
+    fullName: "Mohammed Zakwan",
+    title: "Frontend Developer",
+    skills: ["HTML", "CSS", "JS", "ReactJs"],
+  },
+];
+
 const columnsFromBackend = {
   [uuid()]: {
     name: "Applied",
@@ -179,6 +218,10 @@ const JobDetails = () => {
     }
   };
 
+  function createCandidateTile(props, i) {
+    return <CandidateTile i={i} {...props}></CandidateTile>;
+  }
+
   return (
     <>
       <MainContainer>
@@ -188,52 +231,66 @@ const JobDetails = () => {
 
         <CardContainer>
           <GridContainer align="flex-start" width="100%" columns="1fr 1fr">
-            <BorderedContainer align="flex-start" justify="flex-start">
-              <Heading2>About Job</Heading2>
-              <GridContainer columns="1fr 1fr 1fr" width="100%">
-                <Container align="flex-start">
-                  <JobTitleText>Location:</JobTitleText>
-                  <small>{jobsApiData.location}</small>
-                </Container>
-                <Container align="flex-start">
-                  <JobTitleText>Job Type:</JobTitleText>
-                  <small>{jobsApiData.remote ? "Remote" : "Office"}</small>
-                </Container>
-                <Container align="flex-start">
-                  <JobTitleText>Employment Type:</JobTitleText>
-                  <small>{jobsApiData.employment_type}</small>
-                </Container>
-              </GridContainer>
-              <br></br>
-              <GridContainer columns="1fr 1fr 1fr" width="100%">
-                <Container align="flex-start">
-                  <JobTitleText>Package Range:</JobTitleText>
-                  <CenterFlexContainer>
-                    <small>
-                      {jobsApiData.salary_range.ctc_min}-
-                      {jobsApiData.salary_range.ctc_max} LPA{" "}
-                      {jobsApiData.salary_range.currency}
-                    </small>
-                  </CenterFlexContainer>
-                </Container>
-                <Container align="flex-start">
-                  <JobTitleText>Seniority Level:</JobTitleText>
-                  <small>{jobsApiData.seniority_level}</small>
-                </Container>
-                <Container align="flex-start">
-                  <JobTitleText>Required Work Experience:</JobTitleText>
-                  <small>{jobsApiData.work_experience.min_years} Years</small>
-                </Container>
-              </GridContainer>
+            <GridContainer columns="repeat(auto-fill,minmax(350px,1fr))">
+              <BorderedContainer align="flex-start" justify="flex-start">
+                <Heading2>About Job</Heading2>
+                <GridContainer columns="1fr 1fr 1fr" width="100%">
+                  <Container align="flex-start">
+                    <JobTitleText>Location:</JobTitleText>
+                    <small>{jobsApiData.location}</small>
+                  </Container>
+                  <Container align="flex-start">
+                    <JobTitleText>Job Type:</JobTitleText>
+                    <small>{jobsApiData.remote ? "Remote" : "Office"}</small>
+                  </Container>
+                  <Container align="flex-start">
+                    <JobTitleText>Employment Type:</JobTitleText>
+                    <small>{jobsApiData.employment_type}</small>
+                  </Container>
+                </GridContainer>
+                <br></br>
+                <GridContainer columns="1fr 1fr 1fr" width="100%">
+                  <Container align="flex-start">
+                    <JobTitleText>Package Range:</JobTitleText>
+                    <CenterFlexContainer>
+                      <small>
+                        {jobsApiData.salary_range.ctc_min}-
+                        {jobsApiData.salary_range.ctc_max} LPA{" "}
+                        {jobsApiData.salary_range.currency}
+                      </small>
+                    </CenterFlexContainer>
+                  </Container>
+                  <Container align="flex-start">
+                    <JobTitleText>Seniority Level:</JobTitleText>
+                    <small>{jobsApiData.seniority_level}</small>
+                  </Container>
+                  <Container align="flex-start">
+                    <JobTitleText>Required Work Experience:</JobTitleText>
+                    <small>{jobsApiData.work_experience.min_years} Years</small>
+                  </Container>
+                </GridContainer>
 
-              <JobTitleText>Required Skills</JobTitleText>
-              <CenterFlexContainer>
-                {jobsApiData.skills.map((skill) => (
-                  <SkillTile>{skill}</SkillTile>
-                ))}
-              </CenterFlexContainer>
-              <br></br>
-            </BorderedContainer>
+                <JobTitleText>Required Skills</JobTitleText>
+                <CenterFlexContainer>
+                  {jobsApiData.skills.map((skill) => (
+                    <SkillTile>{skill}</SkillTile>
+                  ))}
+                </CenterFlexContainer>
+                <br></br>
+              </BorderedContainer>
+
+              <BorderedGridContainer
+                align="flex-start"
+                justify="flex-start"
+                columns="1fr"
+              >
+                <Heading2>Candidate Suggested by ATS AI</Heading2>
+                <Container width="100%">
+                  {candidates.map(createCandidateTile)}
+                </Container>
+              </BorderedGridContainer>
+            </GridContainer>
+
             <BorderedContainer align="flex-start">
               <Heading2>Job Description</Heading2>
               <JobSmallText>{jobsApiData.job_desc.desc}</JobSmallText>
@@ -357,3 +414,22 @@ const JobDetails = () => {
 };
 
 export default JobDetails;
+
+function CandidateTile(props) {
+  return (
+    <BorderedGridContainer
+      margin="8px 0 "
+      width="calc(100% - 2rem)"
+      columns="auto 1fr auto"
+    >
+      <LightText>{props.i + 1}</LightText>
+      <Container align="flex-start">
+        <h3 style={{ margin: "4px 0" }}>{props.title}</h3>
+        <LightText>{props.fullName}</LightText>
+        <small>{props.skills.join(",")}</small>
+      </Container>
+
+      <Button btnColor={(props) => props.theme.colors.atsBlue}>Contact</Button>
+    </BorderedGridContainer>
+  );
+}

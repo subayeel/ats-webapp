@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as faceapi from "face-api.js";
+
 const FacialExpressionDetector = () => {
   const videoRef = useRef();
   const canvasRef = useRef();
@@ -8,15 +9,19 @@ const FacialExpressionDetector = () => {
   // LOAD FROM USEEFFECT
   useEffect(() => {
     startVideo();
+
     videoRef && loadModels();
+    
   }, []);
 
   // OPEN YOU FACE WEBCAM
   const startVideo = () => {
-    navigator.mediaDevices
+    const stream = navigator.mediaDevices
       .getUserMedia({ video: true })
       .then((currentStream) => {
-        videoRef.current.srcObject = currentStream;
+       
+          videoRef.current.srcObject = currentStream;
+        
       })
       .catch((err) => {
         console.log(err);
@@ -39,7 +44,8 @@ const FacialExpressionDetector = () => {
   const faceMyDetect = () => {
     setInterval(async () => {
       const detections = await faceapi
-        .detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions()).withFaceExpressions();
+        .detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions())
+        .withFaceExpressions();
 
       // DRAW YOU FACE IN WEBCAM
       //   canvasRef.current.innerHtml = faceapi.createCanvasFromMedia(
@@ -62,17 +68,23 @@ const FacialExpressionDetector = () => {
         console.log(detections);
         setExpressions([...expressions, detections[0]?.expressions]);
       }
+     
     }, 1000);
   };
-  console.log(expressions);
+
   return (
-    <div className="myapp">
-      <div className="appvide">
-        <video height="400" crossOrigin="anonymous" ref={videoRef} autoPlay></video>
-      </div>
-      {/* <canvas ref={canvasRef} width="650" height="450" className="appcanvas" /> */}
+    <div className="appvide">
+      <video
+        height="300"
+        crossOrigin="anonymous"
+        ref={videoRef}
+        autoPlay
+      ></video>
     </div>
   );
 };
 
 export default FacialExpressionDetector;
+{
+  /* <canvas ref={canvasRef} width="650" height="450" className="appcanvas" /> */
+}
