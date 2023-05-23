@@ -6,6 +6,9 @@ export const jobSlice = apiSlice.injectEndpoints({
       query: () => "/jobs",
       providesTags: ["Jobs"],
     }),
+    getSingleJob: builder.query({
+      query: (id) => `/jobs/${id}`,
+    }),
     addJob: builder.mutation({
       query: (data) => ({
         url: "/jobs",
@@ -20,11 +23,12 @@ export const jobSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: { action: data.action },
       }),
-      invalidatesTags:["Jobs"]
+      invalidatesTags: ["Jobs"],
     }),
   }),
 });
 
 export const { useAddJobMutation } = jobSlice;
 export const { useGetJobsQuery } = jobSlice;
+export const { useGetSingleJobQuery } = jobSlice;
 export const { useToggleJobMutation } = jobSlice;

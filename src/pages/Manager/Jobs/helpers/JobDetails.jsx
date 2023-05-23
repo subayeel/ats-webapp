@@ -31,6 +31,7 @@ import {
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import { StrictModeDroppable as Droppable } from "../../../../utils/StrictModeDroppable";
 import { SmallText } from "../../../Auth/Auth.elements";
+import { useGetSingleJobQuery } from "../../../../api/endpoints/jobsEndpoint";
 
 //get details from api using id in params
 const jobsApiData = {
@@ -182,9 +183,94 @@ const columnsFromBackend = {
 };
 
 const dummySkills = ["Full Time", "Senior", "UX/UI"];
-
+var temp = {
+  jobData: {
+    jobDesc: {
+      desc: "A Django Developer is responsible for designing, developing, and maintaining web applications using the Django framework. They work closely with project managers, designers, and other developers to create robust and scalable web solutions",
+      responsibilities: [
+        "Develop and maintain web applications using the Django framework",
+        "\nCollaborate with cross-functional teams to gather and define project requirements",
+        "\nDesign and implement database models and schema using Django ORM",
+        "\nCreate and integrate APIs and web services to enable seamless data exchange",
+        "\nWrite clean, efficient, and reusable code following industry best practices and coding standards",
+        "\nConduct thorough testing and debugging to ensure the application functions flawlessly",
+        "\nOptimize application performance and identify and fix bottlenecks",
+        "\nCollaborate with front-end developers to integrate server-side logic with user-facing elements",
+        "\nParticipate in code reviews to maintain code quality and provide constructive feedback",
+        "\nStay up-to-date with the latest trends and advancements in Django development and related technologies",
+        "",
+      ],
+      requirements: [
+        "Strong proficiency in Python and experience with the Django framework",
+        "\nIn-depth understanding of web development principles and best practices",
+        "\nExperience with front-end technologies such as HTML, CSS, and JavaScript",
+        "\nFamiliarity with relational databases and SQL, preferably experience with database systems like PostgreSQL or MySQL",
+        "\nKnowledge of version control systems, such as Git",
+        "\nExperience working in an Agile development environment",
+        "\nGood understanding of software development life cycle (SDLC) and best practices",
+        "\nStrong problem-solving and analytical skills",
+        "\nExcellent communication and collaboration abilities",
+        "\nBachelor's degree in Computer Science, Software Engineering, or a related field (preferred)",
+        "",
+      ],
+    },
+    salary: {
+      salaryType: "Annual",
+      ctcMin: 3,
+      ctcMax: 7,
+      currency: "",
+    },
+    workExperience: {
+      minYears: 0,
+    },
+    candidates: [],
+    department: "Logistics",
+    education: ["Associate's degree", "Bachelor's degree"],
+    employmentType: "Full-time employment",
+    hideSalary: false,
+    industryType: "Technology",
+    jobTitle: "Django Developer",
+    address: "Bhatkal, Karnataka",
+    postCode: "581320",
+    openings: 10,
+    remote: true,
+    seniorityLevel: "Entry-level",
+    skills: ["Communication skills", "Problem-solving skills"],
+    jobStatus: true,
+  },
+  applicationData: {
+    address: "1",
+    city: "1",
+    dob: "2",
+    education: "1",
+    email: "2",
+    firstName: "2",
+    gender: "2",
+    lastName: "2",
+    martialStatus: "1",
+    phone: "2",
+    picture: "1",
+    postCode: "1",
+    skills: "1",
+    state: "1",
+    workExperience: "1",
+  },
+  _id: "646cec2d75af0f595b0c1104",
+  interviwers: [
+    {
+      id: "121",
+      accessType: "Administrator Access",
+    },
+  ],
+  managerId: "6450101f737750a4e6778c9d",
+  __v: 0,
+};
 const JobDetails = () => {
   const { jobId } = useParams(); //get more details from api
+
+  const { data: jobDetails, isLoading: isJobDetailsLoading } =
+    useGetSingleJobQuery(jobId);
+
   const navigate = useNavigate();
   const [columns, setColumns] = useState(columnsFromBackend);
 
@@ -221,31 +307,37 @@ const JobDetails = () => {
   function createCandidateTile(props, i) {
     return <CandidateTile i={i} {...props}></CandidateTile>;
   }
-
-  return (
-    <>
+  if (isJobDetailsLoading) {
+    return "Loading...";
+  } else {
+    return (
       <MainContainer>
         <CardContainer style={{ margin: "1rem 0" }}>
-          <TileHeading>{jobsApiData.job_title}</TileHeading>
+          <TileHeading>{jobDetails?.jobData.jobTitle}</TileHeading>
         </CardContainer>
 
         <CardContainer>
           <GridContainer align="flex-start" width="100%" columns="1fr 1fr">
-            <GridContainer align="flex-start" columns="repeat(auto-fill,minmax(350px,1fr))">
+            <GridContainer
+              align="flex-start"
+              columns="repeat(auto-fill,minmax(350px,1fr))"
+            >
               <BorderedContainer align="flex-start" justify="flex-start">
                 <Heading2>About Job</Heading2>
                 <GridContainer columns="1fr 1fr 1fr" width="100%">
                   <Container align="flex-start">
                     <JobTitleText>Location:</JobTitleText>
-                    <small>{jobsApiData.location}</small>
+                    <small>{jobDetails?.jobData.address}</small>
                   </Container>
                   <Container align="flex-start">
                     <JobTitleText>Job Type:</JobTitleText>
-                    <small>{jobsApiData.remote ? "Remote" : "Office"}</small>
+                    <small>
+                      {jobDetails?.jobData.remote ? "Remote" : "Office"}
+                    </small>
                   </Container>
                   <Container align="flex-start">
                     <JobTitleText>Employment Type:</JobTitleText>
-                    <small>{jobsApiData.employment_type}</small>
+                    <small>{jobDetails?.jobData.employmentType}</small>
                   </Container>
                 </GridContainer>
                 <br></br>
@@ -254,25 +346,26 @@ const JobDetails = () => {
                     <JobTitleText>Package Range:</JobTitleText>
                     <CenterFlexContainer>
                       <small>
-                        {jobsApiData.salary_range.ctc_min}-
-                        {jobsApiData.salary_range.ctc_max} LPA{" "}
-                        {jobsApiData.salary_range.currency}
+                        Rs.{jobDetails?.jobData.salary.ctcMin} LPA- Rs.
+                        {jobDetails?.jobData.salary.ctcMax} LPA
                       </small>
                     </CenterFlexContainer>
                   </Container>
                   <Container align="flex-start">
                     <JobTitleText>Seniority Level:</JobTitleText>
-                    <small>{jobsApiData.seniority_level}</small>
+                    <small>{jobDetails?.jobData.seniorityLevel}</small>
                   </Container>
                   <Container align="flex-start">
                     <JobTitleText>Required Work Experience:</JobTitleText>
-                    <small>{jobsApiData.work_experience.min_years} Years</small>
+                    <small>
+                      {jobDetails?.jobData.workExperience.minYears} Years
+                    </small>
                   </Container>
                 </GridContainer>
 
                 <JobTitleText>Required Skills</JobTitleText>
                 <CenterFlexContainer>
-                  {jobsApiData.skills.map((skill) => (
+                  {jobDetails?.jobData.skills.map((skill) => (
                     <SkillTile>{skill}</SkillTile>
                   ))}
                 </CenterFlexContainer>
@@ -286,19 +379,19 @@ const JobDetails = () => {
               >
                 <Heading2>Candidate Suggested by ATS AI</Heading2>
                 <Container width="100%">
-                  {candidates.map(createCandidateTile)}
+                  {jobDetails?.jobData.candidates.map(createCandidateTile)}
                 </Container>
               </BorderedGridContainer>
             </GridContainer>
 
             <BorderedContainer align="flex-start">
               <Heading2>Job Description</Heading2>
-              <JobSmallText>{jobsApiData.job_desc.desc}</JobSmallText>
+              <JobSmallText>{jobDetails?.jobData.jobDesc.desc}</JobSmallText>
               <br></br>
               <JobTitleText>Key responsibilities:</JobTitleText>
               <JobSmallText>
                 <ul>
-                  {jobsApiData.job_desc.requirements.map((req) => (
+                  {jobDetails?.jobData.jobDesc.responsibilities.map((req) => (
                     <li>{req}</li>
                   ))}
                 </ul>
@@ -306,7 +399,7 @@ const JobDetails = () => {
               <JobTitleText>Requirements:</JobTitleText>
               <JobSmallText>
                 <ul>
-                  {jobsApiData.job_desc.requirements.map((req) => (
+                  {jobDetails?.jobData.jobDesc.requirements.map((req) => (
                     <li>{req}</li>
                   ))}
                 </ul>
@@ -409,8 +502,8 @@ const JobDetails = () => {
           </div>
         </CardContainer>
       </MainContainer>
-    </>
-  );
+    );
+  }
 };
 
 export default JobDetails;

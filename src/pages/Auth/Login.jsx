@@ -78,7 +78,7 @@ function Login() {
     } else if (auth?.roles?.includes(1984)) {
       navigate("/employee");
     } else if (auth?.roles?.includes(2001)) {
-      navigate("/candidate");
+      navigate("/candidate/dashboard");
     }
   }, [auth?.roles]);
   return (

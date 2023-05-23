@@ -354,9 +354,9 @@ function AddJob() {
     //create an api call to save the job details
 
     // //close modal
-    // setAssignModal(false);
+    setAssignModal(false);
     // //redirect to job section
-    // navigate("/manager/jobs");
+    navigate("/manager/dashboard");
     const finalData = {
       jobData: state,
       applicationData: formData,

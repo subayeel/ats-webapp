@@ -49,9 +49,10 @@ export const GridContainer = styled.div`
   max-width: 100%;
 `;
 export const MainContainer = styled.div`
-  margin: 1rem auto;
+  margin: 1rem 2rem;
   max-width: 1280px;
   @media screen and (min-width: 1376px) {
+    margin: 1rem auto;
     max-width: 1747px;
   }
 `;
@@ -160,7 +161,7 @@ export const Nav = styled.nav`
 
 export const Heading = styled.h1`
   font-weight: 600;
-  margin: ${props=>props.margin};
+  margin: ${(props) => props.margin};
   font-size: 42px;
   width: ${(props) => props.width};
   color: ${(props) => props.theme.colors.atsBlue};
@@ -170,7 +171,7 @@ export const Heading2 = styled.h2`
   font-weight: 500;
   font-size: 28px;
   width: ${(props) => props.width};
-margin: ${props=>props.margin};
+  margin: ${(props) => props.margin};
   color: ${(props) => props.theme.colors.atsGreen};
 `;
 
@@ -199,6 +200,9 @@ export const BtnWrap = styled(CenterFlexContainer)`
   }
 `;
 export const Button = styled.button`
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
   outline: none;
   border: none;
   border-radius: 4px;
@@ -208,6 +212,7 @@ export const Button = styled.button`
   padding: 0.7rem 1rem;
   margin: 1rem 0;
   min-width: max-content;
+  transition: all 0.2s ease-in-out;
   &:hover {
     cursor: pointer;
   }

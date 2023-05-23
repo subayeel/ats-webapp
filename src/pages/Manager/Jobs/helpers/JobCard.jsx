@@ -26,6 +26,7 @@ import ReactModal from "react-modal";
 import PublishRow from "./PublishRow";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useToggleJobMutation } from "../../../../api/endpoints/jobsEndpoint";
+import MyButton from "../../../../components/ui/MyButton";
 
 const dummyData = [
   {
@@ -62,7 +63,7 @@ const dummyData = [
 function JobCard({
   jobStatus,
   jobTitle,
-  industryType,
+  department,
   remote,
   seniorityLevel,
   candidates,
@@ -78,9 +79,9 @@ function JobCard({
       error: toggleJobError,
     },
   ] = useToggleJobMutation();
-  
+
   const navigate = useNavigate();
-  
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [publishModal, setPublishModal] = useState(false);
   const open = Boolean(anchorEl);
@@ -180,7 +181,7 @@ function JobCard({
             {jobTitle}
           </JobTitleText>
           <JobSubTitle>
-            {industryType} &nbsp;&#x2022; &nbsp;{remote ? "Remote" : "Online"}{" "}
+            {department} &nbsp;&#x2022; &nbsp;{remote ? "Remote" : "Online"}{" "}
             &nbsp; &#x2022; &nbsp; {seniorityLevel}
           </JobSubTitle>
         </div>
@@ -218,17 +219,22 @@ function JobCard({
           <JobSmallText>Openings</JobSmallText>
           <JobTitleText>{openings}</JobTitleText>
         </Container>
-        
       </GridContainer>
       <CenterFlexContainer justify="space-between">
         {!jobStatus ? (
-          <Button btnColor="#007d11" onClick={() => toggleJobStatus("open")}>
-            Reopen Job
-          </Button>
+          <MyButton
+            isloading={isToggleJobLoading}
+            label="Reopen Job"
+            btnColor="#007d11"
+            onClick={() => toggleJobStatus("open")}
+          ></MyButton>
         ) : (
-          <Button btnColor="#96000d" onClick={() => toggleJobStatus("close")}>
-            Close Job
-          </Button>
+          <MyButton
+            isloading={isToggleJobLoading}
+            label="Close Job"
+            btnColor="#96000d"
+            onClick={() => toggleJobStatus("close")}
+          ></MyButton>
         )}
         <TextButton onClick={handlePublish}>Publish</TextButton>
       </CenterFlexContainer>
