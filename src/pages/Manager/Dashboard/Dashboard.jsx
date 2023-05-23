@@ -7,26 +7,40 @@ import {
   CardHeading,
   HeaderLine,
   LightText,
+  Button,
 } from "../../../Global";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import NoData from "../../../components/ui/NoData";
 import useAuth from "../../../hooks/useAuth";
+import { useGetJobsQuery } from "../../../api/endpoints/jobsEndpoint";
+import { useNavigate } from "react-router-dom";
+import JobCard from "../Jobs/helpers/JobCard";
+
 function Dashboard() {
+  const { data: jobs, isLoading } = useGetJobsQuery();
+  
   const { auth } = useAuth();
-  console.log(auth.accessToken);
-  const [alignment, setAlignment] = useState("me");
+  const navigate = useNavigate();
+
+  const [alignment, setAlignment] = useState("all");
   const [interviews, setInterviews] = useState([]);
   const [tasks, setTasks] = useState([]);
+
   const [taskCount, setTaskCount] = useState(2);
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
+
+  function createJobCard(props) {
+    return <JobCard {...props} />;
+  }
+
   return (
     <MainContainer>
-      <GridContainer align="stretch" columns="4fr 2fr">
+      <GridContainer align="stretch" columns="1fr auto">
         <CardContainer>
           <CardHeader columns="1fr 200px">
-            <CardHeading>Upcoming Interviews</CardHeading>
+            <CardHeading>Jobs</CardHeading>
             <ToggleButtonGroup
               color="primary"
               value={alignment}
@@ -34,18 +48,20 @@ function Dashboard() {
               onChange={handleChange}
               aria-label="Platform"
             >
-              <ToggleButton value="me">For Me</ToggleButton>
-              <ToggleButton value="other">For Other</ToggleButton>
+              <ToggleButton value="all">All</ToggleButton>
+              <ToggleButton value="open">Open</ToggleButton>
+              <ToggleButton value="closed">Closed</ToggleButton>
             </ToggleButtonGroup>
           </CardHeader>
           <HeaderLine></HeaderLine>
 
-          {interviews.length !== 0 ? (
-            interviews.map((intv) => {
-              return <h1>{intv}</h1>;
-            })
+          {jobs ? (
+            jobs?.map(createJobCard)
           ) : (
-            <NoData text="No Upcoming Interviews" />
+            <>
+              <NoData text="You haven't added any Jobs" />
+              <Button onClick={() => navigate("/")}>Add Job</Button>
+            </>
           )}
         </CardContainer>
         <CardContainer>

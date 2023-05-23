@@ -25,22 +25,64 @@ import { Button } from "../../../../Global";
 import ReactModal from "react-modal";
 import PublishRow from "./PublishRow";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useToggleJobMutation } from "../../../../api/endpoints/jobsEndpoint";
 
+const dummyData = [
+  {
+    jobStatus: false,
+    jobDesc: {
+      desc: "",
+      responsibilities: [],
+      requirements: [],
+    },
+
+    salary: {
+      salaryType: "",
+      ctcMin: 0,
+      ctcMax: 0,
+      currency: "",
+    },
+    workExperience: {
+      minYears: 0,
+    },
+    candidates: [],
+    department: "",
+    education: [],
+    employmentType: "",
+    hideSalary: false,
+    industryType: "",
+    jobTitle: "",
+    location: "",
+    openings: 0,
+    remote: false,
+    seniorityLevel: "",
+    skills: [],
+  },
+];
 function JobCard({
   jobStatus,
   jobTitle,
-  jobCategory,
-  jobType,
-  jobPosition,
-  candidateCount,
-  activeCandidateCount,
-  jobId,
+  industryType,
+  remote,
+  seniorityLevel,
+  candidates,
+  openings,
+  id,
 }) {
-  const location = useLocation();
+  const [
+    toggleJobMutation,
+    {
+      isLoading: isToggleJobLoading,
+      isSuccess: isoggleJobSuccess,
+      isError: isoggleJobError,
+      error: toggleJobError,
+    },
+  ] = useToggleJobMutation();
+  
   const navigate = useNavigate();
+  
   const [anchorEl, setAnchorEl] = useState(null);
   const [publishModal, setPublishModal] = useState(false);
-  const [isGoogle, setGoogle] = useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -52,6 +94,14 @@ function JobCard({
   const handlePublish = () => {
     setPublishModal(true);
   };
+
+  async function toggleJobStatus(action) {
+    try {
+      const response = await toggleJobMutation({ id: id, action: action });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const publishdata = [
     {
@@ -120,18 +170,18 @@ function JobCard({
       </ReactModal>
       <CenterFlexContainer justify="flex-start">
         <AiOutlinePushpin />
-        <JobStatusText textColor={jobStatus === "closed" ? "red" : "green"}>
-          {jobStatus}
+        <JobStatusText textColor={jobStatus ? "green" : "red"}>
+          {jobStatus ? "Open" : "Closed"}
         </JobStatusText>
       </CenterFlexContainer>
       <CenterFlexContainer justify="space-between">
         <div>
-          <JobTitleText onClick={() => navigate(`/manager/jobs/${jobId}`)}>
+          <JobTitleText onClick={() => navigate(`/manager/jobs/${id}`)}>
             {jobTitle}
           </JobTitleText>
           <JobSubTitle>
-            {jobCategory} &nbsp;&#x2022; &nbsp;{jobType} &nbsp; &#x2022; &nbsp;{" "}
-            {jobPosition}
+            {industryType} &nbsp;&#x2022; &nbsp;{remote ? "Remote" : "Online"}{" "}
+            &nbsp; &#x2022; &nbsp; {seniorityLevel}
           </JobSubTitle>
         </div>
         <KebabMenuIcon
@@ -158,27 +208,31 @@ function JobCard({
           <MenuItem onClick={handleClose}>Close Hiring</MenuItem>
         </Menu>
       </CenterFlexContainer>
-      <GridContainer columns="1fr 10px 1fr 10px 1fr">
+      <GridContainer columns="1fr 10px 1fr 10px min-content">
         <Container align="start">
           <JobSmallText>Total Candidate</JobSmallText>
-          <JobTitleText>{candidateCount}</JobTitleText>
+          <JobTitleText>{candidates?.length}</JobTitleText>
         </Container>
         <VerticalLine />
         <Container align="start">
-          <JobSmallText>Active Candidates</JobSmallText>
-          <JobTitleText>{activeCandidateCount}</JobTitleText>
+          <JobSmallText>Openings</JobSmallText>
+          <JobTitleText>{openings}</JobTitleText>
         </Container>
         <VerticalLine />
         <Container align="start">
           <JobSmallText>Job ID</JobSmallText>
-          <JobTitleText>{jobId}</JobTitleText>
+          <small>{id}</small>
         </Container>
       </GridContainer>
       <CenterFlexContainer justify="space-between">
-        {jobStatus === "closed" ? (
-          <Button btnColor="#007d11">Reopen Job</Button>
+        {!jobStatus ? (
+          <Button btnColor="#007d11" onClick={() => toggleJobStatus("open")}>
+            Reopen Job
+          </Button>
         ) : (
-          <Button btnColor="#96000d">Close Job</Button>
+          <Button btnColor="#96000d" onClick={() => toggleJobStatus("close")}>
+            Close Job
+          </Button>
         )}
         <TextButton onClick={handlePublish}>Publish</TextButton>
       </CenterFlexContainer>

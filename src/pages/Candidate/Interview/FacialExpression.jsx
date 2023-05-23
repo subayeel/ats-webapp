@@ -32,9 +32,9 @@ const FacialExpressionDetector = () => {
   const loadModels = () => {
     Promise.all([
       // THIS FOR FACE DETECT AND LOAD FROM YOU PUBLIC/MODELS DIRECTORY
-      faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
-      faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
-      faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
+      // faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
+      // faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
+      // faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
       faceapi.nets.faceExpressionNet.loadFromUri("/models"),
     ]).then(() => {
       faceMyDetect();

@@ -1,6 +1,6 @@
 import { apiSlice } from "../apiSlice";
 
-export const jobApiSlice = apiSlice.injectEndpoints({
+export const jobSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getJobs: builder.query({
       query: () => "/jobs",
@@ -14,7 +14,17 @@ export const jobApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Jobs"],
     }),
+    toggleJob: builder.mutation({
+      query: (data) => ({
+        url: `/jobs?id=${data.id}`,
+        method: "PUT",
+        body: { action: data.action },
+      }),
+      invalidatesTags:["Jobs"]
+    }),
   }),
 });
 
-export const { useAddJobMutation,useGetJobsQuery } = jobApiSlice;
+export const { useAddJobMutation } = jobSlice;
+export const { useGetJobsQuery } = jobSlice;
+export const { useToggleJobMutation } = jobSlice;

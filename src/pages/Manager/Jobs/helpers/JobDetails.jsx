@@ -231,7 +231,7 @@ const JobDetails = () => {
 
         <CardContainer>
           <GridContainer align="flex-start" width="100%" columns="1fr 1fr">
-            <GridContainer columns="repeat(auto-fill,minmax(350px,1fr))">
+            <GridContainer align="flex-start" columns="repeat(auto-fill,minmax(350px,1fr))">
               <BorderedContainer align="flex-start" justify="flex-start">
                 <Heading2>About Job</Heading2>
                 <GridContainer columns="1fr 1fr 1fr" width="100%">

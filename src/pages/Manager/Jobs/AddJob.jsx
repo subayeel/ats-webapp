@@ -30,6 +30,7 @@ import {
   useGetJobsQuery,
 } from "../../../api/endpoints/jobsEndpoint";
 import useAuth from "../../../hooks/useAuth";
+import { useGetUserQuery } from "../../../api/endpoints/userEndpoint";
 const dummyMembers = [
   {
     id: "223",
@@ -72,14 +73,6 @@ const accessTypes = ["Administrator Access", "Read-Only Access"];
 
 const selectedMembers = [{ memberName: "Rahul", memberAccess: "Admin" }];
 function AddJob() {
-  const {
-    data: jobs,
-    isLoading: isJobsLoading,
-    isSuccess: isJobsSuccess,
-    isError: isJobsError,
-    error: JobsError,
-  } = useGetJobsQuery ();
-
   const [
     addJobMutation,
     {
@@ -89,7 +82,9 @@ function AddJob() {
       error: addJobError,
     },
   ] = useAddJobMutation();
-  
+
+
+
   const [error, setError] = useState("");
   const [aboutData, setAboutData] = useState([]);
   const [applicationData, setApplicationData] = useState([]);
@@ -198,6 +193,7 @@ function AddJob() {
   };
   const [state, dispatch] = useReducer(reducer, {
     jobTitle: "",
+    jobStatus: true,
     department: "",
     location: "",
     remote: false,
@@ -251,8 +247,7 @@ function AddJob() {
       picture: "1",
     }
   );
-  
-  
+
   const addJobFlowTiles = [
     {
       id: 1,
@@ -359,9 +354,8 @@ function AddJob() {
       jobData: state,
       applicationData: formData,
       interviwers: choosenMembers,
-      
     };
-    const response = await addJobMutation(finalData)
+    const response = await addJobMutation(finalData);
   }
   function handleAddUser() {
     //make api call to add member
@@ -373,6 +367,7 @@ function AddJob() {
   }
 
   function handleSubmit() {}
+
   return (
     <MainContainer>
       <Modal
@@ -429,12 +424,12 @@ function AddJob() {
         <Container align="flex-start">
           <Heading3>Selected Members</Heading3>
           {/* {dummyMembers
-            .filter((mem) =>
-              choosenMembers.map((memb) => memb.id).includes(mem.id)
-            )
-            .map((member) => {
-              return <SelectedMemberRow {...member}></SelectedMemberRow>;
-            })} */}
+              .filter((mem) =>
+                choosenMembers.map((memb) => memb.id).includes(mem.id)
+              )
+              .map((member) => {
+                return <SelectedMemberRow {...member}></SelectedMemberRow>;
+              })} */}
           {choosenMembers.map((member) => {
             return (
               <SelectedMemberRow
