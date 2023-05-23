@@ -208,9 +208,9 @@ function JobCard({
           <MenuItem onClick={handleClose}>Close Hiring</MenuItem>
         </Menu>
       </CenterFlexContainer>
-      <GridContainer columns="1fr 10px 1fr 10px min-content">
+      <GridContainer columns="1fr 10px 1fr ">
         <Container align="start">
-          <JobSmallText>Total Candidate</JobSmallText>
+          <JobSmallText>Candidates Applied</JobSmallText>
           <JobTitleText>{candidates?.length}</JobTitleText>
         </Container>
         <VerticalLine />
@@ -218,11 +218,7 @@ function JobCard({
           <JobSmallText>Openings</JobSmallText>
           <JobTitleText>{openings}</JobTitleText>
         </Container>
-        <VerticalLine />
-        <Container align="start">
-          <JobSmallText>Job ID</JobSmallText>
-          <small>{id}</small>
-        </Container>
+        
       </GridContainer>
       <CenterFlexContainer justify="space-between">
         {!jobStatus ? (

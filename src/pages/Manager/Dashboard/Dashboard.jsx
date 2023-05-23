@@ -18,7 +18,7 @@ import JobCard from "../Jobs/helpers/JobCard";
 
 function Dashboard() {
   const { data: jobs, isLoading } = useGetJobsQuery();
-  
+
   const { auth } = useAuth();
   const navigate = useNavigate();
 
@@ -38,36 +38,41 @@ function Dashboard() {
   return (
     <MainContainer>
       <GridContainer align="stretch" columns="1fr auto">
-        <CardContainer>
-          <CardHeader columns="1fr 200px">
-            <CardHeading>Jobs</CardHeading>
-            <ToggleButtonGroup
-              color="primary"
-              value={alignment}
-              exclusive
-              onChange={handleChange}
-              aria-label="Platform"
-            >
-              <ToggleButton value="all">All</ToggleButton>
-              <ToggleButton value="open">Open</ToggleButton>
-              <ToggleButton value="closed">Closed</ToggleButton>
-            </ToggleButtonGroup>
-          </CardHeader>
-          <HeaderLine></HeaderLine>
+        <GridContainer gap="1rem" align="start" columns="1fr" rows="100px 1fr">
+          <CardContainer>
+            <CardHeader columns="1fr 200px">
+              <CardHeading>Jobs {jobs?.length}</CardHeading>
+              <ToggleButtonGroup
+                color="primary"
+                value={alignment}
+                exclusive
+                onChange={handleChange}
+                aria-label="Platform"
+              >
+                <ToggleButton value="all">All</ToggleButton>
+                <ToggleButton value="open">Open</ToggleButton>
+                <ToggleButton value="closed">Closed</ToggleButton>
+              </ToggleButtonGroup>
+            </CardHeader>
+          </CardContainer>
+          
+            <GridContainer margin="1.5rem 0" columns="repeat(auto-fill,minmax(400px,1fr))">
+              {jobs ? (
+                jobs?.map(createJobCard)
+              ) : (
+                <>
+                  <NoData text="You haven't added any Jobs" />
+                  <Button onClick={() => navigate("/")}>Add Job</Button>
+                </>
+              )}
+            </GridContainer>
+          
+        </GridContainer>
 
-          {jobs ? (
-            jobs?.map(createJobCard)
-          ) : (
-            <>
-              <NoData text="You haven't added any Jobs" />
-              <Button onClick={() => navigate("/")}>Add Job</Button>
-            </>
-          )}
-        </CardContainer>
         <CardContainer>
           <CardHeader columns="1fr 50px">
             <CardHeading>My Tasks</CardHeading>
-            <LightText>{taskCount} Tasks</LightText>
+            <LightText>{tasks.length} Tasks</LightText>
           </CardHeader>
           <HeaderLine></HeaderLine>
           {interviews.length !== 0 ? (

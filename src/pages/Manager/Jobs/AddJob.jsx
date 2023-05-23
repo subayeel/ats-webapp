@@ -24,13 +24,8 @@ import JobCreation from "./helpers/JobCreation";
 import JobApplication from "./helpers/JobApplication";
 import HiringFlow from "./helpers/HiringFlow";
 import SelectedMemberRow from "./helpers/SelectedMemberRow";
+import { useAddJobMutation } from "../../../api/endpoints/jobsEndpoint";
 
-import {
-  useAddJobMutation,
-  useGetJobsQuery,
-} from "../../../api/endpoints/jobsEndpoint";
-import useAuth from "../../../hooks/useAuth";
-import { useGetUserQuery } from "../../../api/endpoints/userEndpoint";
 const dummyMembers = [
   {
     id: "223",
@@ -83,8 +78,6 @@ function AddJob() {
     },
   ] = useAddJobMutation();
 
-
-
   const [error, setError] = useState("");
   const [aboutData, setAboutData] = useState([]);
   const [applicationData, setApplicationData] = useState([]);
@@ -103,6 +96,8 @@ function AddJob() {
     jobTitle: "handleJobTitle",
     department: "handleDepartment",
     location: "handleLocation",
+    address: "handleAddress",
+    postCode: "handlePostCode",
     remote: "handleRemote",
     hideSalary: "handleHideSalary",
     desc: "handleDesc",
@@ -123,6 +118,10 @@ function AddJob() {
   };
   const reducer = (state, action) => {
     switch (action.type) {
+      case ACTION.address:
+        return { ...state, address: action.payload };
+      case ACTION.postCode:
+        return { ...state, postCode: action.payload };
       case ACTION.jobTitle:
         return { ...state, jobTitle: action.payload };
       case ACTION.department:
@@ -143,12 +142,18 @@ function AddJob() {
       case ACTION.responsibilities:
         return {
           ...state,
-          jobDesc: { ...state.jobDesc, responsibilities: action.payload },
+          jobDesc: {
+            ...state.jobDesc,
+            responsibilities: action.payload.split("."),
+          },
         };
       case ACTION.requirements:
         return {
           ...state,
-          jobDesc: { ...state.jobDesc, requirements: action.payload },
+          jobDesc: {
+            ...state.jobDesc,
+            requirements: action.payload.split("."),
+          },
         };
       case ACTION.employmentType:
         return { ...state, employmentType: action.payload };
@@ -193,6 +198,8 @@ function AddJob() {
   };
   const [state, dispatch] = useReducer(reducer, {
     jobTitle: "",
+    address: "",
+    postCode: "",
     jobStatus: true,
     department: "",
     location: "",

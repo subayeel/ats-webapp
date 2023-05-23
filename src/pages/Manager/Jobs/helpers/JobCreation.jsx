@@ -34,8 +34,9 @@ import axios from "../../../../api/axios";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
+import { indianCities, indianStates } from "../../../../data/indianStateCities";
 
-function JobCreation({ setAboutData ,dispatch,state}) {
+function JobCreation({ setAboutData, dispatch, state }) {
   const navigate = useNavigate();
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
@@ -43,9 +44,12 @@ function JobCreation({ setAboutData ,dispatch,state}) {
   const [success, setSuccess] = useState("");
   const [skills, setSkills] = useState([]);
   const [education, setEducation] = useState([]);
+  const [cities, setCities] = useState([]);
 
   const ACTION = {
     jobTitle: "handleJobTitle",
+    address: "handleAddress",
+    postCode: "handlePostCode",
     department: "handleDepartment",
     location: "handleLocation",
     remote: "handleRemote",
@@ -66,7 +70,6 @@ function JobCreation({ setAboutData ,dispatch,state}) {
     openings: "handleOpenings",
     candidates: "handleCandidates",
   };
-  
 
   //handle auto filling using pdf
   function handleAutoFill() {
@@ -77,7 +80,7 @@ function JobCreation({ setAboutData ,dispatch,state}) {
   }
   function handleRemoteCheck(e) {
     dispatch({ type: ACTION.remote, payload: e.target.checked });
-    // setFormData({ ["isRemote"]: e.target.checked });
+    // setstate({ ["isRemote"]: e.target.checked });
   }
   function handleHideSalaryCheck(e) {
     dispatch({ type: ACTION.hideSalary, payload: e.target.checked });
@@ -93,7 +96,7 @@ function JobCreation({ setAboutData ,dispatch,state}) {
       typeof value === "string" ? value.split(",") : value
     );
     // setFormData({ ["skills"]: skills });
-    dispatch({ type: ACTION.skills, payload: [skills] });
+    dispatch({ type: ACTION.skills, payload: skills });
   };
   const handleEducationChange = (event) => {
     const {
@@ -104,23 +107,14 @@ function JobCreation({ setAboutData ,dispatch,state}) {
       typeof value === "string" ? value.split(",") : value
     );
     // setFormData({ ["education"]: education });
-    dispatch({ type: ACTION.education, payload: [education] });
+    dispatch({ type: ACTION.education, payload: education });
   };
 
-  async function handleSubmit() {
-    try {
-      const result = await axiosPrivate.post("/job", state);
-      if (result.status == 201) {
-        setSuccess("Registered Successfully");
-      }
-    } catch (err) {
-      setError(err);
-      console.log(err);
-    }
-  }
+ 
   useEffect(() => {
     setAboutData(state);
   }, [state]);
+
   return (
     <>
       <GridContainer width="100%" columns="1fr 20px 1fr">
@@ -143,7 +137,7 @@ function JobCreation({ setAboutData ,dispatch,state}) {
       <GridContainer columns="repeat(auto-fill,minmax(250px,1fr))">
         <TextField
           fullWidth
-          value={state.jobTitle}
+          value={state?.jobTitle}
           onChange={(e) =>
             dispatch({ type: ACTION.jobTitle, payload: e.target.value })
           }
@@ -154,7 +148,7 @@ function JobCreation({ setAboutData ,dispatch,state}) {
           <InputLabel id="demo-simple-select-label">Department</InputLabel>
           <Select
             labelId="demo-simple-select-label"
-            value={state.department}
+            value={state?.department}
             label="Department"
             onChange={(e) =>
               dispatch({ type: ACTION.department, payload: e.target.value })
@@ -165,28 +159,34 @@ function JobCreation({ setAboutData ,dispatch,state}) {
             })}
           </Select>
         </FormControl>
-        <FormControl margin="dense" fullWidth>
-          <InputLabel id="demo-simple-select-label">Location*</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            value={state.location}
-            label="Location*"
+        <GridContainer columns="1fr 1fr">
+          <TextField
+            margin="dense"
+            value={state?.address}
             onChange={(e) =>
-              dispatch({ type: ACTION.location, payload: e.target.value })
+              dispatch({ type: ACTION.address, payload: e.target.value })
             }
-          >
-            {jobsDepartments.map((job) => {
-              return <MenuItem value={job}>{job}</MenuItem>;
-            })}
-          </Select>
-        </FormControl>
+            fullWidth
+            multiple
+            label="Address"
+          />
+          <TextField
+            value={state?.postCode}
+            onChange={(e) =>
+              dispatch({ type: ACTION.postCode, payload: e.target.value })
+            }
+            margin="dense"
+            fullWidth
+            label="Post Code"
+          />
+        </GridContainer>
       </GridContainer>
 
       <FormGroup>
         <FormControlLabel
           control={
             <Checkbox
-              checked={state.remote}
+              checked={state?.remote}
               onChange={handleRemoteCheck}
               defaultChecked
             />
@@ -201,9 +201,33 @@ function JobCreation({ setAboutData ,dispatch,state}) {
         fullWidth
         label="Job Descreption"
         name="jobDesc"
-        value={state.jobDesc.desc}
+        value={state?.jobDesc.desc}
         onChange={(e) =>
           dispatch({ type: ACTION.desc, payload: e.target.value })
+        }
+      />
+      <TextField
+        multiline
+        
+        fullWidth
+        margin="dense"
+        label="Job Responsibilities"
+        name="jobDesc"
+        value={state?.jobDesc.responsibilities}
+        onChange={(e) =>
+          dispatch({ type: ACTION.responsibilities, payload: e.target.value })
+        }
+      />
+      
+      <TextField
+        multiline
+        fullWidth
+        margin="dense"
+        label="Job Requirements"
+        name="jobDesc"
+        value={state?.jobDesc.requirements}
+        onChange={(e) =>
+          dispatch({ type: ACTION.requirements, payload: e.target.value })
         }
       />
       <GridContainer
@@ -219,7 +243,7 @@ function JobCreation({ setAboutData ,dispatch,state}) {
             labelId="employmentType-select-label"
             id="demo-simple-select"
             name="employmentType"
-            value={state.employmentType}
+            value={state?.employmentType}
             label="Employment Type"
             onChange={(e) =>
               dispatch({ type: ACTION.employmentType, payload: e.target.value })
@@ -239,7 +263,7 @@ function JobCreation({ setAboutData ,dispatch,state}) {
             labelId="seniorityLevel-select-label"
             id="demo-simple-select"
             name="seniorityLevel"
-            value={state.seniorityLevel}
+            value={state?.seniorityLevel}
             label="Seniority Level"
             onChange={(e) =>
               dispatch({ type: ACTION.seniorityLevel, payload: e.target.value })
@@ -255,7 +279,7 @@ function JobCreation({ setAboutData ,dispatch,state}) {
           <InputLabel id="industryType-select-label">Industry Type</InputLabel>
           <Select
             labelId="industryType-select-label"
-            value={state.industryType}
+            value={state?.industryType}
             label="Industry Type"
             onChange={(e) =>
               dispatch({ type: ACTION.industryType, payload: e.target.value })
@@ -275,7 +299,7 @@ function JobCreation({ setAboutData ,dispatch,state}) {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             name="salaryType"
-            value={state.salary.salaryType}
+            value={state?.salary.salaryType}
             label="Salary Type"
             onChange={(e) =>
               dispatch({ type: ACTION.salaryType, payload: e.target.value })
@@ -288,7 +312,7 @@ function JobCreation({ setAboutData ,dispatch,state}) {
         <TextField
           label="Minimum CTC"
           name="minimumCtc"
-          value={state.salary.ctcMin}
+          value={state?.salary.ctcMin}
           onChange={(e) =>
             dispatch({ type: ACTION.ctcMin, payload: e.target.value })
           }
@@ -297,7 +321,7 @@ function JobCreation({ setAboutData ,dispatch,state}) {
         <TextField
           label="Maximum CTC"
           name="maximumCtc"
-          value={state.salary.ctcMax}
+          value={state?.salary.ctcMax}
           onChange={(e) =>
             dispatch({ type: ACTION.ctcMax, payload: e.target.value })
           }
@@ -306,27 +330,28 @@ function JobCreation({ setAboutData ,dispatch,state}) {
 
       <Heading3 width="100%">Work Experience (in Years)*</Heading3>
 
-      <TextField
-        label="Experience(in Years)"
-        value={state.workExperience.minYears}
-        onChange={(e) =>
-          dispatch({ type: ACTION.minYears, payload: e.target.value })
-        }
-      />
+      <GridContainer align="flex-start">
+        <TextField
+          label="Experience(in Years)"
+          value={state?.workExperience.minYears}
+          onChange={(e) =>
+            dispatch({ type: ACTION.minYears, payload: e.target.value })
+          }
+        />
 
-      <FormGroup>
         <FormControlLabel
           control={
             <Checkbox
               name="hideSalary"
-              checked={state.hideSalary}
+              checked={state?.hideSalary}
               onChange={handleHideSalaryCheck}
               defaultChecked
             />
           }
           label="Hide Salary details from the Candidates."
         />
-      </FormGroup>
+      </GridContainer>
+
       <Heading3 width="100%">Skills*</Heading3>
       <GridContainer columns="1fr 1fr 1fr">
         <FormControl sx={{ width: "300px" }}>
@@ -368,13 +393,12 @@ function JobCreation({ setAboutData ,dispatch,state}) {
         <TextField
           label="Number of Openings"
           name="openingsCount"
-          value={state.openings}
+          value={state?.openings}
           onChange={(e) =>
             dispatch({ type: ACTION.openings, payload: e.target.value })
           }
         />
       </GridContainer>
-      
     </>
   );
 }

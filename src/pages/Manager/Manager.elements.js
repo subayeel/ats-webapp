@@ -14,8 +14,10 @@ export const JobCardContainer = styled.div`
   grid-template-columns: 1fr;
   gap: 0.7rem;
   background-color: #fff;
-  border-radius: 4px;
-  padding: 1rem;
+  border-radius: 8px;
+  padding: 2rem 2rem 1rem 2rem;
+  border: 1px solid #d3d3d3;
+ 
   &:hover {
     cursor: pointer;
   }
