@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import {
@@ -32,6 +32,10 @@ import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import { StrictModeDroppable as Droppable } from "../../../../utils/StrictModeDroppable";
 import { SmallText } from "../../../Auth/Auth.elements";
 import { useGetSingleJobQuery } from "../../../../api/endpoints/jobsEndpoint";
+import {
+  useGetCandidatesQuery,
+  useUpdateJobStatusMutation,
+} from "../../../../api/endpoints/candidateEndpoint";
 
 //get details from api using id in params
 const jobsApiData = {
@@ -121,150 +125,6 @@ const jobsApiData = {
   ],
 };
 
-const candidates = [
-  {
-    id: 1,
-    status: "intervies",
-    fullName: "Abdullah Subayeel",
-    title: "Full Stack Developer",
-    skills: ["ReactJs", "NodeJs", "MongoDB", "Redux"],
-  },
-  {
-    id: 2,
-    status: "hired",
-    fullName: "Maruti Naik",
-    title: "Android Dev",
-    skills: ["Kotlin", "Java"],
-  },
-  {
-    id: 3,
-    status: "contacted",
-    fullName: "Abdul Raheem",
-    title: "Node Developer",
-    skills: ["JS", "NodeJs", "ExpressJs", "EJS"],
-  },
-  {
-    id: 4,
-    status: "contacted",
-    fullName: "Abdullah Subayeel",
-    title: ".Net Developer",
-    skills: ["C#", "C++", "VB.NET"],
-  },
-  {
-    id: 5,
-    status: "applied",
-    fullName: "Mohammed Zakwan",
-    title: "Frontend Developer",
-    skills: ["HTML", "CSS", "JS", "ReactJs"],
-  },
-];
-
-const columnsFromBackend = {
-  [uuid()]: {
-    name: "Applied",
-    items: jobsApiData.candidates.filter((c) => c.status === "applied"),
-  },
-  [uuid()]: {
-    name: "Contacted",
-    items: jobsApiData.candidates.filter((c) => c.status === "contacted"),
-  },
-  [uuid()]: {
-    name: "Interview",
-    items: jobsApiData.candidates.filter((c) => c.status === "interview"),
-  },
-  [uuid()]: {
-    name: "Hired",
-    items: jobsApiData.candidates.filter((c) => c.status === "hired"),
-  },
-  [uuid()]: {
-    name: "Rejected",
-    items: jobsApiData.candidates.filter((c) => c.status === "rejected"),
-  },
-};
-
-const dummySkills = ["Full Time", "Senior", "UX/UI"];
-var temp = {
-  jobData: {
-    jobDesc: {
-      desc: "A Django Developer is responsible for designing, developing, and maintaining web applications using the Django framework. They work closely with project managers, designers, and other developers to create robust and scalable web solutions",
-      responsibilities: [
-        "Develop and maintain web applications using the Django framework",
-        "\nCollaborate with cross-functional teams to gather and define project requirements",
-        "\nDesign and implement database models and schema using Django ORM",
-        "\nCreate and integrate APIs and web services to enable seamless data exchange",
-        "\nWrite clean, efficient, and reusable code following industry best practices and coding standards",
-        "\nConduct thorough testing and debugging to ensure the application functions flawlessly",
-        "\nOptimize application performance and identify and fix bottlenecks",
-        "\nCollaborate with front-end developers to integrate server-side logic with user-facing elements",
-        "\nParticipate in code reviews to maintain code quality and provide constructive feedback",
-        "\nStay up-to-date with the latest trends and advancements in Django development and related technologies",
-        "",
-      ],
-      requirements: [
-        "Strong proficiency in Python and experience with the Django framework",
-        "\nIn-depth understanding of web development principles and best practices",
-        "\nExperience with front-end technologies such as HTML, CSS, and JavaScript",
-        "\nFamiliarity with relational databases and SQL, preferably experience with database systems like PostgreSQL or MySQL",
-        "\nKnowledge of version control systems, such as Git",
-        "\nExperience working in an Agile development environment",
-        "\nGood understanding of software development life cycle (SDLC) and best practices",
-        "\nStrong problem-solving and analytical skills",
-        "\nExcellent communication and collaboration abilities",
-        "\nBachelor's degree in Computer Science, Software Engineering, or a related field (preferred)",
-        "",
-      ],
-    },
-    salary: {
-      salaryType: "Annual",
-      ctcMin: 3,
-      ctcMax: 7,
-      currency: "",
-    },
-    workExperience: {
-      minYears: 0,
-    },
-    candidates: [],
-    department: "Logistics",
-    education: ["Associate's degree", "Bachelor's degree"],
-    employmentType: "Full-time employment",
-    hideSalary: false,
-    industryType: "Technology",
-    jobTitle: "Django Developer",
-    address: "Bhatkal, Karnataka",
-    postCode: "581320",
-    openings: 10,
-    remote: true,
-    seniorityLevel: "Entry-level",
-    skills: ["Communication skills", "Problem-solving skills"],
-    jobStatus: true,
-  },
-  applicationData: {
-    address: "1",
-    city: "1",
-    dob: "2",
-    education: "1",
-    email: "2",
-    firstName: "2",
-    gender: "2",
-    lastName: "2",
-    martialStatus: "1",
-    phone: "2",
-    picture: "1",
-    postCode: "1",
-    skills: "1",
-    state: "1",
-    workExperience: "1",
-  },
-  _id: "646cec2d75af0f595b0c1104",
-  interviwers: [
-    {
-      id: "121",
-      accessType: "Administrator Access",
-    },
-  ],
-  managerId: "6450101f737750a4e6778c9d",
-  __v: 0,
-};
 const JobDetails = () => {
   const { jobId } = useParams(); //get more details from api
 
@@ -272,9 +132,73 @@ const JobDetails = () => {
     useGetSingleJobQuery(jobId);
 
   const navigate = useNavigate();
-  const [columns, setColumns] = useState(columnsFromBackend);
+  const {
+    data: candidates,
+    isLoading: isCandidatesLoading,
+    isSuccess: isCandidatesSuccess,
+  } = useGetCandidatesQuery();
 
-  const handleOnDragEnd = (result, columns, setColumns) => {
+  const [
+    changeJobStatus,
+    {
+      isLoading: isChangeStatusLoading,
+      isSuccess: isChangeStatusSuccess,
+      isError: isChangeStatusError,
+      error: changeStatusError,
+    },
+  ] = useUpdateJobStatusMutation();
+
+  const appliedCandidates = candidates?.filter((c) =>
+    c.appliedJobs?.some((j) => j.jobId === jobId)
+  );
+
+  const temp = appliedCandidates?.filter((c) =>
+    c.appliedJobs?.some((j) => j.status === "applied" && j.jobId === jobId)
+  );
+
+  const columnsFromBackend = {
+    applied: {
+      name: "Applied",
+      items: candidates?.filter((c) =>
+        c.appliedJobs?.some((j) => j.status === "applied" && j.jobId === jobId)
+      ),
+    },
+    interview: {
+      name: "Contacted",
+      items: candidates?.filter((c) =>
+        c.appliedJobs?.some(
+          (j) => j.status === "contacted" && j.jobId === jobId
+        )
+      ),
+    },
+    interview: {
+      name: "Interview",
+      items: candidates?.filter((c) =>
+        c.appliedJobs?.some(
+          (j) => j.status === "interview" && j.jobId === jobId
+        )
+      ),
+    },
+    hired: {
+      name: "Hired",
+      items: candidates?.filter((c) =>
+        c.appliedJobs?.some((j) => j.status === "hired" && j.jobId === jobId)
+      ),
+    },
+    rejected: {
+      name: "Rejected",
+      items: candidates?.filter((c) =>
+        c.appliedJobs?.some((j) => j.status === "rejected" && j.jobId === jobId)
+      ),
+    },
+  };
+
+  const [columns, setColumns] = useState(columnsFromBackend);
+  useEffect(() => {
+    setColumns(columnsFromBackend);
+  }, [isCandidatesSuccess]);
+
+  const handleOnDragEnd = async (result, columns, setColumns) => {
     if (!result.destination) return;
     const { source, destination } = result;
     if (source.droppableId !== destination.droppableId) {
@@ -296,6 +220,12 @@ const JobDetails = () => {
           items: destItems,
         },
       });
+
+      await changeJobStatus({
+        status: destination.droppableId,
+        id: result.draggableId,
+        jobId: jobId,
+      });
     } else {
       const column = columns[source.droppableId];
       const copiedItems = [...column.items];
@@ -307,7 +237,7 @@ const JobDetails = () => {
   function createCandidateTile(props, i) {
     return <CandidateTile i={i} {...props}></CandidateTile>;
   }
-  if (isJobDetailsLoading) {
+  if (isJobDetailsLoading || isCandidatesLoading) {
     return "Loading...";
   } else {
     return (
@@ -430,11 +360,11 @@ const JobDetails = () => {
                                 marginRight: "1rem",
                               }}
                             >
-                              {column.items.map((item, index) => {
+                              {column?.items?.map((item, index) => {
                                 return (
                                   <Draggable
-                                    key={item.id}
-                                    draggableId={item.id.toString()}
+                                    key={item._id}
+                                    draggableId={item._id.toString()}
                                     index={index}
                                   >
                                     {(provided, snapshot) => (
@@ -475,7 +405,7 @@ const JobDetails = () => {
 
                                           <Button
                                             onClick={() =>
-                                              navigate(`candidate/${item.id}`)
+                                              navigate(`candidate/${item._id}`)
                                             }
                                             btnColor={(props) =>
                                               props.theme.colors.atsBlue

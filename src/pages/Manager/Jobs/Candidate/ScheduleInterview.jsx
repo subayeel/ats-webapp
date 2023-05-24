@@ -23,17 +23,16 @@ import {
   MainContainer,
   Heading2,
 } from "../../../../Global";
-import { JobSubTitle } from "../../Manager.elements";
 
-import tinymce from "tinymce";
 //Mui imports
-import dayjs from "dayjs";
+
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 //Document editor
 import BundledEditor from "../../../../BundleEditor";
+import { useGetSingleCandidateQuery } from "../../../../api/endpoints/candidateEndpoint";
 //constants
 
 //Get HR details to display in email
@@ -89,9 +88,13 @@ const employeesList = [
 
 function ScheduleInterview() {
   const { candidateId, jobId } = useParams();
+  const { data: singleCandidateData, isSingleCandidateLoading } =
+    useGetSingleCandidateQuery(candidateId);
   const [intvType, setIntvType] = useState("");
   const [jobPosition, setJobPosition] = useState("");
-  const [selectedCandidate, setSelectedCandidate] = useState("");
+  const [selectedCandidate, setSelectedCandidate] = useState(
+    singleCandidateData?.fullName
+  );
   const [selectedEmployees, setSelectedEmployees] = useState([]);
   const [intvDate, setIntvDate] = useState("");
 
@@ -148,21 +151,16 @@ ${HR_DETAILS.company}</p>`;
     //send email to candidate
     //send email to selected employees
   }
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
-  };
+  useEffect(() => {
+    setSelectedCandidate(singleCandidateData?.fullName);
+  }, [singleCandidateData]);
 
   useEffect(() => {
-    const candidate = candidateList.filter(
-      (cdt) => cdt.candidateId == selectedCandidate
-    );
     var text = `<p>Subject: Invitation to Interview for ${
       jobPosition || "[POSITION_NAME]"
     }<br><br>
     
-    Dear ${candidate[0]?.candidateName || "[Candidate Name]"},<br><br>
+    Dear ${selectedCandidate || "[Candidate Name]"},<br><br>
     
     I hope this email finds you well. I am pleased to inform you that your application for the position of ${
       jobPosition || "[JOB POSITION]"
@@ -240,23 +238,15 @@ ${HR_DETAILS.company}</p>`;
           </Container>
           <Container height="100%" align="flex-start" justify="flex-start">
             <FormControl fullWidth="true" margin="dense">
-              <InputLabel id="state-select-label">Candidate</InputLabel>
-              <Select
+              
+              <TextField
                 labelId="state-select-label"
                 id="demo-simple-select"
                 name="state"
                 value={selectedCandidate}
                 label="Candidate"
-                onChange={(e) => setSelectedCandidate(e.target.value)}
-              >
-                {candidateList.map((cdt) => {
-                  return (
-                    <MenuItem value={cdt.candidateId}>
-                      {cdt.candidateName}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
+                disabled
+              ></TextField>
             </FormControl>
             <FormControl fullWidth="true" margin="dense">
               <InputLabel id="skills-label">Add Interviewer</InputLabel>

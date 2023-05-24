@@ -12,6 +12,7 @@ export const jobSlice = apiSlice.injectEndpoints({
     getAllJobs: builder.query({
       query: () => `/jobs/alljobs`,
     }),
+
     addJob: builder.mutation({
       query: (data) => ({
         url: "/jobs",
@@ -28,6 +29,7 @@ export const jobSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Jobs"],
     }),
+    
   }),
 });
 
@@ -36,3 +38,4 @@ export const { useGetJobsQuery } = jobSlice;
 export const { useGetAllJobsQuery } = jobSlice;
 export const { useGetSingleJobQuery } = jobSlice;
 export const { useToggleJobMutation } = jobSlice;
+

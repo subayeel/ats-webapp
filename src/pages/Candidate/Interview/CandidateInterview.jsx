@@ -15,6 +15,7 @@ import { LightText } from "../../../Global";
 import { Button } from "../../../Global";
 import NoData from "../../../components/ui/NoData";
 import SuggestedJobTile from "../helpers/SuggestedJobTile";
+import { useGetAllJobsQuery } from "../../../api/endpoints/jobsEndpoint";
 
 //constants
 const suggestedJobs = [
@@ -40,6 +41,7 @@ const suggestedJobs = [
 const CandidateInterview = () => {
   const [interviewRequests, setInteviewRequests] = useState([]);
 
+  const { data: jobs, isLoading: isJobsLoading } = useGetAllJobsQuery();
   //function to create requested interview
   function createInterviewCards(props, i) {
     return (
@@ -52,7 +54,7 @@ const CandidateInterview = () => {
   }
   return (
     <MainContainer>
-      <GridContainer columns="1fr 2fr" align="stretch">
+      <GridContainer columns="1fr 2fr" align="flex-start">
         <CardContainer>
           <Heading3>Interview Requests</Heading3>
           <HeaderLine />
@@ -66,7 +68,7 @@ const CandidateInterview = () => {
           <Heading3>Apply for Jobs</Heading3>
           <HeaderLine />
           <Container width="100%" align="flex-start">
-            {suggestedJobs.map((sjob) => (
+            {jobs?.map((sjob) => (
               <SuggestedJobTile {...sjob} />
             ))}
           </Container>

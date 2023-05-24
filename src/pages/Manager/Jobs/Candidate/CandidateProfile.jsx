@@ -19,6 +19,7 @@ import {
   SkillTile,
   TileHeading,
 } from "../../Manager.elements";
+import { useGetSingleCandidateQuery } from "../../../../api/endpoints/candidateEndpoint";
 const candidateData = {
   id: "223",
   name: "Abdulla Subayeel",
@@ -34,6 +35,11 @@ const candidateData = {
 const CandidateProfile = () => {
   const { jobId, candidateId } = useParams(); //get data using candidateId
   const navigate = useNavigate();
+
+  const { data: singleCandidateData, isSingleCandidateLoading } =
+    useGetSingleCandidateQuery(candidateId);
+
+ 
   return (
     <MainContainer>
       <CardContainer>
@@ -42,13 +48,15 @@ const CandidateProfile = () => {
             <img width="100px" src={voidImage} />
           </SquaredImageContainer>
           <Container height="100%" justify="space-around" align="flex-start">
-            <JobTitleText>{candidateData.title}</JobTitleText>
-            <TileHeading>{candidateData.name}</TileHeading>
+            <JobTitleText>{singleCandidateData?.title}</JobTitleText>
+            <TileHeading>{singleCandidateData?.fullName}</TileHeading>
             <JobSmallText>
-              {candidateData.isFresher ? "Fresher" : candidateData.experience}
+              {singleCandidateData?.workExperience.length < 1
+                ? "Fresher"
+                : "Experienced"}
             </JobSmallText>
             <CenterFlexContainer>
-              {candidateData.skills.map((skill) => (
+              {singleCandidateData?.skills.map((skill) => (
                 <SkillTile>{skill}</SkillTile>
               ))}
             </CenterFlexContainer>
@@ -61,7 +69,12 @@ const CandidateProfile = () => {
           >
             <Container align="flex-end">
               <JobSmallText>Current Stage</JobSmallText>
-              <JobSubTitle>{candidateData.status}</JobSubTitle>
+              <JobSubTitle>
+                {
+                  singleCandidateData?.appliedJobs.filter((j) => j.jobId === jobId)[0]
+                    .status
+                }
+              </JobSubTitle>
             </Container>
             <GridContainer columns="2fr 1fr 1fr">
               <Button
