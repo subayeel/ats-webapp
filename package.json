@@ -18,6 +18,8 @@
     "face-api.js": "^0.22.2",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
+    "pdfjs-dist": "^3.6.172",
+    "pdfjs-lib": "^0.0.149",
     "raw-loader": "^4.0.2",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",

@@ -17,6 +17,14 @@ export const candidateSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Candidate"],
     }),
+    applyJob: builder.mutation({
+      query: (data) => ({
+        url: `/candidate/applyjob?id=${data.id}`,
+        method: "PUT",
+        body: { status: data.status, jobId: data.jobId,jobTitle:data.jobTitle },
+      }),
+      invalidatesTags: ["Candidate"],
+    }),
     getCurrentCandidate: builder.query({
       query: () => `/candidate/currentcandidate`,
     }),
@@ -27,3 +35,4 @@ export const { useGetCandidatesQuery } = candidateSlice;
 export const { useGetSingleCandidateQuery } = candidateSlice;
 export const { useGetCurrentCandidateQuery } = candidateSlice;
 export const { useUpdateJobStatusMutation } = candidateSlice;
+export const { useApplyJobMutation } = candidateSlice;

@@ -17,27 +17,7 @@ import NoData from "../../../components/ui/NoData";
 import SuggestedJobTile from "../helpers/SuggestedJobTile";
 import { useGetAllJobsQuery } from "../../../api/endpoints/jobsEndpoint";
 
-//constants
-const suggestedJobs = [
-  {
-    _id: "12",
-    job_title: "React Developer",
-    department: "IT",
-    location: "Mysore,Karnataka",
-  },
-  {
-    _id: "13",
-    job_title: "JavaScript Dev",
-    department: "IT",
-    location: "Manglore,Karnataka",
-  },
-  {
-    _id: "14",
-    job_title: "Flutter Developer",
-    department: "IT",
-    location: "Banglore,Karnataka",
-  },
-];
+
 const CandidateInterview = () => {
   const [interviewRequests, setInteviewRequests] = useState([]);
 

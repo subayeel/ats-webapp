@@ -18,26 +18,26 @@ import {
   
 } from "../../Manager/Manager.elements";
 
-function JobTile({ _id, job_title, department, location, status }) {
+function JobTile({ jobId, jobTitle, department, address, status }) {
   const navigate = useNavigate();
   return (
     <BorderedGridContainer
       style={{ margin: "4px 0" }}
-      key={_id}
+      key={jobId}
       columns="1fr 1fr 140px"
       width="calc(100% - 2rem)"
     >
       <Container align="flex-start" width="100%">
-        <JobTitleText>{job_title}</JobTitleText>
+        <JobTitleText>{jobTitle}</JobTitleText>
         <JobSubTitle>{department}</JobSubTitle>
-        <JobSmallText>{location}</JobSmallText>
+        <JobSmallText>{address}</JobSmallText>
       </Container>
       <Container>
         <LightText>Your Status</LightText>
         <JobSmallText>{status}</JobSmallText>
       </Container>
       <Button
-        onClick={() => navigate(`/candidate/jobs/${_id}`)}
+        onClick={() => navigate(`/candidate/jobs/${jobId}`)}
         btnColor={(props) => props.theme.colors.atsBlue}
       >
         View Details

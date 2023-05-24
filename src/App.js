@@ -41,6 +41,7 @@ import PersistLogin from "./pages/Auth/PersistLogin";
 import OceanQuestionsForm from "./pages/Auth/helpers/OceanQuestionsForm";
 import CandidateInterview from "./pages/Candidate/Interview/CandidateInterview";
 import InterviewScreen from "./pages/Candidate/Interview/InterviewScreen";
+import JobApplicationScreen from "./pages/Candidate/Interview/JobApplicationScreen";
 const ROLES = {
   User: 2001,
   Editor: 1984,
@@ -150,7 +151,7 @@ function App() {
                 ></Route>
                 <Route
                   path="/candidate/interview/:jobId"
-                  element={<InterviewScreen></InterviewScreen>}
+                  element={<JobApplicationScreen />}
                 ></Route>
                 <Route
                   path="/candidate/jobs/:jobId"

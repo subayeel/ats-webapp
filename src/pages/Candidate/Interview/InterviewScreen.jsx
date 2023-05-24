@@ -97,10 +97,9 @@ function InterviewScreen() {
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
-  
   //Timer
   const [seconds, setSeconds] = useState(59);
-  const [minutes, setMinutes] = useState(9);
+  const [minutes, setMinutes] = useState(4);
   const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
@@ -109,30 +108,23 @@ function InterviewScreen() {
       setMinutes(minutes - 1);
       setSeconds(59);
     }
-    if (elapsedTime < 600000) {
+    if (elapsedTime < 300000) {
       intervalId = setInterval(() => {
         setSeconds(seconds - 1);
       }, 1000);
     } else {
       alert("Job applied");
-      
       navigate("/candidate/dashboard");
+      window.location.reload(true);
     }
 
     let timerId = setTimeout(() => {
-      setElapsedTime((prevElapsedTime) => prevElapsedTime + 60000);
-    }, 60000);
+      setElapsedTime((prevElapsedTime) => prevElapsedTime + 300000);
+      console.log("time out ran");
+    }, 300000);
 
     return () => clearInterval(intervalId);
   }, [seconds, minutes]);
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentQuestionIndex(
-        (currentIndex) => (currentIndex + 1) % questions.length
-      );
-    }, 60000);
-    return () => clearInterval(intervalId);
-  }, []);
 
   function nextQuestion() {
     setCurrentQuestionIndex(
@@ -149,77 +141,81 @@ function InterviewScreen() {
     }
   }
 
-  return (
-    <MainContainer>
-      <GridContainer columns="2fr auto" align="stretch">
-        <CardContainer>
-          <GridContainer columns="1fr auto" width="100%">
-            <Heading2>Interview Conducted By AI</Heading2>
-            <LightText>
-              <h1>
-                {minutes < 10 ? `0${minutes}` : minutes}:
-                {seconds < 10 ? `0${seconds}` : seconds}
-              </h1>
-            </LightText>
-          </GridContainer>
-          <BorderedGridContainer justify="flex-start" width="100%">
-            <FormControl margin="dense">
-              <FormLabel id="demo-radio-buttons-group-label">
-                {questions[currentQuestionIndex].question}
-              </FormLabel>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                name="radio-buttons-group"
-              >
-                <FormControlLabel
-                  value={questions[currentQuestionIndex].option1}
-                  control={<Radio />}
-                  label={questions[currentQuestionIndex].option1}
-                />
+  function submitApplication() {}
 
-                <FormControlLabel
-                  value={questions[currentQuestionIndex].option2}
-                  control={<Radio />}
-                  label={questions[currentQuestionIndex].option2}
-                />
-                <FormControlLabel
-                  value={questions[currentQuestionIndex].option3}
-                  control={<Radio />}
-                  label={questions[currentQuestionIndex].option3}
-                />
-                <FormControlLabel
-                  value={questions[currentQuestionIndex].option4}
-                  control={<Radio />}
-                  label={questions[currentQuestionIndex].option4}
-                />
-              </RadioGroup>
-            </FormControl>
-          </BorderedGridContainer>
-          <GridContainer
-            columns="auto auto"
-            justify="space-between"
-            width="100%"
+  return (
+    <GridContainer columns="2fr auto" align="stretch">
+      <CardContainer>
+        <GridContainer columns="1fr auto" width="100%">
+          <Heading2>Round 2 - Interview Conducted By AI</Heading2>
+          <LightText>
+            <h1>
+              {minutes < 10 ? `0${minutes}` : minutes}:
+              {seconds < 10 ? `0${seconds}` : seconds}
+            </h1>
+          </LightText>
+        </GridContainer>
+        <BorderedGridContainer justify="flex-start" width="100%">
+          <FormControl margin="dense">
+            <FormLabel id="demo-radio-buttons-group-label">
+              {questions[currentQuestionIndex].question}
+            </FormLabel>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              name="radio-buttons-group"
+            >
+              <FormControlLabel
+                value={questions[currentQuestionIndex].option1}
+                control={<Radio />}
+                label={questions[currentQuestionIndex].option1}
+              />
+
+              <FormControlLabel
+                value={questions[currentQuestionIndex].option2}
+                control={<Radio />}
+                label={questions[currentQuestionIndex].option2}
+              />
+              <FormControlLabel
+                value={questions[currentQuestionIndex].option3}
+                control={<Radio />}
+                label={questions[currentQuestionIndex].option3}
+              />
+              <FormControlLabel
+                value={questions[currentQuestionIndex].option4}
+                control={<Radio />}
+                label={questions[currentQuestionIndex].option4}
+              />
+            </RadioGroup>
+          </FormControl>
+        </BorderedGridContainer>
+        <GridContainer columns="auto auto" justify="space-between" width="100%">
+          <Button
+            onClick={prevQuestion}
+            btnColor={(props) => props.theme.colors.atsBlue}
           >
+            Previous
+          </Button>
+          {currentQuestionIndex === 9 ? (
             <Button
-              onClick={prevQuestion}
+              onClick={submitApplication}
               btnColor={(props) => props.theme.colors.atsBlue}
             >
-              Previous
+              Submit
             </Button>
+          ) : (
             <Button
               onClick={nextQuestion}
               btnColor={(props) => props.theme.colors.atsBlue}
             >
               Next
             </Button>
-          </GridContainer>
-        </CardContainer>
-        <CardContainer>
-          <FacialExpressionDetector />
-        </CardContainer>
-      </GridContainer>
-      
-    </MainContainer>
+          )}
+        </GridContainer>
+      </CardContainer>
+      <CardContainer>
+        <FacialExpressionDetector />
+      </CardContainer>
+    </GridContainer>
   );
 }
 

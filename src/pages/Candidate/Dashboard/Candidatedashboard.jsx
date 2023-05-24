@@ -54,7 +54,8 @@ const CandidateDashboard = () => {
                 Work experience:{" "}
                 {candidateDetails?.workExperience?.map((w) => (
                   <LightText>
-                    {w.companyName}&nbsp;({w.startDate.substring(0,7)} - {w.endDate.substring(0,7)})
+                    {w.companyName}&nbsp;({w.startDate?.substring(0, 7)} -{" "}
+                    {w.endDate?.substring(0, 7)})
                   </LightText>
                 ))}
               </JobSmallText>
@@ -96,7 +97,7 @@ const CandidateDashboard = () => {
               <Heading2 width="100%">Available Jobs</Heading2>
               <Container align="flex-start" width="100%">
                 {jobs
-                  .filter((j) => j.jobStatus)
+                  ?.filter((j) => j.jobStatus)
                   .map((sjob) => (
                     <SuggestedJobTile {...sjob} />
                   ))}
