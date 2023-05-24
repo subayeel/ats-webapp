@@ -19,10 +19,13 @@ import {
 import { JobTitleText } from "../Manager/Manager.elements";
 import { SmallText } from "./Auth.elements";
 import useAuth from "../../hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../api/auth/authSlice";
 const LOGIN_URL = "/auth";
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch()
   const [onLoginRoute, setOnLoginRoute] = useState("/");
   const from = location.state?.from?.pathname;
 
@@ -48,6 +51,7 @@ function Login() {
       
 
       setAuth({ user, pwd, roles, accessToken });
+      dispatch(setCredentials({ ...response.data }));
       setUser("");
       setPwd("");
     } catch (err) {

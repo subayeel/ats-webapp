@@ -20,6 +20,7 @@ import {
   LightText,
   Button,
 } from "../../../Global";
+import { useGetSingleJobQuery } from "../../../api/endpoints/jobsEndpoint";
 
 //get details from api using id in params
 const jobsApiData = {
@@ -72,8 +73,68 @@ const jobsApiData = {
   openings: 32,
 };
 
+const temp = {
+  jobData: {
+    jobDesc: {
+      desc: "We are seeking a creative and analytical Marketing Manager to join our team. The Marketing Manager will be responsible for developing and implementing marketing strategies to promote our products and services.",
+      responsibilities: [
+        'Develop and execute marketing campaigns", "Manage social media presence", "Conduct market research',
+      ],
+      requirements: [
+        'Bachelor\'s degree in Marketing or related field", "Proven experience in marketing", "Strong analytical skills',
+      ],
+    },
+    salary: {
+      salaryType: "Annual",
+      ctcMin: 60000,
+      ctcMax: 80000,
+      currency: "",
+    },
+    workExperience: {
+      minYears: 3,
+    },
+    candidates: [],
+    department: "Marketing",
+    education: [],
+    employmentType: "Full-time employment",
+    hideSalary: true,
+    industryType: "Marketing",
+    jobTitle: "Marketing Manager",
+    address: "Bangalore",
+    postCode: "560001",
+    openings: 35,
+    remote: true,
+    seniorityLevel: "Mid-level",
+    skills: ["Marketing skills"],
+    jobStatus: true,
+  },
+  applicationData: {
+    address: null,
+    city: "1",
+    dob: "0",
+    education: "1",
+    email: "1",
+    firstName: "2",
+    gender: "2",
+    lastName: "2",
+    martialStatus: "2",
+    phone: "0",
+    picture: "1",
+    postCode: "1",
+    skills: "1",
+    state: "1",
+    workExperience: "0",
+  },
+  _id: "646d203cc9e80d52ac26729c",
+  interviwers: [],
+  managerId: "6450101f737750a4e6778c9d",
+  __v: 0,
+};
+
 const CandidateJobDetails = () => {
   const { jobId } = useParams(); //get more details from api
+  const { data: jobDetails, isLoading: isJobDetailsLoading } =
+    useGetSingleJobQuery(jobId);
   const location = useLocation();
   const navigate = useNavigate();
   const params = location.pathname.split("/");
@@ -82,6 +143,8 @@ const CandidateJobDetails = () => {
   function handleApplication() {
     navigate(`/candidate/interview/${jobId}`);
   }
+
+  console.log(jobDetails);
   return (
     <>
       <MainContainer>
@@ -91,8 +154,8 @@ const CandidateJobDetails = () => {
             justify="space-between"
             columns={isApplying ? "1fr 100px 100px" : "1fr 100px"}
           >
-            <Heading3 style={{ margin: "0" }}>{jobsApiData.job_title}</Heading3>
-            <LightText>Openings:{jobsApiData.openings}</LightText>
+            <Heading3 style={{ margin: "0" }}>{temp.jobData.jobTitle}</Heading3>
+            <LightText>Openings:{temp.jobData.openings}</LightText>
             {isApplying && (
               <Button
                 onClick={handleApplication}
@@ -111,15 +174,15 @@ const CandidateJobDetails = () => {
               <GridContainer columns="1fr 1fr 1fr" width="100%">
                 <Container align="flex-start">
                   <JobTitleText>Location:</JobTitleText>
-                  <small>{jobsApiData.location}</small>
+                  <small>{temp.jobData.address}</small>
                 </Container>
                 <Container align="flex-start">
                   <JobTitleText>Job Type:</JobTitleText>
-                  <small>{jobsApiData.remote ? "Remote" : "Office"}</small>
+                  <small>{temp.jobData.remote ? "Remote" : "Office"}</small>
                 </Container>
                 <Container align="flex-start">
                   <JobTitleText>Employment Type:</JobTitleText>
-                  <small>{jobsApiData.employment_type}</small>
+                  <small>{temp.jobData.employmentType}</small>
                 </Container>
               </GridContainer>
               <br></br>
@@ -128,25 +191,24 @@ const CandidateJobDetails = () => {
                   <JobTitleText>Package Range:</JobTitleText>
                   <CenterFlexContainer>
                     <small>
-                      {jobsApiData.salary_range.ctc_min}-
-                      {jobsApiData.salary_range.ctc_max} LPA{" "}
-                      {jobsApiData.salary_range.currency}
+                      Rs. {temp.jobData.salary.ctcMin} - Rs.
+                      {temp.jobData.salary.ctcMax}{" "}
                     </small>
                   </CenterFlexContainer>
                 </Container>
                 <Container align="flex-start">
                   <JobTitleText>Seniority Level:</JobTitleText>
-                  <small>{jobsApiData.seniority_level}</small>
+                  <small>{temp.jobData.seniorityLevel}</small>
                 </Container>
                 <Container align="flex-start">
                   <JobTitleText>Required Work Experience:</JobTitleText>
-                  <small>{jobsApiData.work_experience.min_years} Years</small>
+                  <small>{temp.jobData.workExperience.minYears} Years</small>
                 </Container>
               </GridContainer>
 
               <JobTitleText>Required Skills</JobTitleText>
               <CenterFlexContainer>
-                {jobsApiData.skills.map((skill) => (
+                {temp.jobData.skills.map((skill) => (
                   <SkillTile>{skill}</SkillTile>
                 ))}
               </CenterFlexContainer>
@@ -154,12 +216,12 @@ const CandidateJobDetails = () => {
             </BorderedContainer>
             <BorderedContainer align="flex-start">
               <Heading2>Job Description</Heading2>
-              <JobSmallText>{jobsApiData.job_desc.desc}</JobSmallText>
+              <JobSmallText>{temp.jobData.jobDesc.desc}</JobSmallText>
               <br></br>
               <JobTitleText>Key responsibilities:</JobTitleText>
               <JobSmallText>
                 <ul>
-                  {jobsApiData.job_desc.requirements.map((req) => (
+                  {temp.jobData.jobDesc.responsibilities.map((req) => (
                     <li>{req}</li>
                   ))}
                 </ul>
@@ -167,7 +229,7 @@ const CandidateJobDetails = () => {
               <JobTitleText>Requirements:</JobTitleText>
               <JobSmallText>
                 <ul>
-                  {jobsApiData.job_desc.requirements.map((req) => (
+                  {temp.jobData.jobDesc.requirements.map((req) => (
                     <li>{req}</li>
                   ))}
                 </ul>

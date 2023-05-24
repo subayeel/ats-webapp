@@ -361,7 +361,7 @@ function CandidateSignup() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
-    dispatch({ type: ACTION.qualifications, payload: [qualification] });
+    dispatch({ type: ACTION.qualifications, payload: qualification });
   };
   const handleSkillsChange = (event) => {
     const {
@@ -371,7 +371,7 @@ function CandidateSignup() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
-    dispatch({ type: ACTION.skills, payload: [skills] });
+    dispatch({ type: ACTION.skills, payload: skills });
   };
   function addWorkExperience() {
     dispatch({

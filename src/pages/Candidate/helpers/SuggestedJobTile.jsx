@@ -12,23 +12,23 @@ import {
     Container,
     
   } from "../../../Global";
-function SuggestedJobTile({ _id, job_title, department, location, status }) {
+function SuggestedJobTile({ id, jobTitle, department, address, jobStatus }) {
     const navigate = useNavigate();
     return (
       
       <BorderedGridContainer
          margin= "4px 0" 
-        key={_id}
+        key={id}
         columns="1fr 120px"
         width="calc(100% - 2rem)"
       >
         <Container align="flex-start" width="100%">
-          <JobTitleText>{job_title}</JobTitleText>
-          <JobSmallText>{location}</JobSmallText>
+          <JobTitleText>{jobTitle}</JobTitleText>
+          <JobSmallText>{address}</JobSmallText>
         </Container>
   
         <Button
-          onClick={() => navigate(`/candidate/jobs/${_id}/apply`)}
+          onClick={() => navigate(`/candidate/jobs/${id}/apply`)}
           btnColor={(props) => props.theme.colors.atsBlue}
         >
           Apply

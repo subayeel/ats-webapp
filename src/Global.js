@@ -52,7 +52,7 @@ export const MainContainer = styled.div`
   margin: 1rem 2rem;
   max-width: 1280px;
   @media screen and (min-width: 1376px) {
-    margin: 1rem auto;
+    /* margin: 1rem auto;  */
     max-width: 1747px;
   }
 `;

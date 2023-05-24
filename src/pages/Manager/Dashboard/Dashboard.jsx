@@ -46,7 +46,7 @@ function Dashboard() {
   } else {
     return (
       <MainContainer>
-        <GridContainer align="stretch" columns="1fr auto">
+        <GridContainer align="flex-start" columns="1fr auto">
           <GridContainer
             gap="1rem"
             align="start"
